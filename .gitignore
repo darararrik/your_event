@@ -1,0 +1,90 @@
+# Flutter/Dart
+*.dart_tool/
+*.pub/
+*.packages
+.pub/
+build/
+flutter_*.png
+pubspec.lock
+
+# macOS
+*.DS_Store
+*.localized
+
+# iOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Flutter.podspec.json
+ios/Flutter/Flutter.podspec.lock
+ios/Flutter/Flutter.xcframework
+ios/Flutter/Generated.xcconfig
+ios/Pods/
+ios/Podfile.lock
+ios/Podfile
+ios/Pods.xcodeproj/
+ios/.symlinks/
+ios/Flutter/.symlinks/
+
+# Android
+*.apk
+*.apks
+*.aab
+*.gradle
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/build/
+android/gradle/
+android/gradle-wrapper.jar
+android/gradle-wrapper.properties
+
+# Windows
+*.log
+*.db
+*.exe
+*.dll
+
+# Linux
+*~
+*.swp
+*.swo
+*.swn
+
+# Code Editor
+*.idea/
+*.vscode/
+
+# Misc
+*.sublime-workspace
+*.sublime-project
+
+# IDE-specific
+*.iml
+*.ipr
+*.iws
+.idea/
+*.vscode/
+*.classpath
+*.project
+*.settings/
+
+# JetBrains IDEs
+*.iml
+*.ipr
+*.iws
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ncb
+*.opt
+*.plg
+
+# Other
+*.log
+*.lock
+*.tmp
+*.swp
+*.swo
+*.swn
