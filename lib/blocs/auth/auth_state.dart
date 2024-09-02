@@ -13,7 +13,9 @@ class AuthLoading extends AuthState {}
 class AuthSuccess extends AuthState {
 
 
-  const AuthSuccess();
+  const AuthSuccess(
+    
+  );
 
   @override
   List<Object?> get props => [];
