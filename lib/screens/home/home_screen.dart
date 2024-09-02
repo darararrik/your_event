@@ -6,9 +6,9 @@ const HomeScreen({ super.key });
   @override
   Widget build(BuildContext context){
       return Scaffold(
-      appBar: AppBar(title: Text('Вход'),
+      appBar: AppBar(title: Text('MainScreen'),
       centerTitle: true,),
-      body: Center(child: Text('Форма входа')), // Добавьте форму входа здесь
+      body: Center(child: Text('Welcome')), // Добавьте форму входа здесь
     );
   }
 }
