@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/widgets/buttonForm.dart';
+import 'package:yourevent/core/widgets/button_form.dart';
 import 'package:yourevent/design/images.dart';
-import 'package:yourevent/screens/signIn/signIn_screen.dart';
+import 'package:yourevent/screens/signIn/sign_in_screen.dart';
 // Ваши состояния
 
 class StartScreen extends StatelessWidget {
+  const StartScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +17,21 @@ class StartScreen extends StatelessWidget {
         child: Column(
           children: [
             logo,
-            SizedBox(height: 60,),
+            const SizedBox(height: 60,),
             Text(
                 'Все для праздника\nв одном месте',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.headlineMedium,
               ),
-            SizedBox(height: 32,),
+            const SizedBox(height: 32,),
 
             imgStartScreen,
-            SizedBox(height: 40,),
+            const SizedBox(height: 40,),
 
             ButtonForm(
               text: 'Создать аккаунт',
               onPressed: () {
-                Navigator.pushNamed(context, '/signUp');
+                Navigator.pushNamed(context, '/start/signUp');
               },
             ),
             const SizedBox(
@@ -38,10 +40,7 @@ class StartScreen extends StatelessWidget {
             ButtonForm(
               text: 'Войти',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInScreen()),
-                );
+               Navigator.pushNamed(context, '/start/signIn');
               },
               hasColor: false,
             ),

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:yourevent/design/colors.dart';
 
 final lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
+  primaryColor: orange,
+  textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.black, ),),
   textTheme: const TextTheme( 
 
 

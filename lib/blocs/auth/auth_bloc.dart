@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:yourevent/models/user_model.dart' as user_model;
 import 'dart:async';
 
-import 'package:yourevent/repositories/auth/authRepository.dart';
+import 'package:yourevent/repositories/auth/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -12,53 +15,74 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authRepository) : super(AuthInitial()) {
     on<AuthCheckRequested>(_onAuthCheckRequested);
-    // on<SignInRequested>(_onSignInRequested);
-    // on<SignOutRequested>(_onSignOutRequested);
-    on<AuthSignUpRequested>(_onSignUpRequested);
+    on<SignInRequested>(_onSignInRequested);
+    on<SignOutRequested>(_onSignOutRequested);
+    on<SignUpRequested>(_onSignUpRequested);
+    on<SignInGoogleRequested>(_onSignInGoogleRequested);
   }
 
-  void _onAuthCheckRequested(
-      AuthCheckRequested event, Emitter<AuthState> emit) {
-    final user = _authRepository.getCurrentUser();
+  Future<void> _onAuthCheckRequested(
+      AuthCheckRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final user = await _authRepository.getCurrentUser();
     if (user != null) {
-      emit(AuthSuccess());
+      emit(AuthSuccess(user));
     } else {
       emit(Unauthenticated());
     }
   }
 
-  // Future<void> _onSignInRequested(
-  //     SignInRequested event, Emitter<AuthState> emit) async {
-  //   try {
-  //     final user = await _authRepository.signInWithEmailAndPassword(
-  //         email: event.email, password: event.password);
-  //     emit(AuthSuccess());
-  //   } catch (e) {
-  //     emit(AuthFailure(e.toString()));
-  //   }
-  // }
-
-  // Future<void> _onSignOutRequested(
-  //     SignOutRequested event, Emitter<AuthState> emit) async {
-  //   await _authRepository.signOut();
-  //   emit(Unauthenticated());
-  // }
+  Future<void> _onSignOutRequested(
+      SignOutRequested event, Emitter<AuthState> emit) async {
+    await _authRepository.signOut();
+    emit(Unauthenticated());
+  }
 
 // Обработчик события регистрации
+  Future<void> _onSignInRequested(
+      SignInRequested event, Emitter<AuthState> emit) async {
+    try {
+      final user = await _authRepository.signInWithEmailAndPassword(
+          email: event.email, password: event.password);
+      emit(AuthSuccess(user!));
+    } on AuthException catch (e) {
+      // Используем отдельные ошибки для email и password
+      emit(AuthErrorState(
+          emailError: e.emailError, passwordError: e.passwordError));
+    } catch (e) {
+      emit(const AuthErrorState(emailError: 'Произошла ошибка.'));
+    }
+  }
+
   Future<void> _onSignUpRequested(
-      AuthSignUpRequested event, Emitter<AuthState> emit) async {
+      SignUpRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      // Вызов метода регистрации из репозитория
-      await _authRepository.createUser(
+      final user = await _authRepository.createUser(
         name: event.name,
         email: event.email,
         password: event.password,
       );
-
-      emit(const AuthSuccess()); // Переход в состояние аутентифицированного пользователя
+      emit(AuthSuccess(user!));
+    } on AuthException catch (e) {
+      emit(AuthErrorState(
+          emailError: e.emailError, passwordError: e.passwordError));
     } catch (e) {
-      emit(AuthFailure(e.toString())); // Переход в состояние ошибки
+      emit(AuthErrorState(emailError: 'Произошла ошибка.'));
+    }
+  }
+
+  FutureOr<void> _onSignInGoogleRequested(
+      SignInGoogleRequested event, Emitter<AuthState> emit) async {
+    try {
+      final user = await _authRepository.signInWithGoogle();
+      emit(AuthSuccess(user));
+    } on AuthException catch (e) {
+      // Используем отдельные ошибки для email и password
+      emit(AuthErrorState(
+          emailError: e.emailError, passwordError: e.passwordError));
+    } catch (e) {
+      emit(AuthErrorState(emailError: 'Произошла ошибка: ${e.toString()}'));
     }
   }
 }
