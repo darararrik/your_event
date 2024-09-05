@@ -15,8 +15,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late String? errorEmail;
-  late String? errorPassword;
+   String? errorEmail;
+   String? errorPassword;
   @override
   void dispose() {
     emailController.dispose();

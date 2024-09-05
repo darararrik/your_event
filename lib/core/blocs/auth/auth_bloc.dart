@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yourevent/models/user_model.dart' as user_model;
+import 'package:yourevent/core/models/user_model.dart' as user_model;
 import 'dart:async';
 
 import 'package:yourevent/repositories/auth/auth_repository.dart';
@@ -68,7 +68,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthErrorState(
           emailError: e.emailError, passwordError: e.passwordError));
     } catch (e) {
-      emit(AuthErrorState(emailError: 'Произошла ошибка.'));
+      emit(const AuthErrorState(emailError: 'Произошла ошибка.'));
     }
   }
 

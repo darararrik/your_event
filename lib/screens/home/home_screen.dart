@@ -31,6 +31,40 @@ class HomeScreen extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: Colors.white,
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index)
+        {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorColor: primaryBlack,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home_outlined,color: Colors.white,size: 32,),
+            icon: Icon(Icons.home_outlined,color: secondaryGray,size: 32,),
+            label: 'Главная',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.filter_none_outlined,color: Colors.white,),
+            icon: Icon(Icons.filter_none_outlined,color: secondaryGray),
+            label: 'Агентства',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.calendar_month_outlined, color: Colors.white,),
+            icon: Icon(Icons.calendar_month_outlined,color: secondaryGray,),
+            label: 'Мои события',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.person_outlined, color: Colors.white,),
+            icon: Icon(Icons.person_outlined,color: secondaryGray,),
+            label: 'Профиль',
+          ),
+        ],
+
+      ),
     );
   }
 }

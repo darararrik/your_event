@@ -49,7 +49,7 @@ class SignUpRequested extends AuthEvent {
 class EmailChanged extends AuthEvent {
   final String email;
 
-  EmailChanged(this.email);
+  const EmailChanged(this.email);
   
   @override
   List<Object?> get props => [email];
@@ -58,7 +58,7 @@ class EmailChanged extends AuthEvent {
 class PasswordChanged extends AuthEvent {
   final String password;
 
-  PasswordChanged(this.password);
+  const PasswordChanged(this.password);
   
   @override
   List<Object?> get props => [password];

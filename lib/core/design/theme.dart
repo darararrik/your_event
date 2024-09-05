@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/design/colors.dart';
+import 'package:yourevent/core/design/colors.dart';
 
 final lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,

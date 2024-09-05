@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/cubits/inputField/input_field_cubit.dart';
-import 'package:yourevent/design/colors.dart';
+
+import '../design/design.dart';
 
 class TextFormFieldCustom extends StatelessWidget {
   final TextEditingController controller;
@@ -38,7 +39,7 @@ class TextFormFieldCustom extends StatelessWidget {
               TextFormField(
                 controller: controller,
                 obscureText: obscureText && !state.isPasswordVisible,
-                style: theme.textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w500),
+                style: theme.textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w500),//Отошел от дизайна
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: backgroundInputButton,

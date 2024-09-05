@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/widgets/button_form.dart';
-import 'package:yourevent/design/images.dart';
+import 'package:yourevent/core/widgets/button_form_custom.dart';
 import 'package:yourevent/screens/signIn/sign_in_screen.dart';
-// Ваши состояния
+
+import '../../core/design/design.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
-
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

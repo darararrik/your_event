@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/design/colors.dart';
+
+import '../design/design.dart';
 
 class ButtonForm extends StatelessWidget {
   final String text;
