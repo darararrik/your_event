@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yourevent/core/widgets/button_form_custom.dart';
-import 'package:yourevent/screens/signIn/sign_in_screen.dart';
+import 'package:yourevent/screens/sign_in/sign_in_screen.dart';
 
 import '../../core/design/design.dart';
 

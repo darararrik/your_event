@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/blocs/auth/auth_bloc.dart';
-import 'package:yourevent/design/colors.dart';
+import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 
+import '../../core/design/design.dart';
+
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-   String? errorEmail;
-   String? errorPassword;
+  String? errorEmail;
+  String? errorPassword;
   @override
   void dispose() {
     emailController.dispose();
@@ -40,8 +41,8 @@ class _SignInScreenState extends State<SignInScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Auth Successful!')),
               );
-              Navigator.pushReplacementNamed(context, '/home');
-            };
+              Navigator.pushReplacementNamed(context, '/main');
+            }
           },
           builder: (context, state) {
             if (state is AuthErrorState) {

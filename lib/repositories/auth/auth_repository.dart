@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:yourevent/models/user_model.dart' as user_model;
+import 'package:yourevent/core/models/user_model.dart' as user_model;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 class AuthRepository {
@@ -41,7 +41,6 @@ class AuthRepository {
       }
     } catch (e) {
       throw AuthException(emailError: 'Произошла ошибка.');
-      print(e);
     }
     return null;
   }
