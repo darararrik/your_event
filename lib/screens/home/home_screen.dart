@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/auth/auth.dart';
 
 import '../../core/design/design.dart';
-
+import 'package:auto_route/auto_route.dart';
+@RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is Unauthenticated)
           {
-             Navigator.pushReplacementNamed(context, '/start');
+            context.router.replaceNamed('/start/signin');
           }
         },
         builder: (context, state) {

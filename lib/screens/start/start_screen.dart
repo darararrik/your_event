@@ -1,48 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:yourevent/core/widgets/button_form_custom.dart';
-import 'package:yourevent/screens/sign_in/sign_in_screen.dart';
-
+import 'package:yourevent/router/router.dart';
+import '../../core/blocs/auth/auth.dart';
 import '../../core/design/design.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+@RoutePage()
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 52, 16, 0),
-        child: Column(
-          children: [
-            logo,
-            const SizedBox(height: 60,),
-            Text(
+
+    // Отправляем событие для проверки аутентификации при загрузке экрана
+    context.read<AuthBloc>().add(AuthCheckRequested());
+
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        // if (state is AuthSuccess) {
+        //   // Если пользователь авторизован, перенаправляем на главную страницу
+        //   context.router.replaceNamed('/home');
+        // } else if (state is Unauthenticated) {
+        //   // Пользователь не авторизован, остаемся на экране авторизации
+        //   // Логика остается такой же
+        // } else
+        // if (state is AuthErrorState) {
+        //   // Обработка ошибок аутентификации
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     SnackBar(
+        //       content: Text(
+        //           'Ошибка: ${state.emailError ?? ''} ${state.passwordError ?? ''}'),
+        //     ),
+        //   );
+        // }
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 52, 16, 0),
+          child: Column(
+            children: [
+              logo,
+              const SizedBox(height: 60),
+              Text(
                 'Все для праздника\nв одном месте',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.headlineMedium,
               ),
-            const SizedBox(height: 32,),
-
-            imgStartScreen,
-            const SizedBox(height: 40,),
-
-            ButtonForm(
-              text: 'Создать аккаунт',
-              onPressed: () {
-                Navigator.pushNamed(context, '/start/signUp');
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ButtonForm(
-              text: 'Войти',
-              onPressed: () {
-               Navigator.pushNamed(context, '/start/signIn');
-              },
-              hasColor: false,
-            ),
-          ],
+              const SizedBox(height: 32),
+              imgStartScreen,
+              const SizedBox(height: 40),
+              ButtonForm(
+                text: 'Создать аккаунт',
+                onPressed: () {
+                  context.router.push(SignUpRoute()); // Используем AutoRoute
+                },
+              ),
+              const SizedBox(height: 20),
+              ButtonForm(
+                text: 'Войти',
+                onPressed: () {
+                  context.router
+                      .push(SignInRoute()); // Используем AutoRouteем pushNamed
+                },
+                hasColor: false,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -19,17 +19,17 @@ class CustomBottomNavBar extends StatelessWidget {
               Navigator.pushNamed(context, '/agents');
             } else if (index == 2) {
               Navigator.pushNamed(context, '/myEvents');
+            } else if (index == 3) {
+              Navigator.pushNamed(context, '/profile');
             }
-            else if (index == 3) {
-              Navigator.pushNamed(context, '/profile');}
-            
           },
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.filter_none), label: 'Agents'),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'MyEvents'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.filter_none), label: 'Agents'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month), label: 'MyEvents'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-
           ],
         );
       },

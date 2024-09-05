@@ -1,5 +1,4 @@
 export 'agents/agents.dart';
-export 'checkAuth/checkAuth.dart';
 export 'home/home.dart';
 export 'main/main.dart';
 export 'my_events/my_events.dart';
