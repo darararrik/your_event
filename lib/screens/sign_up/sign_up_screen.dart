@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Registration Successful!')),
               );
-              context.router.replace(HomeRoute());
+              context.router.replace(const HomeRoute());
             } else if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),

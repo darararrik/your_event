@@ -44,7 +44,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Auth Successful!')),
               );
-              context.router.replace(HomeRoute());
+              context.router.replace(const HomeRoute());
             }
           },
           builder: (context, state) {

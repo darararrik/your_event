@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/bottom_nav/bottom_nav.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
+  const CustomBottomNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavBloc, BottomNavState>(

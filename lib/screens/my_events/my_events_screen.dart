@@ -6,6 +6,6 @@ class MyEventsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('MyEventsScreen'));
+    return const Center(child: Text('MyEventsScreen'));
   }
 }

@@ -54,7 +54,7 @@ class StartScreen extends StatelessWidget {
               ButtonForm(
                 text: 'Создать аккаунт',
                 onPressed: () {
-                  context.router.push(SignUpRoute()); // Используем AutoRoute
+                  context.router.push(const SignUpRoute()); // Используем AutoRoute
                 },
               ),
               const SizedBox(height: 20),
@@ -62,7 +62,7 @@ class StartScreen extends StatelessWidget {
                 text: 'Войти',
                 onPressed: () {
                   context.router
-                      .push(SignInRoute()); // Используем AutoRouteем pushNamed
+                      .push(const SignInRoute()); // Используем AutoRouteем pushNamed
                 },
                 hasColor: false,
               ),
