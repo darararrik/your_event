@@ -28,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Регистрация',
-          style: theme.textTheme.headlineMedium,
+          style: theme.textTheme.headlineSmall,
         ),
         centerTitle: true,
         backgroundColor: white,

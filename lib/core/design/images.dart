@@ -7,13 +7,13 @@ final Widget logo = SvgPicture.asset(
   height: 52,
 );
 final Widget faqSearch = SvgPicture.asset(
-  "assets/images/faqSearch.svg",
+  "assets/images/search.svg",
   width: 70,
   height: 70,
 );
 final Widget package = SvgPicture.asset(
   "assets/images/package.svg",
-  width: 70,
+  width: 70 ,
   height: 70,
 );
 final Widget imgStartScreen = SvgPicture.asset(

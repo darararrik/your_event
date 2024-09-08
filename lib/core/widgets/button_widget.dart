@@ -33,8 +33,7 @@ class ButtonWidget extends StatelessWidget {
         fixedSize: WidgetStateProperty.all<Size>(const Size(380, 53)),
       ),
       child: Text(text,
-          style: theme.textTheme.titleMedium
-              ?.copyWith(color: hasColor ? white : orange)),
+          style: theme.textTheme.labelLarge!.copyWith(fontSize: 14, color: hasColor ? white : orange)),
     );
   }
 }

@@ -44,7 +44,7 @@ class TextFormFieldWidget extends StatelessWidget {
                   filled: true,
                   fillColor: backgroundInputButton,
                   hintText: hintText,
-                  hintStyle: theme.textTheme.labelSmall,
+                  hintStyle: theme.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w300,),
                   suffixIcon: obscureText
                       ? IconButton(
                           icon: Icon(

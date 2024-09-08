@@ -45,7 +45,7 @@ class StartScreen extends StatelessWidget {
               Text(
                 'Все для праздника\nв одном месте',
                 textAlign: TextAlign.center,
-                style: theme.textTheme.headlineMedium,
+                style: theme.textTheme.headlineSmall,
               ),
               const SizedBox(height: 32),
               imgStartScreen,

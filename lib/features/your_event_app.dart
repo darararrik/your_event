@@ -7,15 +7,11 @@ import 'package:yourevent/features/features.dart';
 import '../core/blocs/auth/auth.dart';
 import '../core/design/design.dart';
 
-class YourEventApp extends StatefulWidget {
-  const YourEventApp({super.key});
+class YourEventApp extends StatelessWidget {
 
-  @override
-  State<YourEventApp> createState() => _YourEventAppState();
-}
-
-class _YourEventAppState extends State<YourEventApp> {
   final _router = AppRouter();
+
+  YourEventApp({super.key});
   @override
   Widget build(BuildContext context) {
     AuthRepository authRepository = AuthRepository();

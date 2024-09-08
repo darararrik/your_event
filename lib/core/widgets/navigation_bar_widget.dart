@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../design/design.dart';
 
 // ignore: non_constant_identifier_names
-Container NavigationBarWidget(ThemeData theme, TabsRouter tabsRouter) {
+Container NavigationBarWidget(TabsRouter tabsRouter) {
   return Container(
     decoration: const BoxDecoration(
         border: Border(top: BorderSide(width: 1, color: outline_Grey))),
