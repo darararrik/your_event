@@ -9,6 +9,7 @@ abstract class AuthState extends Equatable {
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
+
 class AuthSuccess extends AuthState {
   final user_model.User user;
 
@@ -28,11 +29,35 @@ class AuthFailure extends AuthState {
   @override
   List<Object?> get props => [error];
 }
+
 class AuthErrorState extends AuthState {
   final String? emailError;
   final String? passwordError;
 
   const AuthErrorState({this.emailError, this.passwordError});
-    @override
-  List<Object?> get props => [emailError,passwordError];
+  @override
+  List<Object?> get props => [emailError, passwordError];
+}
+
+final class ProfileInitial extends AuthState {}
+
+class ProfileLoading extends AuthState {}
+
+class ProfileLoaded extends AuthState {
+  final user_model.User user;
+
+  const ProfileLoaded(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
+
+//Состояние ошибки при работе с профилем
+class ProfileError extends AuthState {
+  final String message;
+
+  ProfileError({required this.message});
+
+  @override
+  List<Object> get props => [message];
 }

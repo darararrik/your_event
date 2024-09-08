@@ -21,19 +21,7 @@ class StartScreen extends StatelessWidget {
         if (state is AuthSuccess) {
           // Если пользователь авторизован, перенаправляем на главную страницу
           context.router.replaceNamed('/main/home');
-        } else if (state is Unauthenticated) {
-          // Пользователь не авторизован, остаемся на экране авторизации
-          // Логика остается такой же
-        } else
-        if (state is AuthErrorState) {
-          // Обработка ошибок аутентификации
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  'Ошибка: ${state.emailError ?? ''} ${state.passwordError ?? ''}'),
-            ),
-          );
-        }
+        };
       },
       child: Scaffold(
         body: Padding(

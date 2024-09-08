@@ -26,6 +26,10 @@ class HomeScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return CustomScrollView(
+            // Отключаем скроллинг
+            physics:
+                const NeverScrollableScrollPhysics(), 
+
             slivers: [
               SliverAppBar(
                 automaticallyImplyLeading: false,

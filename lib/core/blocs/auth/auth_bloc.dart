@@ -19,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutRequested>(_onSignOutRequested);
     on<SignUpRequested>(_onSignUpRequested);
     on<SignInGoogleRequested>(_onSignInGoogleRequested);
+    on<ProfileLoad>(_onProfileLoad);
   }
 
   Future<void> _onAuthCheckRequested(
@@ -83,6 +84,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emailError: e.emailError, passwordError: e.passwordError));
     } catch (e) {
       emit(AuthErrorState(emailError: 'Произошла ошибка: ${e.toString()}'));
+    }
+  }
+    Future<void> _onProfileLoad(
+      ProfileLoad event, Emitter<AuthState> emit) async {
+    emit(ProfileLoading());
+    try {
+      final user = await _authRepository.getCurrentUser();
+      if (user != null) {
+        emit(ProfileLoaded(user));
+      } else {
+        emit(ProfileError(message: "user not found"));
+      }
+    } catch (e) {
+      emit(ProfileError(message: e.toString()));
     }
   }
 }
