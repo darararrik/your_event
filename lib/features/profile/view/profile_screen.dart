@@ -10,6 +10,8 @@ import '../../../router/router.dart';
 
 @RoutePage()
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -25,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    //final theme = Theme.of(context);
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (BuildContext context, ProfileState state) {
         if (state is ProfileError) {
@@ -57,13 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            SliverFillRemaining(
+            const SliverFillRemaining(
               child: Column(
                 children: [
                   Center(
                       child: CircleAvatar(
-                    backgroundImage: NetworkImage(user!.photoURL),
-                    child: Text(user!.displayName),
+                    backgroundImage: NetworkImage(
+                        "https://firebasestorage.googleapis.com/v0/b/yourevent0app.appspot.com/o/avatar.png?alt=media&token=99be8cea-5607-441b-adc1-9c1df1d555ea"),
                   ))
                 ],
               ),

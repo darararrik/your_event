@@ -23,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onAuthCheckRequested(
       AuthCheckRequested event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthChecking());
     final user = await _authRepository.getCurrentUser();
     if (user != null) {
       emit(AuthSuccess(user));
@@ -64,6 +64,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
       emit(AuthSuccess(user!));
+      await _authRepository.saveUserDataToFirestore(
+        name: event.name,
+        email: event.email,
+      );
     } on AuthException catch (e) {
       emit(AuthErrorState(
           emailError: e.emailError, passwordError: e.passwordError));
@@ -85,5 +89,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthErrorState(emailError: 'Произошла ошибка: ${e.toString()}'));
     }
   }
-   
 }

@@ -11,7 +11,7 @@ class AuthRepository {
   AuthRepository({FirebaseAuth? firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
   static const String defaultAvatarUrl =
-      'gs://yourevent0app.appspot.com/avatar.png'; // URL фото по умолчанию в Firebase Storage
+      'https://firebasestorage.googleapis.com/v0/b/yourevent0app.appspot.com/o/avatar.png?alt=media&token=99be8cea-5607-441b-adc1-9c1df1d555ea'; // URL фото по умолчанию в Firebase Storage
 
   /// Регистрация нового пользователя с использованием email и пароля.
   Future<user_model.User?> createUser(
@@ -24,11 +24,6 @@ class AuthRepository {
         email: email,
         password: password,
       );
-
-      // Сохранение данных пользователя в Firestore
-      await _saveUserDataToFirestore(
-          userCredential: userCredential, name: name, email: email);
-
       return user_model.User.fromFirebaseUser(userCredential.user!);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -46,25 +41,28 @@ class AuthRepository {
   }
 
   /// Сохранение данных пользователя в Firestore.
-  Future<void> _saveUserDataToFirestore({
-    required UserCredential userCredential,
+  Future<void> saveUserDataToFirestore({
     required String name,
     required String email,
   }) async {
     try {
-      final firebaseUser = userCredential.user!;
-      
-      // Обновляем профиль пользователя
-      await firebaseUser.updateDisplayName(name);
-      await firebaseUser.updateProfile(photoURL: defaultAvatarUrl);
+      final firebaseUser = _firebaseAuth.currentUser;
 
-      // Сохраняем данные в Firestore
-      await _firestore.collection('users').doc(firebaseUser.uid).set({
-        'uid': firebaseUser.uid,
-        'name': name,
-        'email': email,
-        'avatarUrl': defaultAvatarUrl,
-      });
+      if (firebaseUser != null) {
+        // Обновляем профиль пользователя
+        await firebaseUser.updateDisplayName(name);
+        await firebaseUser.updatePhotoURL(defaultAvatarUrl);
+
+        // Сохраняем данные в Firestore
+        await _firestore.collection('users').doc(firebaseUser.uid).set({
+          'uid': firebaseUser.uid,
+          'name': name,
+          'email': email,
+          'avatarUrl': defaultAvatarUrl,
+        });
+      } else {
+        debugPrint('Ошибка: пользовательский объект null.');
+      }
     } catch (e) {
       // Логируем ошибку, но не бросаем исключение, чтобы регистрация прошла успешно
       debugPrint('Ошибка при сохранении данных пользователя в Firestore: $e');
@@ -80,14 +78,14 @@ class AuthRepository {
         password: password,
       );
       return user_model.User.fromFirebaseUser(userCredential.user!);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'wrong-password') {
+    } on FirebaseAuthException catch (firebaseException) {
+      if (firebaseException.code == 'wrong-password') {
         throw AuthException(passwordError: 'Неправильный пароль.');
-      } else if (e.code == 'user-not-found') {
+      } else if (firebaseException.code == 'user-not-found') {
         throw AuthException(emailError: 'Пользователь не найден.');
-      } else if (e.code == 'invalid-email') {
+      } else if (firebaseException.code == 'invalid-email') {
         throw AuthException(emailError: 'Некорректный формат почты.');
-      } else {
+      } else if (firebaseException.code == 'too-many-requests') {
         throw AuthException(emailError: 'Ошибка аутентификации.');
       }
     } catch (e) {

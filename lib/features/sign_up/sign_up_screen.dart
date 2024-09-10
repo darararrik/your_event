@@ -36,11 +36,13 @@ class SignUpScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is AuthSuccess) {
               context.router.replaceNamed('/main/home');
-            } else if (state is AuthFailure) {
+            } 
+            if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),
               );
-            } else if (state is AuthErrorState) {
+            } 
+            if (state is AuthErrorState) {
               errorEmail = state.emailError;
               errorPassword = state.passwordError;
             }
@@ -48,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is AuthLoading)
             {
-              return const Center(child: CircularProgressIndicator(),);
+              return Center(child: CircularProgressIndicator(),);
             }
             return Form(
               key: _formKey,
@@ -76,10 +78,8 @@ class SignUpScreen extends StatelessWidget {
                       } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Введите корректный email';
                       }
-                      else 
-                      {
                          return errorEmail;
-                      }
+
                      
                     },
                   ),
@@ -96,7 +96,7 @@ class SignUpScreen extends StatelessWidget {
                       else if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
-                      else {return errorPassword;}
+                      return errorPassword;
                     },
                   ),
                   const SizedBox(height: 40),

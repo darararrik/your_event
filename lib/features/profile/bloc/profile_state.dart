@@ -6,22 +6,20 @@ sealed class ProfileState extends Equatable {
   List<Object> get props => [];
 }
 
-class ProfileInitial extends ProfileState {
-}
+class ProfileInitial extends ProfileState {}
 
 class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
   final user_model.User user;
   const ProfileLoaded({required this.user});
-    @override
+  @override
   List<Object> get props => [user];
 }
-@immutable
-class ProfileError extends ProfileState{ 
-  Object _error;
-  ProfileError({required Object error}) : _error = error;
-     @override
-  List<Object> get props => [_error];
 
+class ProfileError extends ProfileState {
+  final Object _error;
+  const ProfileError({required Object error}) : _error = error;
+  @override
+  List<Object> get props => [_error];
 }
