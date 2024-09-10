@@ -17,8 +17,6 @@ class SignInScreen extends StatelessWidget {
   String? errorEmail;
   String? errorPassword;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +30,9 @@ class SignInScreen extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccess) {
-              context.router.replaceNamed('/main/home');
+              context.router.popUntilRoot(); // Очищаем стек навигации
+
+              context.router.popUntilRouteWithPath("/main/home");
             }
           },
           builder: (context, state) {
@@ -55,7 +55,6 @@ class SignInScreen extends StatelessWidget {
                       if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Введите корректный e-mail';
                       }
-                      return errorEmail;
                     },
                   ),
                   const SizedBox(height: 24),
@@ -71,7 +70,6 @@ class SignInScreen extends StatelessWidget {
                       if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
-                      return errorPassword;
                     },
                   ),
                   const SizedBox(height: 8),

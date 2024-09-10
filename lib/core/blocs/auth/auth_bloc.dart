@@ -23,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onAuthCheckRequested(
       AuthCheckRequested event, Emitter<AuthState> emit) async {
-    emit(AuthChecking());
+    emit(AuthLoading());
     final user = await _authRepository.getCurrentUser();
     if (user != null) {
       emit(AuthSuccess(user));

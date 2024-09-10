@@ -17,109 +17,97 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Center(
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is Unauthenticated) {
-            context.router.replace(const StartRoute());
-          }
-        },
-        builder: (context, state) {
-          return CustomScrollView(
-            // Отключаем скроллинг
-            physics:
-                const NeverScrollableScrollPhysics(), 
-
-            slivers: [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                toolbarHeight: 108,
-                title: logo,
-                centerTitle: true,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.notifications_outlined,
-                        size: 32,
-                        color: theme.primaryColor,
-                      ),
-                      onPressed: () {},
-                    ),
-                  )
-                ],
+    return CustomScrollView(
+      // Отключаем скроллинг
+      physics:
+          const NeverScrollableScrollPhysics(), 
+      slivers: [
+        SliverAppBar(
+          //automaticallyImplyLeading: false,
+          toolbarHeight: 108,
+          title: logo,
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: IconButton(
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  size: 32,
+                  color: theme.primaryColor,
+                ),
+                onPressed: () {},
               ),
-              SliverFillRemaining(
-                  child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            )
+          ],
+        ),
+        SliverFillRemaining(
+            child: Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Хотите организовать мероприятие?",
-                            style: theme.textTheme.headlineLarge!
-                                .copyWith(height: 1),
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            "Выберите способ организации",
-                            style: theme.textTheme.bodyLarge!
-                                .copyWith(color: grey),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      "Хотите организовать мероприятие?",
+                      style: theme.textTheme.headlineLarge!
+                          .copyWith(height: 1),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 12,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: IconButtonWidget(
-                            text: 'Выбрать агентство мероприятий',
-                            image: faqSearch,
-                            onPressed: () {},
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 60,
-                        ),
-                        Expanded(
-                          child: IconButtonWidget(
-                            text: 'Организую сам',
-                            image: package,
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Выберите способ организации",
+                      style: theme.textTheme.bodyLarge!
+                          .copyWith(color: grey),
                     ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: RowIcon(
-                        onTap: () {},
-                        title: "Наши статьи",
-                        icon: const Icon(Icons.arrow_right_rounded),
-                      ),
-                    ),
-                    ArticleListView(),
                   ],
                 ),
-              ))
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: IconButtonWidget(
+                      text: 'Выбрать агентство мероприятий',
+                      image: faqSearch,
+                      onPressed: () {},
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 60,
+                  ),
+                  Expanded(
+                    child: IconButtonWidget(
+                      text: 'Организую сам',
+                      image: package,
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: RowIcon(
+                  onTap: () {},
+                  title: "Наши статьи",
+                  icon: const Icon(Icons.arrow_right_rounded),
+                ),
+              ),
+              ArticleListView(),
             ],
-          );
-        },
-      ),
+          ),
+        ))
+      ],
     );
   }
 }

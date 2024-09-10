@@ -22,12 +22,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileLoadRequested event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     try {
-      final user = await authRepository.getCurrentUser();
-      if (user != null) {
-        emit(ProfileLoaded(user: user));
-      } else {
-        throw Exception("Ошибка пользователь не найден.");
-      }
+      final firebaseUser = await authRepository.getCurrentUser();
+      final user = user_model.User.fromFirebaseUser(firebaseUser!);
+      emit(ProfileLoaded(user: user));
     } catch (e) {
       emit(ProfileError(error: e));
     }

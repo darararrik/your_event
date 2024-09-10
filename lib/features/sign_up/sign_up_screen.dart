@@ -35,22 +35,25 @@ class SignUpScreen extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccess) {
-              context.router.replaceNamed('/main/home');
-            } 
+              context.router.popUntilRoot(); // Очищаем стек навигации
+
+              context.router.popUntilRouteWithPath("/main/home");
+            }
             if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),
               );
-            } 
+            }
             if (state is AuthErrorState) {
               errorEmail = state.emailError;
               errorPassword = state.passwordError;
             }
           },
           builder: (context, state) {
-            if (state is AuthLoading)
-            {
-              return Center(child: CircularProgressIndicator(),);
+            if (state is AuthLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
             return Form(
               key: _formKey,
@@ -75,12 +78,11 @@ class SignUpScreen extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите e-mail';
-                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                          .hasMatch(value)) {
                         return 'Введите корректный email';
                       }
-                         return errorEmail;
-
-                     
+                      return errorEmail;
                     },
                   ),
                   const SizedBox(height: 24),
@@ -92,8 +94,7 @@ class SignUpScreen extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите пароль';
-                      }
-                      else if (value.length < 6) {
+                      } else if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
                       return errorPassword;

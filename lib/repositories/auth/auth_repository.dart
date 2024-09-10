@@ -14,7 +14,7 @@ class AuthRepository {
       'https://firebasestorage.googleapis.com/v0/b/yourevent0app.appspot.com/o/avatar.png?alt=media&token=99be8cea-5607-441b-adc1-9c1df1d555ea'; // URL фото по умолчанию в Firebase Storage
 
   /// Регистрация нового пользователя с использованием email и пароля.
-  Future<user_model.User?> createUser(
+  Future<User?> createUser(
       {required String name,
       required String email,
       required String password}) async {
@@ -24,7 +24,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
-      return user_model.User.fromFirebaseUser(userCredential.user!);
+      return userCredential.user!;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw AuthException(emailError: 'Электронная почта уже используется.');
@@ -70,14 +70,14 @@ class AuthRepository {
   }
 
   // Вход пользователя с использованием email и пароля.
-  Future<user_model.User?> signInWithEmailAndPassword(
+  Future<User?> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return user_model.User.fromFirebaseUser(userCredential.user!);
+      return userCredential.user!;
     } on FirebaseAuthException catch (firebaseException) {
       if (firebaseException.code == 'wrong-password') {
         throw AuthException(passwordError: 'Неправильный пароль.');
@@ -91,6 +91,7 @@ class AuthRepository {
     } catch (e) {
       throw AuthException(emailError: 'Произошла ошибка.');
     }
+    return null;
   }
 
   /// Выход пользователя из системы.
@@ -99,15 +100,15 @@ class AuthRepository {
   }
 
   /// Получение текущего авторизованного пользователя.
-  Future<user_model.User?> getCurrentUser() async {
+  Future<User?> getCurrentUser() async {
     final firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser != null) {
-      return user_model.User.fromFirebaseUser(firebaseUser);
+      return firebaseUser;
     }
     return null;
   }
 
-  Future<user_model.User> signInWithGoogle() async {
+  Future<User> signInWithGoogle() async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -129,7 +130,7 @@ class AuthRepository {
       // Once signed in, return the UserCredential
       final userCredential =
           await _firebaseAuth.signInWithCredential(credential);
-      return user_model.User.fromFirebaseUser(userCredential.user!);
+      return userCredential.user!;
     } catch (e) {
       throw AuthException(emailError: 'Ошибка входа с помощью Google.');
     }

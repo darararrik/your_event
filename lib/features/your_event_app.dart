@@ -19,7 +19,7 @@ class YourEventApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-              AuthBloc(authRepository)..add(AuthCheckRequested()),
+              AuthBloc(authRepository),
         ),
         BlocProvider(
           create: (context) => ProfileBloc(authRepository),

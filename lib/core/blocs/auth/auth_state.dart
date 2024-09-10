@@ -9,9 +9,9 @@ abstract class AuthState extends Equatable {
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
-class AuthChecking extends AuthState {}
+//class AuthChecking extends AuthState {}
 class AuthSuccess extends AuthState {
-  final user_model.User user;
+  final User user;
 
   const AuthSuccess(this.user);
 
@@ -27,7 +27,7 @@ class AuthFailure extends AuthState {
   const AuthFailure(this.error);
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [];
 }
 
 class AuthErrorState extends AuthState {
@@ -36,5 +36,5 @@ class AuthErrorState extends AuthState {
 
   const AuthErrorState({this.emailError, this.passwordError});
   @override
-  List<Object?> get props => [emailError, passwordError];
+  List<Object?> get props => [];
 }
