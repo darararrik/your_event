@@ -21,7 +21,7 @@ class StartScreen extends StatelessWidget {
         if (state is AuthSuccess) {
           // Если пользователь авторизован, перенаправляем на главную страницу
           context.router.replaceNamed('/main/home');
-        };
+        }
       },
       child: Scaffold(
         body: Padding(
@@ -41,7 +41,7 @@ class StartScreen extends StatelessWidget {
               ButtonWidget(
                 text: 'Создать аккаунт',
                 onPressed: () {
-                  context.router.push(const SignUpRoute()); // Используем AutoRoute
+                  context.router.pushNamed('/signup'); // Используем AutoRoute
                 },
               ),
               const SizedBox(height: 20),

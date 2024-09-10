@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:yourevent/core/models/user_model.dart' as user_model;
 import 'package:yourevent/repositories/auth/auth_repository.dart';
 
@@ -13,22 +14,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   AuthRepository authRepository;
   ProfileBloc(this.authRepository) : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) {
-      on<ProfileLoad>(_onProfileLoad);
+      on<ProfileLoadRequested>(_onProfileLoad);
     });
   }
 
   Future<void> _onProfileLoad(
-      ProfileLoad event, Emitter<ProfileState> emit) async {
+      ProfileLoadRequested event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     try {
       final user = await authRepository.getCurrentUser();
       if (user != null) {
-        emit(ProfileLoaded(user));
+        emit(ProfileLoaded(user: user));
       } else {
-        emit(ProfileError(message: "user not found"));
+        throw Exception("Ошибка пользователь не найден.");
       }
     } catch (e) {
-      emit(ProfileError(message: e.toString()));
+      emit(ProfileError(error: e));
     }
   }
 }

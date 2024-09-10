@@ -4,7 +4,7 @@ class RowIcon extends StatelessWidget {
   final onTap;
   final Icon icon;
   final String title;
-  RowIcon(
+  const RowIcon(
       {super.key, required this.onTap, required this.icon, required this.title});
 
   @override

@@ -9,14 +9,11 @@ import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
 class SignUpScreen extends StatelessWidget {
-
-   SignUpScreen({super.key});
+  SignUpScreen({super.key});
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +40,15 @@ class SignUpScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.error)),
               );
+            } else if (state is AuthErrorState) {
+              errorEmail = state.emailError;
+              errorPassword = state.passwordError;
             }
           },
           builder: (context, state) {
-            if (state is AuthErrorState) {
-              errorEmail = state.emailError;
-              errorPassword = state.passwordError;
+            if (state is AuthLoading)
+            {
+              return const Center(child: CircularProgressIndicator(),);
             }
             return Form(
               key: _formKey,
@@ -73,11 +73,14 @@ class SignUpScreen extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите e-mail';
-                      }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Введите корректный email';
                       }
-                      return errorEmail;
+                      else 
+                      {
+                         return errorEmail;
+                      }
+                     
                     },
                   ),
                   const SizedBox(height: 24),
@@ -90,10 +93,10 @@ class SignUpScreen extends StatelessWidget {
                       if (value == null || value.isEmpty) {
                         return 'Введите пароль';
                       }
-                      if (value.length < 6) {
+                      else if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
-                      return errorPassword;
+                      else {return errorPassword;}
                     },
                   ),
                   const SizedBox(height: 40),

@@ -67,7 +67,3 @@ class PasswordChanged extends AuthEvent {
   List<Object?> get props => [password];
 }
 
-class ProfileLoad extends AuthEvent {
-  @override
-  List<Object?> get props => [];
-}
