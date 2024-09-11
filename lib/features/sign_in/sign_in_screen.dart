@@ -55,6 +55,7 @@ class SignInScreen extends StatelessWidget {
                       if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Введите корректный e-mail';
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 24),
@@ -70,6 +71,7 @@ class SignInScreen extends StatelessWidget {
                       if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 8),
