@@ -12,10 +12,9 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   AuthRepository authRepository;
-  ProfileBloc(this.authRepository) : super(ProfileInitial()) {
-    on<ProfileEvent>((event, emit) {
-      on<ProfileLoadRequested>(_onProfileLoad);
-    });
+  ProfileBloc(this.authRepository) : super(ProfileLoading()) {
+    on<ProfileLoadRequested>(_onProfileLoad);
+    add(ProfileLoadRequested());
   }
 
   Future<void> _onProfileLoad(

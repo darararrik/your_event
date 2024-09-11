@@ -1,1 +1,1 @@
-export 'my_events_screen.dart';
+export 'view/view.dart';

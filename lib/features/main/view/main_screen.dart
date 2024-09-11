@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is Unauthenticated) {
           // Переход на стартовый экран при выходе пользователя
-          context.router.replaceAll([StartRoute()]);
+          context.router.replaceAll([const StartRoute()]);
         }
       },
       child: AutoTabsRouter(

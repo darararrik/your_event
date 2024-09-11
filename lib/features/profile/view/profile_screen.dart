@@ -15,13 +15,11 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state is ProfileInitial) {
-          context.read<ProfileBloc>().add(ProfileLoadRequested());
+        if (state is ProfileLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        }
-        if (state is ProfileError) {
+        } else if (state is ProfileError) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -39,13 +37,14 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           );
-        }
-        if (state is ProfileLoaded) {
+        } else if (state is ProfileLoaded) {
           final user = state.user;
 
           return CustomScrollView(
             slivers: [
               SliverAppBar(
+                title: const Text("Профиль"),
+                centerTitle: true,
                 toolbarHeight: 108,
                 actions: [
                   IconButton(
