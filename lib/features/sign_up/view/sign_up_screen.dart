@@ -4,7 +4,7 @@ import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-import '../../core/design/design.dart';
+import '../../../core/design/design.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()

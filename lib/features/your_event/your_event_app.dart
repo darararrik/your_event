@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/repositories/auth/auth_repository.dart';
 import 'package:yourevent/features/features.dart';
-import '../core/blocs/auth/auth.dart';
-import '../core/design/design.dart';
+import '../../core/blocs/auth/auth.dart';
+import '../../core/design/design.dart';
 
 class YourEventApp extends StatelessWidget {
   final _router = AppRouter();

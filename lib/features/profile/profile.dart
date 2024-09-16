@@ -1,1 +1,2 @@
-export 'view/profile_screen.dart';
+export 'bloc/bloc.dart';
+export 'view/view.dart';
