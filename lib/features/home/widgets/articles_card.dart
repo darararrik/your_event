@@ -1,79 +1,93 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class ArticlesCard extends StatelessWidget {
-  const ArticlesCard({super.key, required this.rhymes, required this.word});
+// class Card extends StatelessWidget {
+//   double height;
+//   double width;
+//   // Заглушка для данных
+//   Card({super.key,  
+//     required this.height,
+//     required this.width,
+//   });
 
-  final String word;
-  final List<String> rhymes;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return BaseConatiner(
-      width: 200,
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            word,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-            ),
-          ),
-          Flexible(
-            child: Text(
-              rhymes.asMap().entries.map((e) {
-                final sb = StringBuffer();
-                sb.write(e.value);
-                if (e.key != rhymes.length - 1) {
-                  sb.write(',  ');
-                }
-                return sb.toString();
-              }).join(),
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w800,
-                fontSize: 13,
-                color: theme.hintColor.withOpacity(0.4),
-              ),
-              maxLines: 4,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class BaseConatiner extends StatelessWidget {
-  const BaseConatiner({
-    super.key,
-    required this.child,
-    this.width,
-    this.margin,
-    this.padding = const EdgeInsets.only(left: 12),
-  });
-
-  final double? width;
-  final EdgeInsets? margin;
-  final Widget child;
-  final EdgeInsets padding;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      width: width,
-      margin: margin,
-      padding: padding,
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: child,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context, dynamic articles) {
+//     return SizedBox(
+//       width: width,
+//       height: height, // Высота ListView
+//       child: ListView.builder(
+//         scrollDirection: Axis.horizontal,
+//         itemCount: articles.length,
+//         itemBuilder: (context, index) {
+//           final article = articles[index];
+//           return Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: GestureDetector(
+//               onTap: () {
+//                 //TODO: Сделать переход на экран статьи
+//               },
+//               child: Card(
+//                 elevation: 4,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(20),
+//                 ),
+//                 child: Stack(
+//                   children: [
+//                     // Фотография, полностью покрывающая контейнер
+//                     ClipRRect(
+//                       borderRadius: BorderRadius.circular(20),
+//                       child: Image.asset(
+//                         article['photoUrl']!,
+//                         width: 260,
+//                         height:
+//                             240, // Устанавливаем высоту, чтобы изображение покрывало всю карточку
+//                         fit: BoxFit.cover,
+//                       ),
+//                     ),
+//                     // Текст поверх фотографии
+//                     Container(
+//                       width: width,//260,
+//                       height: height,//240,
+//                       decoration: BoxDecoration(
+//                         color: Colors.black54,
+//                         borderRadius: BorderRadius.circular(20),
+//                       ),
+//                       child: Padding(
+//                         padding: const EdgeInsetsDirectional.symmetric(
+//                             horizontal: 12, vertical: 24),
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.end,
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Text(
+//                               article['date']!,
+//                               style: Theme.of(context)
+//                                   .textTheme
+//                                   .bodySmall!
+//                                   .copyWith(
+//                                       color: Colors.white,
+//                                       fontWeight: FontWeight.w300,
+//                                       fontSize: 16),
+//                             ),
+//                             Text(
+//                               article['title']!,
+//                               style: Theme.of(context)
+//                                   .textTheme
+//                                   .bodyLarge!
+//                                   .copyWith(color: Colors.white, fontSize: 16),
+//                               overflow: TextOverflow.fade,
+//                             ),
+//                             const SizedBox(height: 2),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
