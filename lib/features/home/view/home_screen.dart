@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/features/create_event/view/create_event_screen.dart';
 import 'package:yourevent/features/home/bloc/articles_bloc.dart';
+import 'package:yourevent/features/home/models/article_model.dart';
 import 'package:yourevent/features/home/repository/articles_repository.dart';
 import 'package:yourevent/features/home/widgets/icon_button_widget.dart';
 import 'package:yourevent/features/home/widgets/row_icon.dart';
@@ -50,7 +51,8 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Хотите организовать мероприятие?",
-                        style: theme.textTheme.headlineLarge!.copyWith(height: 1),
+                        style:
+                            theme.textTheme.headlineLarge!.copyWith(height: 1),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -68,9 +70,8 @@ class HomeScreen extends StatelessWidget {
                         text: 'Выбрать агентство мероприятий',
                         image: faqSearch,
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const CreateEventScreen())
-                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const CreateEventScreen()));
                         },
                       ),
                     ),
@@ -93,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                     icon: const Icon(Icons.arrow_right_rounded),
                   ),
                 ),
-                
+
                 // Добавляем BlocBuilder для отображения статей
                 Expanded(
                   child: BlocBuilder<ArticlesBloc, ArticlesState>(
@@ -102,22 +103,24 @@ class HomeScreen extends StatelessWidget {
                         return const Center(child: CircularProgressIndicator());
                       } else if (state is ArticlesLoaded) {
                         return ListView.builder(
+                          scrollDirection: Axis.horizontal,
                           itemCount: state.articles.length,
                           itemBuilder: (context, index) {
                             final article = state.articles[index];
-                            return ListTile(
-                              title: Text(article.title),
-                              subtitle: Text(article.content),
-                              onTap: () {
-                                // TODO: Реализовать переход на страницу статьи
-                              },
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 12),
+                              child: CardWidget(
+                                article: article,
+                                width: 260,
+                                height: 240,
+                              ),
                             );
                           },
                         );
                       } else if (state is ArticlesError) {
                         return Center(child: Text(state.message));
                       }
-    
+
                       return const Center(child: Text('No articles found.'));
                     },
                   ),
@@ -127,6 +130,77 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class CardWidget extends StatelessWidget {
+  CardWidget({
+    super.key,
+    required this.article,
+    required this.width,
+    required this.height,
+  });
+  double width;
+  double height;
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        //TODO Сделать переход на статью
+      },
+      child: Stack(
+        children: [
+          // Фотография, полностью покрывающая контейнер
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              article.photoURL,
+              width: width,
+              height:
+                  height, // Устанавливаем высоту, чтобы изображение покрывало всю карточку
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Текст поверх фотографии
+          Container(
+            width: width, //260,
+            height: height, //240,
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 12, vertical: 24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    article.time.toString(),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 16),
+                  ),
+                  Text(
+                    article.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white, fontSize: 16),
+                    overflow: TextOverflow.fade,
+                  ),
+                  const SizedBox(height: 2),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

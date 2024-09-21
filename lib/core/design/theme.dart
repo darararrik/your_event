@@ -6,7 +6,9 @@ final lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     navigationBarTheme: const NavigationBarThemeData(
       backgroundColor: Colors.white, // Цвет фона навбара
-      indicatorColor: orange,
+      indicatorColor: Colors.transparent,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      overlayColor: WidgetStatePropertyAll(Colors.transparent),
     ),
     appBarTheme: const AppBarTheme(backgroundColor: white),
     textButtonTheme: TextButtonThemeData(
@@ -72,7 +74,7 @@ final lightTheme = ThemeData(
         color: Colors.black,
       ),
       labelLarge: TextStyle(
-         fontSize: 18,
+        fontSize: 18,
         fontFamily: "Roboto",
         fontWeight: FontWeight.w500,
         color: Colors.black,
@@ -89,5 +91,4 @@ final lightTheme = ThemeData(
         fontWeight: FontWeight.w500,
         color: Colors.black,
       ),
-
     ));

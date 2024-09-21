@@ -3,22 +3,25 @@
 // class Card extends StatelessWidget {
 //   double height;
 //   double width;
+//   dynamic content;
 //   // Заглушка для данных
 //   Card({super.key,  
 //     required this.height,
 //     required this.width,
+//     required this.content,
+    
 //   });
 
 //   @override
-//   Widget build(BuildContext context, dynamic articles) {
+//   Widget build(BuildContext context) {
 //     return SizedBox(
 //       width: width,
 //       height: height, // Высота ListView
 //       child: ListView.builder(
 //         scrollDirection: Axis.horizontal,
-//         itemCount: articles.length,
+//         itemCount: content.length,
 //         itemBuilder: (context, index) {
-//           final article = articles[index];
+//           final article = content[index];
 //           return Padding(
 //             padding: const EdgeInsets.all(8.0),
 //             child: GestureDetector(
@@ -30,6 +33,8 @@
 //                 shape: RoundedRectangleBorder(
 //                   borderRadius: BorderRadius.circular(20),
 //                 ),
+//                 height: null,
+//                 width: null,
 //                 child: Stack(
 //                   children: [
 //                     // Фотография, полностью покрывающая контейнер

@@ -11,7 +11,6 @@ Container NavigationBarWidget(TabsRouter tabsRouter) {
     child: NavigationBar(
       selectedIndex: tabsRouter.activeIndex,
       onDestinationSelected: (index) => _openPage(index, tabsRouter),
-      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
       destinations: const [
         NavigationDestination(
           icon: Icon(
@@ -21,7 +20,7 @@ Container NavigationBarWidget(TabsRouter tabsRouter) {
           label: 'Home',
           selectedIcon: Icon(
             Icons.home_outlined,
-            color: white,
+            color: orange,
             size: 32,
           ),
         ),
@@ -30,26 +29,31 @@ Container NavigationBarWidget(TabsRouter tabsRouter) {
           label: 'Agents',
           selectedIcon: Icon(
             Icons.filter_none,
-            color: white,
+            color: orange,
           ),
         ),
         NavigationDestination(
-          icon: Icon(Icons.calendar_month,size: 28,),
+          icon: Icon(
+            Icons.calendar_month,
+            size: 28,
+          ),
           label: 'MyEvents',
           selectedIcon: Icon(
             Icons.calendar_month,
             size: 28,
-            color: white,
+            color: orange,
           ),
         ),
         NavigationDestination(
-          icon: Icon(Icons.person_outline,size: 32,),
+          icon: Icon(
+            Icons.person_outline,
+            size: 32,
+          ),
           label: 'Profile',
-          
           selectedIcon: Icon(
             Icons.person_outline,
             size: 32,
-            color: white,
+            color: orange,
           ),
         ),
       ],
