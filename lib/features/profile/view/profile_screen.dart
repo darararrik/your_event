@@ -13,85 +13,93 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
-        if (state is ProfileLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is ProfileError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  state.error.toString(), // Вывод сообщения об ошибке
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<ProfileBloc>().add(ProfileLoadRequested());
-                  },
-                  child: const Text('Повторить попытку'),
-                ),
-              ],
-            ),
-          );
-        } else if (state is ProfileLoaded) {
-          final user = state.user;
-
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                title: const Text("Профиль"),
-                centerTitle: true,
-                toolbarHeight: 108,
-                actions: [
-                  IconButton(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is Unauthenticated) {
+          // Переход на стартовый экран при выходе пользователя
+          context.router.replaceAll([const StartRoute()]);
+        }
+      },
+      child: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ProfileError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    state.error.toString(), // Вывод сообщения об ошибке
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  ElevatedButton(
                     onPressed: () {
-                      context.read<AuthBloc>().add(SignOutRequested());
+                      context.read<ProfileBloc>().add(ProfileLoadRequested());
                     },
-                    icon: const Icon(
-                      Icons.exit_to_app_rounded,
-                      size: 32,
-                      color: Colors.redAccent,
-                    ),
+                    child: const Text('Повторить попытку'),
                   ),
                 ],
               ),
-              SliverFillRemaining(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundImage: user.photoURL.isNotEmpty
-                              ? NetworkImage(user.photoURL)
-                              : const AssetImage(
-                                      'assets/images/default_avatar.png')
-                                  as ImageProvider,
-                          onBackgroundImageError: (_, __) {
-                            debugPrint('Ошибка загрузки аватарки');
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          user.displayName,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ],
+            );
+          } else if (state is ProfileLoaded) {
+            final user = state.user;
+
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  title: const Text("Профиль"),
+                  centerTitle: true,
+                  toolbarHeight: 108,
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(SignOutRequested());
+                      },
+                      icon: const Icon(
+                        Icons.exit_to_app_rounded,
+                        size: 32,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  ],
+                ),
+                SliverFillRemaining(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundImage: user.photoURL.isNotEmpty
+                                ? NetworkImage(user.photoURL)
+                                : const AssetImage(
+                                        'assets/images/default_avatar.png')
+                                    as ImageProvider,
+                            onBackgroundImageError: (_, __) {
+                              debugPrint('Ошибка загрузки аватарки');
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            user.displayName,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        } else {
-          return const Center(child: Text('Не удалось загрузить профиль.'));
-        }
-      },
+              ],
+            );
+          } else {
+            return const Center(child: Text('Не удалось загрузить профиль.'));
+          }
+        },
+      ),
     );
   }
 }

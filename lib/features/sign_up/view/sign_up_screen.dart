@@ -4,7 +4,7 @@ import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-import '../../../core/design/design.dart';
+import '../../../core/ui/design.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
@@ -35,9 +35,9 @@ class SignUpScreen extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccess) {
-              context.router.popUntilRoot(); // Очищаем стек навигации
-
-              context.router.popUntilRouteWithPath("/main/home");
+              context.router
+                  .popUntil((route) => route.settings.name == MainRoute.name);
+              context.router.push(const HomeRoute());
             }
             if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(

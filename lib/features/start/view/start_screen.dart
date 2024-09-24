@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourevent/core/widgets/button_widget.dart';
 import 'package:yourevent/router/router.dart';
 import '../../../core/blocs/auth/auth.dart';
-import '../../../core/design/design.dart';
+import '../../../core/ui/design.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +41,7 @@ class StartScreen extends StatelessWidget {
               ButtonWidget(
                 text: 'Создать аккаунт',
                 onPressed: () {
-                  context.router.pushNamed('/signup'); // Используем AutoRoute
+                  context.router.push(SignUpRoute()); // Используем AutoRoute
                 },
               ),
               const SizedBox(height: 20),
@@ -49,7 +49,7 @@ class StartScreen extends StatelessWidget {
                 text: 'Войти',
                 onPressed: () {
                   context.router
-                      .push(const SignInRoute()); // Используем AutoRouteем pushNamed
+                      .push( SignInRoute()); // Используем AutoRouteем pushNamed
                 },
                 hasColor: false,
               ),

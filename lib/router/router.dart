@@ -1,5 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:yourevent/features/articles/view/article_screen.dart';
+import 'package:yourevent/features/articles/view/articles_screen.dart';
+import 'package:yourevent/features/create_event/view/event_confirm_screen.dart';
+import 'package:yourevent/features/create_event/view/event_details_screen.dart';
+import 'package:yourevent/features/create_event/view/event_type_screen.dart';
 import 'package:yourevent/features/features.dart';
+import 'package:yourevent/features/home/routes/home_routes.dart';
+import 'package:yourevent/features/home/view/home_wrapper_screen.dart';
+import 'package:yourevent/router/auth_guard.dart';
 part 'router.gr.dart';
 
 @AutoRouterConfig()
@@ -8,35 +17,27 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: StartRoute.page,
-          path: '/',
+          initial: true,
         ),
         AutoRoute(
-          page: SignInRoute.page, 
-          path: '/signin',
+          page: SignInRoute.page,
         ),
         AutoRoute(
-          page: SignUpRoute.page, 
-          path: '/signup',
+          page: SignUpRoute.page,
         ),
         AutoRoute(
           page: MainRoute.page,
-          path: '/main',
+          guards: [AuthGuard()],
           children: [
-            AutoRoute(
-              page: HomeRoute.page,
-              path: 'home',
-            ),
+            HomeRoutes.routes,
             AutoRoute(
               page: ProfileRoute.page,
-              path: 'profile',
             ),
             AutoRoute(
               page: MyEventsRoute.page,
-              path: 'myevents',
             ),
             AutoRoute(
               page: AgentsRoute.page,
-              path: 'agents',
             ),
           ],
         ),

@@ -36,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SignOutRequested event, Emitter<AuthState> emit) async {
     await _authRepository.signOut();
     emit(Unauthenticated());
+  
   }
 
 // Обработчик события регистрации

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/cubits/inputField/input_field_cubit.dart';
 
-import '../design/design.dart';
+import '../ui/design.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   final TextEditingController controller;

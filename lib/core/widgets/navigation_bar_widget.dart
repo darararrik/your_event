@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../design/design.dart';
+import '../ui/design.dart';
 
 // ignore: non_constant_identifier_names
 Container NavigationBarWidget(TabsRouter tabsRouter) {

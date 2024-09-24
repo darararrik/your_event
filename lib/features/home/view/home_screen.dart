@@ -1,13 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/features/create_event/view/create_event_screen.dart';
+import 'package:yourevent/features/create_event/view/event_confirm_screen.dart';
 import 'package:yourevent/features/home/bloc/articles_bloc.dart';
 import 'package:yourevent/features/home/models/article_model.dart';
 import 'package:yourevent/features/home/repository/articles_repository.dart';
 import 'package:yourevent/features/home/widgets/icon_button_widget.dart';
 import 'package:yourevent/features/home/widgets/row_icon.dart';
-import '../../../core/design/design.dart';
+import 'package:yourevent/router/router.dart';
+import '../../../core/ui/design.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 @RoutePage()
@@ -70,8 +71,8 @@ class HomeScreen extends StatelessWidget {
                         text: 'Выбрать агентство мероприятий',
                         image: faqSearch,
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const CreateEventScreen()));
+                          
+                          context.router.push(const EventTypeRoute());
                         },
                       ),
                     ),
@@ -134,6 +135,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class CardWidget extends StatelessWidget {
   CardWidget({
     super.key,

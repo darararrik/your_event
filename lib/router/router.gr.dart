@@ -29,6 +29,101 @@ class AgentsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ArticleScreen]
+class ArticleRoute extends PageRouteInfo<void> {
+  const ArticleRoute({List<PageRouteInfo>? children})
+      : super(
+          ArticleRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ArticleRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ArticleScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ArticlesScreen]
+class ArticlesRoute extends PageRouteInfo<void> {
+  const ArticlesRoute({List<PageRouteInfo>? children})
+      : super(
+          ArticlesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ArticlesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ArticlesScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [CreateEventScreen]
+class CreateEventRoute extends PageRouteInfo<void> {
+  const CreateEventRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateEventRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateEventRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreateEventScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [EventDetailsScreen]
+class EventDetailsRoute extends PageRouteInfo<void> {
+  const EventDetailsRoute({List<PageRouteInfo>? children})
+      : super(
+          EventDetailsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EventDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EventDetailsScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [EventTypeScreen]
+class EventTypeRoute extends PageRouteInfo<void> {
+  const EventTypeRoute({List<PageRouteInfo>? children})
+      : super(
+          EventTypeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EventTypeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const EventTypeScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [HomeScreen]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -43,6 +138,25 @@ class HomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomeScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [HomeWrapperScreen]
+class HomeWrapperRoute extends PageRouteInfo<void> {
+  const HomeWrapperRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeWrapperRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeWrapperRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return WrappedRoute(child: const HomeWrapperScreen());
     },
   );
 }
@@ -99,17 +213,20 @@ class ProfileRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return ProfileScreen();
+      return const ProfileScreen();
     },
   );
 }
 
 /// generated route for
 /// [SignInScreen]
-class SignInRoute extends PageRouteInfo<void> {
-  const SignInRoute({List<PageRouteInfo>? children})
-      : super(
+class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
+  SignInRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           SignInRoute.name,
+          args: SignInRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -118,17 +235,33 @@ class SignInRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return SignInScreen();
+      final args =
+          data.argsAs<SignInRouteArgs>(orElse: () => const SignInRouteArgs());
+      return SignInScreen(key: args.key);
     },
   );
 }
 
+class SignInRouteArgs {
+  const SignInRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignInRouteArgs{key: $key}';
+  }
+}
+
 /// generated route for
 /// [SignUpScreen]
-class SignUpRoute extends PageRouteInfo<void> {
-  const SignUpRoute({List<PageRouteInfo>? children})
-      : super(
+class SignUpRoute extends PageRouteInfo<SignUpRouteArgs> {
+  SignUpRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           SignUpRoute.name,
+          args: SignUpRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -137,9 +270,22 @@ class SignUpRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return  SignUpScreen();
+      final args =
+          data.argsAs<SignUpRouteArgs>(orElse: () => const SignUpRouteArgs());
+      return SignUpScreen(key: args.key);
     },
   );
+}
+
+class SignUpRouteArgs {
+  const SignUpRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignUpRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

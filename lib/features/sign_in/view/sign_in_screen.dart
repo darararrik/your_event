@@ -4,7 +4,7 @@ import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-import '../../../core/design/design.dart';
+import '../../../core/ui/design.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
@@ -30,9 +30,7 @@ class SignInScreen extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccess) {
-              context.router.popUntilRoot(); // Очищаем стек навигации
-
-              context.router.popUntilRouteWithPath("/main/home");
+              context.router.replaceAll([const MainRoute()]);
             }
           },
           builder: (context, state) {
