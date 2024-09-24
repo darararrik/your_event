@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class RowIcon extends StatelessWidget {
-  final onTap;
+  final onTapFunc;
   final Icon icon;
   final String title;
   const RowIcon(
-      {super.key, required this.onTap, required this.icon, required this.title});
+      {super.key, required this.onTapFunc, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTapFunc,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

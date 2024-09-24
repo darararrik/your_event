@@ -1,15 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/features/create_event/view/event_confirm_screen.dart';
-import 'package:yourevent/features/home/bloc/articles_bloc.dart';
-import 'package:yourevent/features/home/models/article_model.dart';
-import 'package:yourevent/features/home/repository/articles_repository.dart';
-import 'package:yourevent/features/home/widgets/icon_button_widget.dart';
-import 'package:yourevent/features/home/widgets/row_icon.dart';
-import 'package:yourevent/router/router.dart';
-import '../../../core/ui/design.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yourevent/features/home/bloc/bloc.dart';
+import 'package:yourevent/features/home/widgets/widgets.dart';
+import '../../../core/ui/ui.dart';
+
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -70,10 +66,7 @@ class HomeScreen extends StatelessWidget {
                       child: IconButtonWidget(
                         text: 'Выбрать агентство мероприятий',
                         image: faqSearch,
-                        onPressed: () {
-                          
-                          context.router.push(const EventTypeRoute());
-                        },
+                        onPressed: () {},
                       ),
                     ),
                     const SizedBox(width: 60),
@@ -90,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: RowIcon(
-                    onTap: () {},
+                    onTapFunc: () {},
                     title: "Наши статьи",
                     icon: const Icon(Icons.arrow_right_rounded),
                   ),
@@ -131,78 +124,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class CardWidget extends StatelessWidget {
-  CardWidget({
-    super.key,
-    required this.article,
-    required this.width,
-    required this.height,
-  });
-  double width;
-  double height;
-  final ArticleModel article;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        //TODO Сделать переход на статью
-      },
-      child: Stack(
-        children: [
-          // Фотография, полностью покрывающая контейнер
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              article.photoURL,
-              width: width,
-              height:
-                  height, // Устанавливаем высоту, чтобы изображение покрывало всю карточку
-              fit: BoxFit.cover,
-            ),
-          ),
-          // Текст поверх фотографии
-          Container(
-            width: width, //260,
-            height: height, //240,
-            decoration: BoxDecoration(
-              color: Colors.black54,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: 12, vertical: 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    article.time.toString(),
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 16),
-                  ),
-                  Text(
-                    article.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(color: Colors.white, fontSize: 16),
-                    overflow: TextOverflow.fade,
-                  ),
-                  const SizedBox(height: 2),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
