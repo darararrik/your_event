@@ -78,7 +78,7 @@
                           text: 'Организую сам',
                           image: package,
                           onPressed: () {
-                            context.router.push( EventTypeRoute());
+                            context.router.push( const EventTypeRoute());
                           },
                         ),
                       ),
