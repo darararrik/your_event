@@ -13,6 +13,7 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
 
   ArticlesBloc(this._articlesRepository) : super(ArticlesInitial()) {
     on<LoadArticles>(_onLoadArticles);
+    add(LoadArticles());
   }
 Future<void> _onLoadArticles(
     LoadArticles event,

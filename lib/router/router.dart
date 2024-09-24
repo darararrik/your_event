@@ -18,11 +18,15 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: SignUpRoute.page,
         ),
+       CreateEventRoutes.routes,
         AutoRoute(
           page: MainRoute.page,
           guards: [AuthGuard()],
           children: [
-            HomeRoutes.routes,
+            AutoRoute(
+              page: HomeRoute.page,
+              initial: true,
+            ),
             AutoRoute(
               page: ProfileRoute.page,
             ),

@@ -17,6 +17,8 @@ class YourEventApp extends StatelessWidget {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     AuthRepository authRepository = AuthRepository();
     ArticlesRepository articlesRepository = ArticlesRepository(firestore);
+    EventRepository eventRepository = EventRepository(firestore);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -25,7 +27,8 @@ class YourEventApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ProfileBloc(authRepository),
         ),
-        BlocProvider(create: (context) => ArticlesBloc(articlesRepository)..add(LoadArticles())),
+        BlocProvider(create: (context) => ArticlesBloc(articlesRepository)),
+        BlocProvider(create: (context) => CreateEventBloc(eventRepository)),
       ],
       child: MaterialApp.router(
         theme: lightTheme,

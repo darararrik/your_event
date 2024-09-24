@@ -6,3 +6,9 @@ sealed class CreateEventEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class EventTypesLoad extends CreateEventEvent {
+  const EventTypesLoad({required this.completer});
+  final Completer? completer;
+
+}

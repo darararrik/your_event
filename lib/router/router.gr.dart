@@ -118,7 +118,7 @@ class EventTypeRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const EventTypeScreen();
+      return EventTypeScreen();
     },
   );
 }
@@ -138,25 +138,6 @@ class HomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomeScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [HomeWrapperScreen]
-class HomeWrapperRoute extends PageRouteInfo<void> {
-  const HomeWrapperRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeWrapperRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeWrapperRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return WrappedRoute(child: const HomeWrapperScreen());
     },
   );
 }
