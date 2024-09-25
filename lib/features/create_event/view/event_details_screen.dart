@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:yourevent/core/widgets/button_widget.dart';
 import 'package:yourevent/core/widgets/text_field_widget.dart';
 import 'package:yourevent/features/create_event/widgets/date_time_picker_widget.dart';
+import 'package:yourevent/features/create_event/widgets/input_text_details_event_widget.dart';
 
 import '../../../core/ui/ui.dart';
 import '../models/event_model.dart';
@@ -10,6 +14,8 @@ import '../widgets/event_type_card_widget.dart';
 @RoutePage()
 class EventDetailsScreen extends StatelessWidget {
   final TextEditingController nameEventController = TextEditingController();
+  final TextEditingController detailsEventController = TextEditingController();
+
   final EventTypeModel eventType;
   EventDetailsScreen({super.key, required this.eventType});
   @override
@@ -27,7 +33,6 @@ class EventDetailsScreen extends StatelessWidget {
             sliver: SliverFillRemaining(
               child: Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EventTypeCardWidget(
                       eventType: eventType,
@@ -38,34 +43,12 @@ class EventDetailsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text("Название события", style: theme.textTheme.labelMedium,),
-                    const SizedBox(height: 8,),
-                    Container(
-                      height: 64,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: backgroundInputButton,
-                      ),
-                      child: TextFormField(
-                        controller: nameEventController,
-                        style: theme.textTheme.bodyMedium,
-                        decoration: InputDecoration(
-                          hintText: "Придумайте название",
-
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 24,
-                              horizontal: 12), // Вертикальные отступы
-                          hintStyle:
-                              theme.textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    InputTextDetailsEventWidget(
+                        maxLines: 1,
+                        height: 1,
+                        textController: nameEventController,
+                        label: "Название события",
+                        hintText: "Придумайте название"),
                     const SizedBox(
                       height: 24,
                     ),
@@ -83,7 +66,20 @@ class EventDetailsScreen extends StatelessWidget {
                           icon: Icons.access_time,
                         ),
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: 28,
+                    ),
+                    InputTextDetailsEventWidget(
+                      maxLines: null,
+                      textController: detailsEventController,
+                      label: "О событии",
+                      hintText: "Придумайте описание",
+                      height: 64,
+                      maxLength: 100,
+                    ),
+                    const SizedBox(height: 32,),
+                    ButtonWidget(text: 'Далее', onPressed: () { }) 
                   ],
                 ),
               ),
