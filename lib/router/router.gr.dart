@@ -87,10 +87,17 @@ class CreateEventRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [EventDetailsScreen]
-class EventDetailsRoute extends PageRouteInfo<void> {
-  const EventDetailsRoute({List<PageRouteInfo>? children})
-      : super(
+class EventDetailsRoute extends PageRouteInfo<EventDetailsRouteArgs> {
+  EventDetailsRoute({
+    Key? key,
+    required EventTypeModel eventType,
+    List<PageRouteInfo>? children,
+  }) : super(
           EventDetailsRoute.name,
+          args: EventDetailsRouteArgs(
+            key: key,
+            eventType: eventType,
+          ),
           initialChildren: children,
         );
 
@@ -99,9 +106,29 @@ class EventDetailsRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const EventDetailsScreen();
+      final args = data.argsAs<EventDetailsRouteArgs>();
+      return EventDetailsScreen(
+        key: args.key,
+        eventType: args.eventType,
+      );
     },
   );
+}
+
+class EventDetailsRouteArgs {
+  const EventDetailsRouteArgs({
+    this.key,
+    required this.eventType,
+  });
+
+  final Key? key;
+
+  final EventTypeModel eventType;
+
+  @override
+  String toString() {
+    return 'EventDetailsRouteArgs{key: $key, eventType: $eventType}';
+  }
 }
 
 /// generated route for
@@ -118,7 +145,7 @@ class EventTypeRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return EventTypeScreen();
+      return const EventTypeScreen();
     },
   );
 }

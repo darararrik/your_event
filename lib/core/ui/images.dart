@@ -22,3 +22,4 @@ final Widget imgStartScreen = SvgPicture.asset(
     height: 220);
 // final Widget bottomSvgPicture = SvgPicture.asset('assets/images/bottomSvgPicture.svg',
 //     fit: BoxFit.fill);
+final Widget placeholder = Image.asset("assets/images/placeholder.png");

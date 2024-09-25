@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yourevent/features/features.dart';
 
 class EventRepository {
-    final FirebaseFirestore _firestore;
+  final FirebaseFirestore _firestore;
 
   EventRepository(this._firestore);
 
@@ -15,7 +15,7 @@ class EventRepository {
           .map((doc) => EventTypeModel.fromFireStore(doc))
           .toList();
     } catch (e) {
-      throw Exception('Error fetching EventTypeModel: $e');
+      throw Exception('Ошибка: $e');
     }
   }
 }

@@ -27,3 +27,5 @@ class EventTypesError extends CreateEventState {
 
   
 }
+class StepTwo extends CreateEventState {
+}

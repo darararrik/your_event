@@ -12,3 +12,5 @@ class EventTypesLoad extends CreateEventEvent {
   final Completer? completer;
 
 }
+class SelectedEvent extends CreateEventEvent { 
+}

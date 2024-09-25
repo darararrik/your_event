@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:yourevent/features/features.dart';
 import 'package:yourevent/router/auth_guard.dart';
+
 part 'router.gr.dart';
 
 @AutoRouterConfig()
@@ -18,7 +19,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: SignUpRoute.page,
         ),
-       CreateEventRoutes.routes,
         AutoRoute(
           page: MainRoute.page,
           guards: [AuthGuard()],
@@ -37,6 +37,15 @@ class AppRouter extends RootStackRouter {
               page: AgentsRoute.page,
             ),
           ],
+        ),
+        AutoRoute(
+          page: EventTypeRoute.page,
+        ),
+        AutoRoute(
+          page: EventDetailsRoute.page,
+        ),
+        AutoRoute(
+          page: CreateEventRoute.page,
         ),
       ];
 }

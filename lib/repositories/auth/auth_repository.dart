@@ -24,7 +24,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
-      return userCredential.user!;
+      return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw AuthException(emailError: 'Электронная почта уже используется.');

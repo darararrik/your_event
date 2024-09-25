@@ -38,6 +38,10 @@ class SignInScreen extends StatelessWidget {
               errorEmail = state.emailError;
               errorPassword = state.passwordError;
             }
+            if (state is AuthLoading)
+            {
+              return const Center(child: CircularProgressIndicator(),);
+            }
             return Form(
               key: _formKey,
               child: Column(

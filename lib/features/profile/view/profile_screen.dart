@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
+import 'package:yourevent/core/ui/ui.dart';
 import 'package:yourevent/features/profile/bloc/profile_bloc.dart';
 
 import '../../../core/models/user_model.dart';
@@ -74,11 +75,7 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage: user.photoURL.isNotEmpty
-                                ? NetworkImage(user.photoURL)
-                                : const AssetImage(
-                                        'assets/images/default_avatar.png')
-                                    as ImageProvider,
+                            backgroundImage: NetworkImage(user.photoURL),
                             onBackgroundImageError: (_, __) {
                               debugPrint('Ошибка загрузки аватарки');
                             },

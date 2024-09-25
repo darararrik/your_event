@@ -19,8 +19,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _onProfileLoad(
       ProfileLoadRequested event, Emitter<ProfileState> emit) async {
-    emit(ProfileLoading());
     try {
+      if (state is! ProfileLoaded) {
+        emit(ProfileLoading());
+      }
       final firebaseUser = await authRepository.getCurrentUser();
       final user = user_model.User.fromFirebaseUser(firebaseUser!);
       emit(ProfileLoaded(user: user));

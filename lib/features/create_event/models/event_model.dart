@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:yourevent/core/ui/ui.dart';
 
 class EventModel {}
 
@@ -12,8 +15,8 @@ class EventTypeModel extends Equatable {
       DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data()!;
     return EventTypeModel(
-      name: data['type'],
-      imageUrl: data['photoUrl'],
+      name: data['name'] ?? '',
+      imageUrl: data['imageUrl'] ?? '',
     );
   }
 
