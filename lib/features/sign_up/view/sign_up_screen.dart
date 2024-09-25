@@ -4,7 +4,7 @@ import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-import '../../../core/ui/design.dart';
+import '../../../core/ui/ui.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
@@ -59,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormFieldWidget(
+                  TextFieldWidget(
                     controller: nameController,
                     labelText: 'Имя пользователя',
                     hintText: "Light",
@@ -71,7 +71,7 @@ class SignUpScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 24),
-                  TextFormFieldWidget(
+                  TextFieldWidget(
                     controller: emailController,
                     labelText: 'E-mail',
                     hintText: "Введите вашу почту",
@@ -86,7 +86,7 @@ class SignUpScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 24),
-                  TextFormFieldWidget(
+                  TextFieldWidget(
                     controller: passwordController,
                     labelText: 'Пароль',
                     hintText: "Придумайте пароль",

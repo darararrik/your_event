@@ -4,8 +4,9 @@ import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-import '../../../core/ui/design.dart';
 import 'package:auto_route/auto_route.dart';
+
+import '../../../core/ui/ui.dart';
 
 @RoutePage()
 // ignore: must_be_immutable
@@ -46,7 +47,7 @@ class SignInScreen extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormFieldWidget(
+                  TextFieldWidget(
                     controller: emailController,
                     hintText: 'Введите вашу почту',
                     labelText: 'E-mail',
@@ -61,7 +62,7 @@ class SignInScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 24),
-                  TextFormFieldWidget(
+                  TextFieldWidget(
                     controller: passwordController,
                     hintText: 'Введите пароль',
                     labelText: 'Пароль',

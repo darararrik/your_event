@@ -38,13 +38,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(Unauthenticated());
   }
 
-// Обработчик события регистрации
   Future<void> _onSignInRequested(
       SignInRequested event, Emitter<AuthState> emit) async {
     try {
-      if (state is! AuthSuccess) {
-        emit(AuthLoading());
-      }
+      emit(AuthLoading());
+
       final user = await _authRepository.signInWithEmailAndPassword(
           email: event.email, password: event.password);
       emit(AuthSuccess(user!));

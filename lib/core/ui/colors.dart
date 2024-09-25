@@ -8,7 +8,7 @@ const Color grey = Color(0xFF898989);
 const Color white = Color(0xFFFFFFFF); // Белый цвет
 const Color black = Color(0xFF000000); // Черный цвет
 const Color outline_Grey = Color(0xFFDADADA);
-const Color outlineInputButton = Color(0xFF9CA3B0);
+const Color greyColor = Color(0xFF9CA3B0);
 const Color backgroundInputButton = Color(0xFFF6F6F6);
 
 
@@ -19,3 +19,4 @@ const Color primaryBlack = Color(0xFF000000);
 
 const Color textFieldOutlineColor = Color(0xFFD5DDE0);
 const Color textFieldColor = Color(0xFF3E4958);
+

@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:yourevent/core/ui/colors.dart';
 
 final lightTheme = ThemeData(
-    primaryColor: orange,
     scaffoldBackgroundColor: Colors.white,
+    colorScheme: const ColorScheme.light(
+      primary: orange, // Основной цвет (будет использован вместо accentColor)
+      secondary: Color(0xFFAB8A74), // Вторичный цвет, если вам нужен
+      surface: white, // Цвет поверхности (например, фон карточек)
+      error: Color(0xFFFF5449), // Цвет для ошибок
+      onPrimary: Color(0xFFFFFFFF), // Цвет текста на основном фоне
+      onSecondary: Color(0xFFFFFFFF), // Цвет текста на вторичном фоне
+      onSurface: Color(0xFF221a15), // Цвет текста на поверхности
+      onError: Color(0xFFFFFFFF), // Цвет текста на фоне ошибки
+    ),
     navigationBarTheme: const NavigationBarThemeData(
       backgroundColor: Colors.white, // Цвет фона навбара
       indicatorColor: Colors.transparent,
@@ -14,6 +23,19 @@ final lightTheme = ThemeData(
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: Colors.black,
+      ),
+    ),
+    iconTheme: const IconThemeData(color: greyColor),
+    outlinedButtonTheme: const OutlinedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor:WidgetStatePropertyAll(backgroundInputButton), // Цвет фона
+        side: WidgetStatePropertyAll(BorderSide(color: Colors.transparent)), // Цвет границы
+        shape: WidgetStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)), // Закругление углов
+          ),
+        ),
+        fixedSize:
+            WidgetStatePropertyAll(Size(184, 64)), // Минимальный размер кнопки
       ),
     ),
     textTheme: const TextTheme(

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/cubits/inputField/input_field_cubit.dart';
 
-import '../ui/design.dart';
+import '../ui/ui.dart';
 
-class TextFormFieldWidget extends StatelessWidget {
+class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final String hintText;
   final bool obscureText;
   final String? Function(String?)? validator; // Функция валидации
 
-  const TextFormFieldWidget({
+  const TextFieldWidget({
     super.key,
     required this.controller,
     required this.labelText,
@@ -39,12 +39,15 @@ class TextFormFieldWidget extends StatelessWidget {
               TextFormField(
                 controller: controller,
                 obscureText: obscureText && !state.isPasswordVisible,
-                style: theme.textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w500),//Отошел от дизайна
+                style: theme.textTheme.labelSmall!
+                    .copyWith(fontWeight: FontWeight.w500), //Отошел от дизайна
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: backgroundInputButton,
                   hintText: hintText,
-                  hintStyle: theme.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w300,),
+                  hintStyle: theme.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w300,
+                  ),
                   suffixIcon: obscureText
                       ? IconButton(
                           icon: Icon(
@@ -60,7 +63,8 @@ class TextFormFieldWidget extends StatelessWidget {
                         )
                       : (controller.text.isNotEmpty
                           ? IconButton(
-                              icon: const Icon(Icons.clear, color: outlineInputButton),
+                              icon: const Icon(Icons.clear,
+                                  color: greyColor),
                               onPressed: () {
                                 controller.clear();
                                 context.read<InputFieldCubit>().clearText();
@@ -75,7 +79,7 @@ class TextFormFieldWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
                       color: controller.text.isNotEmpty
-                          ? outlineInputButton
+                          ? greyColor
                           : Colors.transparent,
                       width: 1.0,
                     ),
@@ -83,7 +87,7 @@ class TextFormFieldWidget extends StatelessWidget {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: const BorderSide(
-                      color: outlineInputButton,
+                      color: greyColor,
                       width: 1.0,
                     ),
                   ),
