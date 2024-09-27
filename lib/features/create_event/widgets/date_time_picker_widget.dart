@@ -8,27 +8,32 @@ class DateTimePickerWidget extends StatefulWidget {
   final bool isTime; // Если true — выбор времени, если false — выбор даты
   final String label;
   final IconData icon;
+  final void Function(DateTime date)? onDateSelected;
+  final void Function(TimeOfDay time)? onTimeSelected;
 
   const DateTimePickerWidget({
     super.key,
     required this.isTime,
     required this.label,
     required this.icon,
+    this.onDateSelected,
+    this.onTimeSelected,
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _DateTimePickerWidgetState createState() => _DateTimePickerWidgetState();
 }
 
 class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
+  final DateTime now = DateTime.now();
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
-  final DateTime now = DateTime.now();
 
   Future<void> _pickDate(BuildContext context) async {
     final pickedDate = await showDatePicker(
       context: context,
-      initialDate: selectedDate ?? now,
+      initialDate: now,
       firstDate: DateTime(now.year, now.month, now.day),
       lastDate: DateTime(2026),
       builder: (context, child) {
@@ -42,7 +47,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     );
     if (pickedDate != null) {
       setState(() {
-        selectedDate = pickedDate;
+        widget.onDateSelected!(pickedDate);
       });
     }
   }
@@ -50,7 +55,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   Future<void> _pickTime(BuildContext context) async {
     final pickedTime = await showTimePicker(
       context: context,
-      initialTime: selectedTime ?? TimeOfDay.now(),
+      initialTime: TimeOfDay.now(),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -66,7 +71,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     );
     if (pickedTime != null) {
       setState(() {
-        selectedTime = pickedTime;
+        pickedTime.format(context);
+        widget.onTimeSelected!(pickedTime);
       });
     }
   }
@@ -95,19 +101,20 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                widget.isTime
-                    ? (selectedTime != null
-                        ? "${selectedTime!.hour}:${selectedTime!.minute}"
-                        : "Время")
-                    : (selectedDate != null
-                        ? DateFormat('dd-MM-yyyy').format(selectedDate!)
-                        : "Дата"),
-                style: theme.textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w300,
-                  color: black,
-                ),
-              ),
+              // Text(
+              //   widget.isTime
+              //       ? (widget.onTimeSelected != null
+              //           ? "${selectedTime!.hour}}:${selectedTime!.minute}"
+              //           : "Время")
+              //       : (widget.onDateSelected != null
+              //           ? DateFormat('dd-MM-yyyy')
+              //               .format(selectedDate!)
+              //           : "Дата"),
+              //   style: theme.textTheme.bodyMedium!.copyWith(
+              //     fontWeight: FontWeight.w300,
+              //     color: black,
+              //   ),
+              // ),
               Icon(
                 widget.icon,
                 color: Colors.grey,

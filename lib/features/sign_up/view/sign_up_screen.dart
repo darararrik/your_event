@@ -18,8 +18,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    String? errorPassword;
-    String? errorEmail;
+    Object? error;
 
     return Scaffold(
       appBar: AppBar(
@@ -45,8 +44,7 @@ class SignUpScreen extends StatelessWidget {
               );
             }
             if (state is AuthErrorState) {
-              errorEmail = state.emailError;
-              errorPassword = state.passwordError;
+              error = state.error;
             }
           },
           builder: (context, state) {
@@ -82,7 +80,7 @@ class SignUpScreen extends StatelessWidget {
                           .hasMatch(value)) {
                         return 'Введите корректный email';
                       }
-                      return errorEmail;
+                      return error.toString();
                     },
                   ),
                   const SizedBox(height: 24),
@@ -97,7 +95,7 @@ class SignUpScreen extends StatelessWidget {
                       } else if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
-                      return errorPassword;
+                      return null;
                     },
                   ),
                   const SizedBox(height: 40),

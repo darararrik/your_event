@@ -10,7 +10,37 @@ sealed class CreateEventEvent extends Equatable {
 class EventTypesLoad extends CreateEventEvent {
   const EventTypesLoad({required this.completer});
   final Completer? completer;
+}
 
+class SelectedEvent extends CreateEventEvent {}
+
+class StepOneEnter extends CreateEventEvent {
+  String name;
+  String description;
+  TimeOfDay time;
+  DateTime date;
+  StepOneEnter({
+    required this.name,
+    required this.date,
+    required this.description,
+    required this.time,
+  });
+  @override
+  List<Object> get props => [name, date, description, time];
 }
-class SelectedEvent extends CreateEventEvent { 
+
+class StepTwoEnter extends CreateEventEvent {
+  final int numberOfPeople;
+  final double cost;
+  final String address;
+
+  const StepTwoEnter({
+    required this.numberOfPeople,
+    required this.cost,
+    required this.address,
+  });
+  @override
+  List<Object> get props => [numberOfPeople, cost, address];
 }
+
+class CreateEvent extends CreateEventEvent {}

@@ -18,4 +18,23 @@ class EventRepository {
       throw Exception('Ошибка: $e');
     }
   }
+
+  Future<void> pushEventFirebase(EventModel eventData) async {
+    // Логика сохранения события в Firebase
+    try {
+      await FirebaseFirestore.instance.collection('events').add({
+        'name': eventData.name,
+        'description': eventData.description,
+        'date': eventData.date.toIso8601String,
+        'time': eventData.time.format,
+        'numberOfPeople': eventData.numberOfPeople,
+        'cost': eventData.cost,
+        'address': eventData.address,
+      });
+    } catch (e) {
+      throw Exception('Ошибка: $e');
+
+      // TODO
+    }
+  }
 }

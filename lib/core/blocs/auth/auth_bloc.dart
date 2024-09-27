@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInRequested>(_onSignInRequested);
     on<SignOutRequested>(_onSignOutRequested);
     on<SignUpRequested>(_onSignUpRequested);
-    on<SignInGoogleRequested>(_onSignInGoogleRequested);
+    // on<SignInGoogleRequested>(_onSignInGoogleRequested);
   }
 
   Future<void> _onAuthCheckRequested(
@@ -46,12 +46,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await _authRepository.signInWithEmailAndPassword(
           email: event.email, password: event.password);
       emit(AuthSuccess(user!));
-    } on AuthException catch (e) {
-      // Используем отдельные ошибки для email и password
-      emit(AuthErrorState(
-          emailError: e.emailError, passwordError: e.passwordError));
+    } on FirebaseAuthException catch (e) {
+      emit(AuthErrorState(error: e));
     } catch (e) {
-      emit(const AuthErrorState(emailError: 'Произошла ошибка.'));
+      emit(const AuthErrorState(error: 'Произошла ошибка.'));
     }
   }
 
@@ -69,25 +67,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         name: event.name,
         email: event.email,
       );
-    } on AuthException catch (e) {
-      emit(AuthErrorState(
-          emailError: e.emailError, passwordError: e.passwordError));
+    } on FirebaseAuthException catch (e) {
+      emit(AuthErrorState(error: e));
     } catch (e) {
-      emit(const AuthErrorState(emailError: 'Произошла ошибка.'));
+      emit(const AuthErrorState(error: 'Произошла ошибка.'));
     }
   }
 
-  FutureOr<void> _onSignInGoogleRequested(
-      SignInGoogleRequested event, Emitter<AuthState> emit) async {
-    try {
-      final user = await _authRepository.signInWithGoogle();
-      emit(AuthSuccess(user));
-    } on AuthException catch (e) {
-      // Используем отдельные ошибки для email и password
-      emit(AuthErrorState(
-          emailError: e.emailError, passwordError: e.passwordError));
-    } catch (e) {
-      emit(AuthErrorState(emailError: 'Произошла ошибка: ${e.toString()}'));
-    }
-  }
+  // FutureOr<void> _onSignInGoogleRequested(
+  //     SignInGoogleRequested event, Emitter<AuthState> emit) async {
+  //   try {
+  //     final user = await _authRepository.signInWithGoogle();
+  //     emit(AuthSuccess(user));
+  //   } on FirebaseAuthException catch (e) {
+  //     // Используем отдельные ошибки для email и password
+  //     emit(AuthErrorState(error: e));
+  //   } catch (e) {
+  //     emit(AuthErrorState(error: 'Произошла ошибка: ${e.toString()}'));
+  //   }
+  // }
 }

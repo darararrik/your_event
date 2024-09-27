@@ -27,16 +27,16 @@ class AuthRepository {
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        throw AuthException(emailError: 'Электронная почта уже используется.');
+        throw Exception('Электронная почта уже используется.');
       } else if (e.code == 'weak-password') {
-        throw AuthException(passwordError: 'Слабый пароль.');
+        throw Exception('Слабый пароль.');
       } else if (e.code == 'invalid-email') {
-        throw AuthException(emailError: 'Некорректный формат почты.');
+        throw Exception( 'Некорректный формат почты.');
       } else {
-        throw AuthException(emailError: 'Ошибка регистрации.');
+        throw Exception( 'Ошибка регистрации.');
       }
     } catch (e) {
-      throw AuthException(emailError: 'Произошла ошибка.');
+      throw Exception('Произошла ошибка.');
     }
   }
 
@@ -80,16 +80,16 @@ class AuthRepository {
       return userCredential.user!;
     } on FirebaseAuthException catch (firebaseException) {
       if (firebaseException.code == 'wrong-password') {
-        throw AuthException(passwordError: 'Неправильный пароль.');
+        throw Exception('Неправильный пароль.');
       } else if (firebaseException.code == 'user-not-found') {
-        throw AuthException(emailError: 'Пользователь не найден.');
+        throw Exception('Пользователь не найден.');
       } else if (firebaseException.code == 'invalid-email') {
-        throw AuthException(emailError: 'Некорректный формат почты.');
+        throw Exception('Некорректный формат почты.');
       } else if (firebaseException.code == 'too-many-requests') {
-        throw AuthException(emailError: 'Ошибка аутентификации.');
+        throw Exception('Ошибка аутентификации.');
       }
     } catch (e) {
-      throw AuthException(emailError: 'Произошла ошибка.');
+      throw Exception('Произошла ошибка.');
     }
     return null;
   }
@@ -108,38 +108,31 @@ class AuthRepository {
     return null;
   }
 
-  Future<User> signInWithGoogle() async {
-    try {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  // Future<User> signInWithGoogle() async {
+  //   try {
+  //     // Trigger the authentication flow
+  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      if (googleUser == null) {
-        throw AuthException(emailError: 'Вход отменен пользователем.');
-      }
+  //     if (googleUser == null) {
+  //       throw AuthException(emailError: 'Вход отменен пользователем.');
+  //     }
 
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+  //     // Obtain the auth details from the request
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
 
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+  //     // Create a new credential
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
 
-      // Once signed in, return the UserCredential
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      return userCredential.user!;
-    } catch (e) {
-      throw AuthException(emailError: 'Ошибка входа с помощью Google.');
-    }
-  }
-}
-
-class AuthException implements Exception {
-  final String? emailError;
-  final String? passwordError;
-
-  AuthException({this.emailError, this.passwordError});
+  //     // Once signed in, return the UserCredential
+  //     final userCredential =
+  //         await _firebaseAuth.signInWithCredential(credential);
+  //     return userCredential.user!;
+  //   } catch (e) {
+  //     throw AuthException(emailError: 'Ошибка входа с помощью Google.');
+  //   }
+  // }
 }

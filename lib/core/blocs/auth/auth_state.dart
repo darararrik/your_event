@@ -31,10 +31,9 @@ class AuthFailure extends AuthState {
 }
 
 class AuthErrorState extends AuthState {
-  final String? emailError;
-  final String? passwordError;
+  final Object? error;
 
-  const AuthErrorState({this.emailError, this.passwordError});
+  const AuthErrorState({this.error});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
 }

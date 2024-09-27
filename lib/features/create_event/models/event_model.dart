@@ -1,10 +1,54 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:yourevent/core/ui/ui.dart';
 
-class EventModel {}
+class EventModel {
+  String name;
+  String description;
+  TimeOfDay time;
+  DateTime date;
+  int? numberOfPeople;
+  double? cost;
+  String? address;
+
+  EventModel({
+    required this.name,
+    required this.date,
+    required this.description,
+    required this.time,
+    this.numberOfPeople,
+    this.cost,
+    this.address,
+  });
+
+  // Создание EventModel из Firestore DocumentSnapshot
+  factory EventModel.fromFireStore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data()!;
+    return EventModel(
+      name: data['title'] ?? '', // Проверка на null, если поле не заполнено
+      date: (data['date'] as Timestamp).toDate(),
+      description: data['description'] ?? '',
+      time: data['time'] ?? '',
+      cost: data['cost'] ?? '',
+      address: data['address'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson(EventModel model) {
+    return {
+      'name': model.name,
+      'description': model.description,
+      'date': model.date,
+      'time': model.time,
+      'cost': model.cost,
+      'address': model.address,
+    };
+  }
+}
 
 class EventTypeModel extends Equatable {
   final String name;

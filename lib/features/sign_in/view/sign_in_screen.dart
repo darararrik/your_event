@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
@@ -9,14 +10,12 @@ import 'package:auto_route/auto_route.dart';
 import '../../../core/ui/ui.dart';
 
 @RoutePage()
-// ignore: must_be_immutable
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String? errorEmail;
-  String? errorPassword;
+  Object? error;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +34,15 @@ class SignInScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            if (state is AuthLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             if (state is AuthErrorState) {
-              errorEmail = state.emailError;
-              errorPassword = state.passwordError;
+              error = state.error;
             }
-            if (state is AuthLoading)
-            {
-              return const Center(child: CircularProgressIndicator(),);
-            }
+
             return Form(
               key: _formKey,
               child: Column(
@@ -58,7 +58,9 @@ class SignInScreen extends StatelessWidget {
                       if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Введите корректный e-mail';
                       }
-                      return null;
+                      if (error != null) {
+                        return error.toString();
+                      }
                     },
                   ),
                   const SizedBox(height: 24),
@@ -74,7 +76,6 @@ class SignInScreen extends StatelessWidget {
                       if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
-                      return null;
                     },
                   ),
                   const SizedBox(height: 8),
