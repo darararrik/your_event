@@ -27,13 +27,16 @@ class AuthRepository {
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        throw Exception('Электронная почта уже используется.');
+        throw FirebaseAuthException(
+            message: 'Электронная почта уже используется.', code: e.code);
       } else if (e.code == 'weak-password') {
-        throw Exception('Слабый пароль.');
+        throw FirebaseAuthException(message: 'Слабый пароль.', code: e.code);
       } else if (e.code == 'invalid-email') {
-        throw Exception( 'Некорректный формат почты.');
+        throw FirebaseAuthException(
+            message: 'Некорректный формат почты.', code: e.code);
       } else {
-        throw Exception( 'Ошибка регистрации.');
+        throw FirebaseAuthException(
+            message: 'Ошибка регистрации.', code: e.code);
       }
     } catch (e) {
       throw Exception('Произошла ошибка.');
@@ -78,15 +81,21 @@ class AuthRepository {
         password: password,
       );
       return userCredential.user!;
-    } on FirebaseAuthException catch (firebaseException) {
-      if (firebaseException.code == 'wrong-password') {
-        throw Exception('Неправильный пароль.');
-      } else if (firebaseException.code == 'user-not-found') {
-        throw Exception('Пользователь не найден.');
-      } else if (firebaseException.code == 'invalid-email') {
-        throw Exception('Некорректный формат почты.');
-      } else if (firebaseException.code == 'too-many-requests') {
-        throw Exception('Ошибка аутентификации.');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        throw FirebaseAuthException(
+            message: 'Неправильный пароль.', code: e.code);
+      }
+      if (e.code == 'user-not-found') {
+        throw FirebaseAuthException(
+            message: 'Пользователь не найден.', code: e.code);
+      }
+      if (e.code == 'invalid-email') {
+        throw FirebaseAuthException(
+            message: 'Некорректный формат почты.', code: e.code);
+      }
+      if (e.code == 'too-many-requests') {
+        throw FirebaseAuthException(message: 'Много запросов.', code: e.code);
       }
     } catch (e) {
       throw Exception('Произошла ошибка.');

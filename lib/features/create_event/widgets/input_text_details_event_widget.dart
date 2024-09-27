@@ -8,9 +8,9 @@ class InputTextDetailsEventWidget extends StatelessWidget {
   final double height;
   final int? maxLines;
   final int? maxLength;
-  String? Function(String?) validator;
+  final String? Function(String?) validator;
 
-  InputTextDetailsEventWidget({
+  const InputTextDetailsEventWidget({
     super.key,
     required this.textController,
     required this.label,

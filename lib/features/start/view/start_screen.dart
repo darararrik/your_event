@@ -22,8 +22,10 @@ class StartScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is AuthSuccess) {
           // Если пользователь авторизован, перенаправляем на главную страницу
-          context.router.replaceNamed('/main/home');
+              context.router.replaceAll([const MainRoute()]);
         }
+
+        
       },
       child: Scaffold(
         body: Padding(

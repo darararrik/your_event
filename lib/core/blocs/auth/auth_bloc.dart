@@ -42,14 +42,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SignInRequested event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoading());
-
       final user = await _authRepository.signInWithEmailAndPassword(
           email: event.email, password: event.password);
       emit(AuthSuccess(user!));
     } on FirebaseAuthException catch (e) {
-      emit(AuthErrorState(error: e));
-    } catch (e) {
-      emit(const AuthErrorState(error: 'Произошла ошибка.'));
+      emit(AuthErrorState(error: e.message));
+    } catch (_) {
+      emit(const AuthErrorState(error: "Произошла ошибка"));
     }
   }
 
@@ -68,7 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
       );
     } on FirebaseAuthException catch (e) {
-      emit(AuthErrorState(error: e));
+      emit(AuthErrorState(error: e.message));
     } catch (e) {
       emit(const AuthErrorState(error: 'Произошла ошибка.'));
     }

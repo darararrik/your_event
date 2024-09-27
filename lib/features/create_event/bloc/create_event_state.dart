@@ -23,6 +23,7 @@ class EventTypesError extends CreateEventState {
   final String error;
 
   const EventTypesError({required this.error});
+  @override
   List<Object> get props => [error];
 }
 

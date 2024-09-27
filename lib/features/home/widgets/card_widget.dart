@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:yourevent/features/home/models/models.dart';
 
 class CardWidget extends StatelessWidget {
-  CardWidget({
+  const CardWidget({
     super.key,
     required this.article,
     required this.width,
     required this.height,
   });
-  double width;
-  double height;
+  final double width;
+  final double height;
   final ArticleModel article;
 
   @override

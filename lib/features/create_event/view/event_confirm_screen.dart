@@ -9,9 +9,9 @@ class CreateEventScreen extends StatelessWidget {
   CreateEventScreen({super.key, required this.eventType});
   final EventTypeModel eventType;
   final _formKey = GlobalKey<FormState>();
-  TextEditingController costController = TextEditingController();
-  TextEditingController numberOfPeopleController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  final TextEditingController costController = TextEditingController();
+  final TextEditingController numberOfPeopleController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RowIcon extends StatelessWidget {
-  final onTapFunc;
+  final void Function() onTapFunc;
   final Icon icon;
   final String title;
   const RowIcon(

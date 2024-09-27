@@ -15,7 +15,6 @@ class SignInScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  Object? error;
 
   @override
   Widget build(BuildContext context) {
@@ -25,25 +24,28 @@ class SignInScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
-        child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              context.router.replaceAll([const MainRoute()]);
-            }
-          },
-          builder: (context, state) {
-            if (state is AuthLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is AuthErrorState) {
-              error = state.error;
-            }
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthErrorState) {
+            // Перепроверяем форму для отображения ошибки
+            _formKey.currentState!.validate();
+          } else if (state is AuthSuccess) {
+            // Если вход успешен, перенаправляем на главную страницу
+            context.router.replaceAll([const MainRoute()]);
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoading) {
+            // Показываем индикатор загрузки, если идет процесс аутентификации
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-            return Form(
+          // Если нет загрузки, показываем форму
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
+            child: Form(
               key: _formKey,
               child: Column(
                 children: [
@@ -54,13 +56,13 @@ class SignInScreen extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите e-mail';
-                      }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                          .hasMatch(value)) {
                         return 'Введите корректный e-mail';
+                      } else if (state is AuthErrorState) {
+                        return state.error;
                       }
-                      if (error != null) {
-                        return error.toString();
-                      }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 24),
@@ -72,10 +74,10 @@ class SignInScreen extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите пароль';
-                      }
-                      if (value.length < 6) {
+                      } else if (value.length < 6) {
                         return 'Пароль должен быть не менее 6 символов';
                       }
+                      return null;
                     },
                   ),
                   const SizedBox(height: 8),
@@ -99,6 +101,9 @@ class SignInScreen extends StatelessWidget {
                   ButtonWidget(
                     text: "Войти",
                     onPressed: () {
+                      if (state is AuthErrorState) {
+                        _formKey.currentState!.validate();
+                      }
                       if (_formKey.currentState!.validate()) {
                         context.read<AuthBloc>().add(
                               SignInRequested(
@@ -109,23 +114,11 @@ class SignInScreen extends StatelessWidget {
                       }
                     },
                   ),
-                  //   const SizedBox(height: 24),
-                  //   ButtonForm(
-                  //     text: "Войти c Google",
-                  //     onPressed: () {
-                  //       context.read<AuthBloc>().add(
-                  //             SignInGoogleRequested(
-                  //               email: emailController.text.trim(),
-                  //               password: passwordController.text.trim(),
-                  //             ),
-                  //           );
-                  //     },
-                  //   ),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

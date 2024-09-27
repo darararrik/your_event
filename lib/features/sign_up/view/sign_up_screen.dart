@@ -38,11 +38,6 @@ class SignUpScreen extends StatelessWidget {
                   .popUntil((route) => route.settings.name == MainRoute.name);
               context.router.push(const HomeRoute());
             }
-            if (state is AuthFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error)),
-              );
-            }
             if (state is AuthErrorState) {
               error = state.error;
             }

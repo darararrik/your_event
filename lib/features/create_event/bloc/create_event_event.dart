@@ -15,11 +15,11 @@ class EventTypesLoad extends CreateEventEvent {
 class SelectedEvent extends CreateEventEvent {}
 
 class StepOneEnter extends CreateEventEvent {
-  String name;
-  String description;
-  TimeOfDay time;
-  DateTime date;
-  StepOneEnter({
+  final String name;
+  final String description;
+  final TimeOfDay time;
+  final DateTime date;
+  const StepOneEnter({
     required this.name,
     required this.date,
     required this.description,

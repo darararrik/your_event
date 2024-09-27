@@ -27,7 +27,7 @@ class EventDetailsScreen extends StatelessWidget {
     DateTime? selectedDate;
     TimeOfDay? selectedTime;
 
-    final theme = Theme.of(context);
+    //final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
