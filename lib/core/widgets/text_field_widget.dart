@@ -10,6 +10,8 @@ class TextFieldWidget extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final String? Function(String?)? validator; // Функция валидации
+  final int? maxLines;
+  final int? maxLength;
 
   const TextFieldWidget({
     super.key,
@@ -18,6 +20,8 @@ class TextFieldWidget extends StatelessWidget {
     required this.hintText,
     this.obscureText = false,
     this.validator,
+    this.maxLines,
+    this.maxLength = 48,
   });
 
   @override
@@ -37,11 +41,15 @@ class TextFieldWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                maxLines: maxLines, // Позволяет текстовому полю расширяться
+                //TODO: ХЗ СКОК СИМВОЛОВ
+                maxLength: maxLength,
                 controller: controller,
                 obscureText: obscureText && !state.isPasswordVisible,
                 style: theme.textTheme.labelSmall!
                     .copyWith(fontWeight: FontWeight.w500), //Отошел от дизайна
                 decoration: InputDecoration(
+                  counterText: '',
                   filled: true,
                   fillColor: backgroundInputButton,
                   hintText: hintText,
@@ -63,8 +71,7 @@ class TextFieldWidget extends StatelessWidget {
                         )
                       : (controller.text.isNotEmpty
                           ? IconButton(
-                              icon: const Icon(Icons.clear,
-                                  color: greyColor),
+                              icon: const Icon(Icons.clear, color: greyColor),
                               onPressed: () {
                                 controller.clear();
                                 context.read<InputFieldCubit>().clearText();

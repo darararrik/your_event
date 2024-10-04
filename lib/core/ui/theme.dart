@@ -34,8 +34,6 @@ final lightTheme = ThemeData(
             borderRadius: BorderRadius.all(Radius.circular(10)), // Закругление углов
           ),
         ),
-        fixedSize:
-            WidgetStatePropertyAll(Size(184, 64)), // Минимальный размер кнопки
       ),
     ),
     textTheme: const TextTheme(

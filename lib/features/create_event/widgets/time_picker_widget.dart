@@ -1,43 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class DateTimePickerWidget extends StatefulWidget {
-  final Function(DateTime)? onDateSelected;
+class TimePickerWidget extends StatefulWidget {
+  final Function(TimeOfDay)? onTimeSelected;
 
-  DateTimePickerWidget({Key? key, this.onDateSelected}) : super(key: key);
+  const TimePickerWidget({super.key, this.onTimeSelected});
 
   @override
-  State<DateTimePickerWidget> createState() => _DateTimePickerWidgetState();
+  State<TimePickerWidget> createState() => _TimePickerWidget();
 }
 
-class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
-  DateTime? _selectedDate;
+class _TimePickerWidget extends State<TimePickerWidget> {
+  TimeOfDay? _selectedTime;
 
   final DateTime now = DateTime.now();
 
-  Future<void> _pickDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  Future<void> _pickTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialDate: now,
-      firstDate: DateTime(now.year, now.month, now.day),
-      lastDate: DateTime(2026),
+      initialTime: TimeOfDay.now(),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(primary: Colors.black),
           ),
-          child: child!,
+          child: MediaQuery(
+              data: const MediaQueryData(alwaysUse24HourFormat: true),
+              child: child!),
         );
       },
     );
 
     if (picked != null) {
       setState(() {
-        _selectedDate = picked;
+        _selectedTime = picked;
       });
       // Возвращаем дату через колбэк
-      if (widget.onDateSelected != null) {
-        widget.onDateSelected!(picked);
+      if (widget.onTimeSelected != null) {
+        widget.onTimeSelected!(picked);
       }
     }
   }
@@ -50,28 +49,28 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Дата",
+          "Время",
           style: theme.textTheme.labelMedium,
         ),
         const SizedBox(height: 8),
         OutlinedButton(
           style: theme.outlinedButtonTheme.style?.copyWith(
               fixedSize: const WidgetStatePropertyAll(Size(184, 48))),
-          onPressed: () => _pickDate(context),
+          onPressed: () => _pickTime(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                _selectedDate != null
-                    ? DateFormat('dd-MM-yyyy').format(_selectedDate!)
-                    : 'Дата',
+                _selectedTime != null
+                    ? _selectedTime.toString()
+                    : 'Время',
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w300,
                   color: Colors.black,
                 ),
               ),
               const Icon(
-                Icons.calendar_month,
+                Icons.access_alarm,
                 color: Colors.grey,
                 size: 32,
               ),
