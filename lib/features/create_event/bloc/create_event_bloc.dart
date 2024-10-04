@@ -29,13 +29,16 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
 
   FutureOr<void> _stepTwoEnter(event, emit) {
     final currentState = state;
-    if (currentState is StepOneComplete) {
-      final eventData = currentState.event
-        .numberOfPeople = event.numberOfPeople
-        .cost = event.cost
-        .address = event.address;
-  
-      emit(StepTwoComplete(eventData));
+    try {
+      if (currentState is StepOneComplete) {
+        emit(Loading());
+        final eventData = currentState.event.numberOfPeople =
+            event.numberOfPeople.cost = event.cost.address = event.address;
+
+        emit(StepTwoComplete(eventData));
+      }
+    } on Exception catch (e) {
+      debugPrint('hz');
     }
   }
 

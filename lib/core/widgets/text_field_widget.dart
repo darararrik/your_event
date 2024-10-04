@@ -13,16 +13,18 @@ class TextFieldWidget extends StatelessWidget {
   final int? maxLines;
   final int? maxLength;
 
-  const TextFieldWidget({
-    super.key,
-    required this.controller,
-    required this.labelText,
-    required this.hintText,
-    this.obscureText = false,
-    this.validator,
-    this.maxLines,
-    this.maxLength = 48,
-  });
+  TextInputType? keyboardType = TextInputType.text;
+
+  TextFieldWidget(
+      {super.key,
+      required this.controller,
+      required this.labelText,
+      required this.hintText,
+      this.obscureText = false,
+      this.validator,
+      this.maxLines,
+      this.maxLength = 48,
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,8 @@ class TextFieldWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                keyboardType: keyboardType,
+
                 maxLines: maxLines, // Позволяет текстовому полю расширяться
                 //TODO: ХЗ СКОК СИМВОЛОВ
                 maxLength: maxLength,

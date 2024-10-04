@@ -30,8 +30,8 @@ class StepOneEnter extends CreateEventEvent {
 }
 
 class StepTwoEnter extends CreateEventEvent {
-  final int numberOfPeople;
-  final double cost;
+  final String numberOfPeople;
+  final String cost;
   final String address;
 
   const StepTwoEnter({

@@ -34,7 +34,7 @@ class StepOneComplete extends CreateEventState {
 
 class StepTwoComplete extends CreateEventState {
   final EventModel event;
- const  StepTwoComplete(this.event);
+  const StepTwoComplete(this.event);
 }
 
 class EventCreated extends CreateEventState {
@@ -42,3 +42,4 @@ class EventCreated extends CreateEventState {
   const EventCreated(this.event);
 }
 
+class Loading extends CreateEventState {}

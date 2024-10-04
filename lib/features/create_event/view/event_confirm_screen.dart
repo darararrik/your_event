@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:yourevent/features/create_event/models/event_model.dart';
-import 'package:yourevent/features/create_event/widgets/event_type_card_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/features/create_event/widgets/input_text_details_event_widget.dart';
+import 'package:yourevent/router/router.dart';
+
+import '../../../core/widgets/widgets.dart';
+import '../create_event.dart';
 
 @RoutePage()
 class CreateEventScreen extends StatelessWidget {
@@ -10,7 +13,8 @@ class CreateEventScreen extends StatelessWidget {
   final EventTypeModel eventType;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController costController = TextEditingController();
-  final TextEditingController numberOfPeopleController = TextEditingController();
+  final TextEditingController numberOfPeopleController =
+      TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
   @override
@@ -23,62 +27,136 @@ class CreateEventScreen extends StatelessWidget {
             centerTitle: true,
           ),
           SliverFillRemaining(
-            child: Center(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    EventTypeCardWidget(
-                      eventType: eventType,
-                      func: false,
-                      width: 380,
-                      height: 180,
+            child: BlocConsumer<CreateEventBloc, CreateEventState>(
+              listener: (context, state) {
+                if (state is StepTwoComplete) {
+                  context.read<CreateEventBloc>().add(CreateEvent());
+                }
+              },
+              builder: (context, state) {
+                if (state is StepOneComplete) {
+                  return Center(
+                    child: Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            EventTypeCardWidget(
+                              eventType: eventType,
+                              func: false,
+                              width: 380,
+                              height: 180,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFieldWidget(
+                                keyboardType: TextInputType.number,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Поле не может быть пустым!';
+                                  }
+                                  return null;
+                                },
+                                maxLines: 1,
+                                controller: numberOfPeopleController,
+                                labelText: "Количество людей",
+                                hintText: "Введите количество"),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            TextFieldWidget(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Поле не может быть пустым!';
+                                }
+                                return null;
+                              },
+                              maxLines: 1,
+                              labelText: "Какой бюджет?",
+                              hintText: "Введите бюджет",
+                              controller: costController,
+                              keyboardType: TextInputType.number,
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            TextFieldWidget(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Поле не может быть пустым!';
+                                  }
+                                  return null;
+                                },
+                                keyboardType: TextInputType.streetAddress,
+                                maxLines: 1,
+                                controller: addressController,
+                                labelText: "Где?",
+                                hintText: "Напишите адрес"),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            ButtonWidget(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context
+                                      .read<CreateEventBloc>()
+                                      .add(StepTwoEnter(
+                                        address: addressController.text.trim(),
+                                        numberOfPeople: numberOfPeopleController
+                                            .text
+                                            .trim(),
+                                        cost: costController.text.trim(),
+                                      ));
+                                }
+                              },
+                              text: 'Далее',
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  );
+                } else if (state is StepTwoComplete) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is EventCreated) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Круто событие создано"),
+                        ButtonWidget(
+                          onPressed: () {
+                            context.router.push(const MainRoute());
+                          },
+                          text: 'Вернуться на главную',
+                          hasColor: false,
+                        )
+                      ],
                     ),
-                    InputTextDetailsEventWidget(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Поле не может быть пустым!';
-                          }
-                          return null;
-                        },
-                        maxLines: 1,
-                        height: 1,
-                        textController: costController,
-                        label: "Какой бюджет",
-                        hintText: "Бюджет"),
-                    const SizedBox(
-                      height: 24,
+                  );
+                } else {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                            "Что то не так!\nВернитесь на главную страницу."),
+                        ButtonWidget(
+                          onPressed: () {
+                            context.router.push(const MainRoute());
+                          },
+                          text: 'Вернуться на главную',
+                          hasColor: false,
+                        )
+                      ],
                     ),
-                    InputTextDetailsEventWidget(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Поле не может быть пустым!';
-                          }
-                          return null;
-                        },
-                        maxLines: 1,
-                        height: 1,
-                        textController: numberOfPeopleController,
-                        label: "Сколько человек?",
-                        hintText: "Количество людей"),
-                    InputTextDetailsEventWidget(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Поле не может быть пустым!';
-                          }
-                          return null;
-                        },
-                        maxLines: 1,
-                        height: 1,
-                        textController: addressController,
-                        label: "Где",
-                        hintText: "Введите адрес!"),
-                  ],
-                ),
-              ),
+                  );
+                }
+              },
             ),
           )
         ],

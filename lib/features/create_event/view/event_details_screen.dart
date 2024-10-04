@@ -51,6 +51,7 @@ class EventDetailsScreen extends StatelessWidget {
                           if (value == null || value.isEmpty) {
                             return "Заполните поля!";
                           }
+                          return null;
                         },
                       ),
                       const SizedBox(height: 24),
@@ -82,6 +83,7 @@ class EventDetailsScreen extends StatelessWidget {
                           if (value == null || value.isEmpty) {
                             return "Заполните поля!";
                           }
+                          return null;
                         },
                       ),
                       const SizedBox(height: 24),
