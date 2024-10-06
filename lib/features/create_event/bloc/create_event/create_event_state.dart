@@ -19,27 +19,19 @@ class EventTypesLoaded extends CreateEventState {
   List<Object> get props => [list];
 }
 
-class EventTypesError extends CreateEventState {
-  final String error;
+class Error extends CreateEventState {
+  final Object error;
 
-  const EventTypesError({required this.error});
+  const Error({required this.error});
   @override
   List<Object> get props => [error];
-}
-
-class StepOneComplete extends CreateEventState {
-  final EventModel event;
-  const StepOneComplete(this.event);
-}
-
-class StepTwoComplete extends CreateEventState {
-  final EventModel event;
-  const StepTwoComplete(this.event);
 }
 
 class EventCreated extends CreateEventState {
   final EventModel event;
   const EventCreated(this.event);
+  @override
+  List<Object> get props => [event];
 }
 
-class Loading extends CreateEventState {}
+class CreateEventLoading extends CreateEventState {}

@@ -1,13 +1,13 @@
 # This is a generated file; do not edit or check into version control.
-cloud_firestore=/home/damir/.pub-cache/hosted/pub.dev/cloud_firestore-5.4.2/
-cloud_firestore_web=/home/damir/.pub-cache/hosted/pub.dev/cloud_firestore_web-4.3.1/
-firebase_auth=/home/damir/.pub-cache/hosted/pub.dev/firebase_auth-5.3.0/
-firebase_auth_web=/home/damir/.pub-cache/hosted/pub.dev/firebase_auth_web-5.13.1/
-firebase_core=/home/damir/.pub-cache/hosted/pub.dev/firebase_core-3.5.0/
-firebase_core_web=/home/damir/.pub-cache/hosted/pub.dev/firebase_core_web-2.18.1/
-firebase_storage=/home/damir/.pub-cache/hosted/pub.dev/firebase_storage-12.3.1/
-firebase_storage_web=/home/damir/.pub-cache/hosted/pub.dev/firebase_storage_web-3.10.1/
-google_sign_in=/home/damir/.pub-cache/hosted/pub.dev/google_sign_in-6.2.1/
-google_sign_in_android=/home/damir/.pub-cache/hosted/pub.dev/google_sign_in_android-6.1.30/
-google_sign_in_ios=/home/damir/.pub-cache/hosted/pub.dev/google_sign_in_ios-5.7.7/
-google_sign_in_web=/home/damir/.pub-cache/hosted/pub.dev/google_sign_in_web-0.12.4+2/
+cloud_firestore=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\cloud_firestore-5.4.1\\
+cloud_firestore_web=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\cloud_firestore_web-4.3.0\\
+firebase_auth=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_auth-5.2.1\\
+firebase_auth_web=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_auth_web-5.13.0\\
+firebase_core=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_core-3.4.1\\
+firebase_core_web=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_core_web-2.18.0\\
+firebase_storage=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_storage-12.3.0\\
+firebase_storage_web=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\firebase_storage_web-3.10.0\\
+google_sign_in=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\google_sign_in-6.2.1\\
+google_sign_in_android=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\google_sign_in_android-6.1.30\\
+google_sign_in_ios=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\google_sign_in_ios-5.7.7\\
+google_sign_in_web=C:\\Users\\imyam\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dev\\google_sign_in_web-0.12.4+2\\

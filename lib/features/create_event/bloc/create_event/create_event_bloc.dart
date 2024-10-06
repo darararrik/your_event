@@ -14,38 +14,17 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
   CreateEventBloc(this._eventRepository) : super(CreateEventInitial()) {
     on<EventTypesLoad>(_onEventTypesLoad);
     add(const EventTypesLoad(completer: null));
-    on<StepOneEnter>(_onStepOneEnter);
-    on<StepTwoEnter>(_onStepTwoEnter);
-
     on<CreateEvent>(_onCreateEvent);
   }
 
   Future<void> _onCreateEvent(event, emit) async {
-    final currentState = state;
-    if (currentState is StepTwoComplete) {
-      final eventData = currentState.event;
-      await _eventRepository.pushEventFirebase(eventData);
-      emit(EventCreated(eventData));
+    try {
+      emit(CreateEventLoading());
+      await _eventRepository.pushEventFirebase(event.event);
+      emit(EventCreated(event.event));
+    } on Exception catch (e) {
+      emit(Error(error: e));
     }
-  }
-
-  void _onStepOneEnter(StepOneEnter event, Emitter<CreateEventState> emit) {
-    final eventData = EventModel(
-      name: event.name,
-      date: event.date,
-      description: event.description,
-      time: event.time,
-    );
-    emit(StepOneComplete(eventData));
-  }
-
-  void _onStepTwoEnter(StepTwoEnter event, Emitter<CreateEventState> emit) {
-    emit(Loading());
-    EventModel eventData = event.event;
-    eventData.cost = event.cost;
-    eventData.address = event.address;
-    eventData.numberOfPeople = event.numberOfPeople;
-    emit(StepTwoComplete(eventData));
   }
 
   Future<void> _onEventTypesLoad(
@@ -61,7 +40,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
         list: eventTypes,
       ));
     } catch (e) {
-      emit(EventTypesError(error: e.toString()));
+      emit(Error(error: e.toString()));
     } finally {
       event.completer?.complete();
     }

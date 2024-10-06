@@ -13,9 +13,9 @@ class TextFieldWidget extends StatelessWidget {
   final int? maxLines;
   final int? maxLength;
 
-  TextInputType? keyboardType = TextInputType.text;
+  final TextInputType? keyboardType ;
 
-  TextFieldWidget(
+  const TextFieldWidget(
       {super.key,
       required this.controller,
       required this.labelText,

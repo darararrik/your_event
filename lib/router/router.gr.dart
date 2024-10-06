@@ -67,28 +67,28 @@ class ArticlesRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CreateEventScreen]
-class CreateEventRoute extends PageRouteInfo<CreateEventRouteArgs> {
-  CreateEventRoute({
+/// [EventDeatailsPageView]
+class EventDeatailsRouteView extends PageRouteInfo<EventDeatailsRouteViewArgs> {
+  EventDeatailsRouteView({
     Key? key,
     required EventTypeModel eventType,
     List<PageRouteInfo>? children,
   }) : super(
-          CreateEventRoute.name,
-          args: CreateEventRouteArgs(
+          EventDeatailsRouteView.name,
+          args: EventDeatailsRouteViewArgs(
             key: key,
             eventType: eventType,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'CreateEventRoute';
+  static const String name = 'EventDeatailsRouteView';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<CreateEventRouteArgs>();
-      return CreateEventScreen(
+      final args = data.argsAs<EventDeatailsRouteViewArgs>();
+      return EventDeatailsPageView(
         key: args.key,
         eventType: args.eventType,
       );
@@ -96,8 +96,8 @@ class CreateEventRoute extends PageRouteInfo<CreateEventRouteArgs> {
   );
 }
 
-class CreateEventRouteArgs {
-  const CreateEventRouteArgs({
+class EventDeatailsRouteViewArgs {
+  const EventDeatailsRouteViewArgs({
     this.key,
     required this.eventType,
   });
@@ -108,53 +108,7 @@ class CreateEventRouteArgs {
 
   @override
   String toString() {
-    return 'CreateEventRouteArgs{key: $key, eventType: $eventType}';
-  }
-}
-
-/// generated route for
-/// [EventDetailsScreen]
-class EventDetailsRoute extends PageRouteInfo<EventDetailsRouteArgs> {
-  EventDetailsRoute({
-    Key? key,
-    required EventTypeModel eventType,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EventDetailsRoute.name,
-          args: EventDetailsRouteArgs(
-            key: key,
-            eventType: eventType,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EventDetailsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<EventDetailsRouteArgs>();
-      return EventDetailsScreen(
-        key: args.key,
-        eventType: args.eventType,
-      );
-    },
-  );
-}
-
-class EventDetailsRouteArgs {
-  const EventDetailsRouteArgs({
-    this.key,
-    required this.eventType,
-  });
-
-  final Key? key;
-
-  final EventTypeModel eventType;
-
-  @override
-  String toString() {
-    return 'EventDetailsRouteArgs{key: $key, eventType: $eventType}';
+    return 'EventDeatailsRouteViewArgs{key: $key, eventType: $eventType}';
   }
 }
 

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/ui/ui.dart';
-import 'package:yourevent/features/create_event/bloc/create_event_bloc.dart';
+import 'package:yourevent/features/create_event/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/create_event/models/event_model.dart';
 import 'package:yourevent/features/home/view/home_screen.dart';
 import 'package:yourevent/router/router.dart';
@@ -22,7 +22,7 @@ class EventTypeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => func ? context.router.push(EventDetailsRoute(eventType: eventType)) : null,
+      onTap: () => func ? context.router.push(EventDeatailsRouteView(eventType: eventType)) : null,
       //TODO: ПРи повороте стэк изменяет размеры
       child: SizedBox(
         width: width,

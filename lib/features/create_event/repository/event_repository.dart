@@ -35,7 +35,7 @@ class EventRepository {
         'date': eventData.date,
         'time': eventData.time.toString(),
         'numberOfPeople': eventData.numberOfPeople,
-        'cost': eventData.cost,
+        'cost': eventData.price,
         'address': eventData.address,
       });
     } catch (e) {

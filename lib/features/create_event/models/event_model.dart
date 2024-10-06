@@ -12,7 +12,7 @@ class EventModel {
   TimeOfDay time;
   DateTime date;
   String? numberOfPeople;
-  String? cost;
+  String? price;
   String? address;
 
   EventModel({
@@ -21,7 +21,7 @@ class EventModel {
     required this.description,
     required this.time,
     this.numberOfPeople,
-    this.cost,
+    this.price,
     this.address,
   });
 
@@ -33,7 +33,7 @@ class EventModel {
       date: (data['date'] as Timestamp).toDate(),
       description: data['description'] ?? '',
       time: data['time'] ?? '',
-      cost: data['cost'] ?? '',
+      price: data['cost'] ?? '',
       address: data['address'] ?? '',
     );
   }
@@ -44,7 +44,7 @@ class EventModel {
       'description': model.description,
       'date': model.date,
       'time': model.time,
-      'cost': model.cost,
+      'cost': model.price,
       'address': model.address,
     };
   }

@@ -12,8 +12,6 @@ class TimePickerWidget extends StatefulWidget {
 class _TimePickerWidget extends State<TimePickerWidget> {
   TimeOfDay? _selectedTime;
 
-  final DateTime now = DateTime.now();
-
   Future<void> _pickTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -61,9 +59,7 @@ class _TimePickerWidget extends State<TimePickerWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                _selectedTime != null
-                    ? _selectedTime.toString()
-                    : 'Время',
+                _selectedTime != null ? formatTime(_selectedTime!) : 'Время',
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w300,
                   color: Colors.black,
@@ -79,5 +75,12 @@ class _TimePickerWidget extends State<TimePickerWidget> {
         ),
       ],
     );
+  }
+
+  String formatTime(TimeOfDay time) {
+    final hours = time.hour.toString().padLeft(2, '0'); // Форматируем часы
+    final minutes =
+        time.minute.toString().padLeft(2, '0'); // Форматируем минуты
+    return '$hours:$minutes'; // Возвращаем строку в формате "HH:MM"
   }
 }

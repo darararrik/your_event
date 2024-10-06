@@ -41,11 +41,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: EventTypeRoute.page,
         ),
-        AutoRoute(
-          page: EventDetailsRoute.page,
-        ),
-        AutoRoute(
-          page: CreateEventRoute.page,
+         AutoRoute(
+          page: EventDeatailsRouteView.page,
         ),
       ];
 }
