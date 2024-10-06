@@ -4,11 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/ui/images.dart';
+import 'package:yourevent/features/create_event/bloc/page_view_bloc.dart';
 import 'package:yourevent/features/create_event/models/event_model.dart';
 import 'package:yourevent/features/create_event/widgets/event_type_card_widget.dart';
 import 'package:yourevent/router/router.dart';
 import '../../home/models/models.dart';
 import '../bloc/create_event_bloc.dart';
+
+
 
 @RoutePage()
 class EventTypeScreen extends StatelessWidget {
