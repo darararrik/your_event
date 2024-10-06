@@ -24,10 +24,11 @@ class EventTypeCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => func ? context.router.push(EventDetailsRoute(eventType: eventType)) : null,
       //TODO: ПРи повороте стэк изменяет размеры
-      child: SizedBox(  
+      child: SizedBox(
         width: width,
         height: height,
         child: Stack(
+          fit: StackFit.passthrough,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),

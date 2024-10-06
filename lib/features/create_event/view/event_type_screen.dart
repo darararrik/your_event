@@ -34,7 +34,8 @@ class EventTypeScreen extends StatelessWidget {
             BlocBuilder<CreateEventBloc, CreateEventState>(
               builder: (context, state) {
                 if (state is EventTypesLoaded) {
-                  final list = state.list; // Получаем список типов событий
+                  List<EventTypeModel> list = state.list;
+                // Получаем список типов событий
 
                   return SliverPadding(
                     padding: const EdgeInsets.symmetric(
@@ -53,8 +54,9 @@ class EventTypeScreen extends StatelessWidget {
                         (BuildContext context, int index) {
                           final eventType = list[index];
                           return EventTypeCardWidget(
-                            eventType: eventType, height: 180, width: 200,
-                            
+                            eventType: eventType,
+                            height: 180,
+                            width: 200,
                           );
                         },
                         childCount: list.length, // Количество карточек

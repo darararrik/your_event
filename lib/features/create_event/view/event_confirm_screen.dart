@@ -130,7 +130,7 @@ class CreateEventScreen extends StatelessWidget {
                         const Text("Круто событие создано"),
                         ButtonWidget(
                           onPressed: () {
-                            context.router.push(const MainRoute());
+                            context.router.replaceAll([const MainRoute()]);
                           },
                           text: 'Вернуться на главную',
                           hasColor: false,
