@@ -16,7 +16,6 @@ class CreateEventScreen extends StatelessWidget {
   final TextEditingController numberOfPeopleController =
       TextEditingController();
   final TextEditingController addressController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,6 +102,7 @@ class CreateEventScreen extends StatelessWidget {
                                   context
                                       .read<CreateEventBloc>()
                                       .add(StepTwoEnter(
+                                        event: state.event,
                                         address: addressController.text.trim(),
                                         numberOfPeople: numberOfPeopleController
                                             .text
@@ -118,7 +118,7 @@ class CreateEventScreen extends StatelessWidget {
                       ),
                     ),
                   );
-                } else if (state is StepTwoComplete) {
+                } else if (state is Loading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );

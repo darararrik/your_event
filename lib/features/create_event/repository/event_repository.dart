@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:yourevent/features/features.dart';
 
 class EventRepository {
   final FirebaseFirestore _firestore;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   EventRepository(this._firestore);
 
@@ -22,16 +25,21 @@ class EventRepository {
   Future<void> pushEventFirebase(EventModel eventData) async {
     // Логика сохранения события в Firebase
     try {
-      await FirebaseFirestore.instance.collection('events').add({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('myEvents')
+          .add({
         'name': eventData.name,
         'description': eventData.description,
-        'date': eventData.date.toIso8601String,
-        'time': eventData.time.format,
+        'date': eventData.date,
+        'time': eventData.time.toString(),
         'numberOfPeople': eventData.numberOfPeople,
         'cost': eventData.cost,
         'address': eventData.address,
       });
     } catch (e) {
+      debugPrint(e.toString());
       throw Exception('Ошибка: $e');
 
       // TODO

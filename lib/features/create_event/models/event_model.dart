@@ -11,8 +11,8 @@ class EventModel {
   String description;
   TimeOfDay time;
   DateTime date;
-  int? numberOfPeople;
-  double? cost;
+  String? numberOfPeople;
+  String? cost;
   String? address;
 
   EventModel({

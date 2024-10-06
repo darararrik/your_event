@@ -21,96 +21,103 @@ class EventDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          const SliverAppBar(
-            title: Text("Выберите детали"),
-            centerTitle: true,
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            sliver: SliverFillRemaining(
-              child: Center(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      EventTypeCardWidget(
-                        eventType: eventType,
-                        func: false,
-                        width: 380,
-                        height: 180,
-                      ),
-                      const SizedBox(height: 20),
-                      TextFieldWidget(
-                        hintText: 'Придумайте название',
-                        controller: nameController,
-                        labelText: 'Название события',
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Заполните поля!";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                      // Поле для выбора даты
-                      Row(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          DateTimePickerWidget(
-                            onDateSelected: (date) {
-                              selectedDate = date; // Сохранение выбранной даты
-                            },
-                          ),
-                          // const SizedBox(width: 12,),
-                          TimePickerWidget(
-                            onTimeSelected: (date) {
-                              selectedTime = date; // Сохранение выбранной даты
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      TextFieldWidget(
-                        hintText: 'Придумайте описание',
-                        controller: descriptionController,
-                        labelText: 'О событии',
-                        maxLength: 120,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Заполните поля!";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                      ButtonWidget(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
-                              selectedTime != null &&
-                              selectedDate != null) {
-                            context.read<CreateEventBloc>().add(StepOneEnter(
-                                name: nameController.text.trim(),
-                                date: selectedDate!,
-                                time: selectedTime!,
-                                description:
-                                    descriptionController.text.trim()));
-                            context.router
-                                .push(CreateEventRoute(eventType: eventType));
-                          }
-                        },
-                        text: 'Далее',
-                      ),
-                    ],
+    return BlocListener<CreateEventBloc, CreateEventState>(
+      listener: (context, state) {
+        if (state is StepOneComplete) {
+          context.router.push(CreateEventRoute(eventType: eventType));
+        }
+      },
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const SliverAppBar(
+              title: Text("Выберите детали"),
+              centerTitle: true,
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              sliver: SliverFillRemaining(
+                child: Center(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        EventTypeCardWidget(
+                          eventType: eventType,
+                          func: false,
+                          width: 380,
+                          height: 180,
+                        ),
+                        const SizedBox(height: 20),
+                        TextFieldWidget(
+                          hintText: 'Придумайте название',
+                          controller: nameController,
+                          labelText: 'Название события',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Заполните поля!";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        // Поле для выбора даты
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            DateTimePickerWidget(
+                              onDateSelected: (date) {
+                                selectedDate =
+                                    date; // Сохранение выбранной даты
+                              },
+                            ),
+                            // const SizedBox(width: 12,),
+                            TimePickerWidget(
+                              onTimeSelected: (date) {
+                                selectedTime =
+                                    date; // Сохранение выбранной даты
+                              },
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        TextFieldWidget(
+                          hintText: 'Придумайте описание',
+                          controller: descriptionController,
+                          labelText: 'О событии',
+                          maxLength: 120,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Заполните поля!";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        ButtonWidget(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate() &&
+                                selectedTime != null &&
+                                selectedDate != null) {
+                              context.read<CreateEventBloc>().add(StepOneEnter(
+                                  name: nameController.text.trim(),
+                                  date: selectedDate!,
+                                  time: selectedTime!,
+                                  description:
+                                      descriptionController.text.trim()));
+                            }
+                          },
+                          text: 'Далее',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

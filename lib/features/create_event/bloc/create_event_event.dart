@@ -30,11 +30,13 @@ class StepOneEnter extends CreateEventEvent {
 }
 
 class StepTwoEnter extends CreateEventEvent {
+  final EventModel event;
   final String numberOfPeople;
   final String cost;
   final String address;
 
   const StepTwoEnter({
+    required this.event,
     required this.numberOfPeople,
     required this.cost,
     required this.address,
