@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yourevent/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/repositories/auth/auth_repository.dart';
+import 'package:yourevent/core/Data/repositories/auth/auth_repository.dart';
 import 'package:yourevent/features/features.dart';
-import '../../core/blocs/auth/auth.dart';
-import '../../core/ui/ui.dart';
+import '../Presentation/blocs/auth/auth.dart';
+import '../utils/ui.dart';
 
 class YourEventApp extends StatelessWidget {
   final _router = AppRouter();

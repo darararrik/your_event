@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/ui/colors.dart';
+import 'package:yourevent/core/utils/colors.dart';
 
 class IconButtonWidget extends StatelessWidget {
   final String text;

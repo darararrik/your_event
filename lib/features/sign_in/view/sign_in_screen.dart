@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
-import 'package:yourevent/core/widgets/widgets.dart';
+import 'package:yourevent/core/Presentation/blocs/auth/auth_bloc.dart';
+import 'package:yourevent/core/Presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
 import 'package:auto_route/auto_route.dart';
 
-import '../../../core/ui/ui.dart';
+import '../../../core/utils/ui.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {

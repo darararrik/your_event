@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/widgets/widgets.dart';
+import 'package:yourevent/core/Presentation/widgets/widgets.dart';
 
 class EventDetailsSecondPage extends StatelessWidget {
   const EventDetailsSecondPage({

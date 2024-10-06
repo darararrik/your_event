@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:yourevent/core/firebase_options.dart';
-import 'features/your_event/your_event.dart';
+import 'package:yourevent/core/internal/firebase_options.dart';
+
+import 'core/internal/your_event_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,10 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yourevent/core/models/user_model.dart' as user_model;
+import 'package:yourevent/core/Domain/models/user_model.dart' as user_model;
 import 'dart:async';
 
-import 'package:yourevent/repositories/auth/auth_repository.dart';
+import 'package:yourevent/core/Data/repositories/auth/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

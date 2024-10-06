@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yourevent/features/home/bloc/bloc.dart';
 import 'package:yourevent/features/home/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
-import '../../../core/ui/ui.dart';
+import '../../../core/utils/ui.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {

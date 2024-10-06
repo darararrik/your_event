@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/core/blocs/auth/auth.dart';
-import 'package:yourevent/core/widgets/widgets.dart';
+import 'package:yourevent/core/Presentation/blocs/auth/auth.dart';
+import 'package:yourevent/core/Presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 import 'package:yourevent/features/features.dart';
 import 'package:auto_route/auto_route.dart';
