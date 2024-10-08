@@ -1,5 +1,5 @@
-export 'Data/Data.dart';
-export 'Domain/Domain.dart';
-export 'Presentation/Presentation.dart';
+export 'Data/data.dart';
+export 'Domain/domain.dart';
+export 'Presentation/presentation.dart';
 export 'internal/internal.dart';
 export 'utils/utils.dart';

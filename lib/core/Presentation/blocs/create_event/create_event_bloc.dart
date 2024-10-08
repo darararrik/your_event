@@ -13,7 +13,6 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
 
   CreateEventBloc(this._eventRepository) : super(CreateEventInitial()) {
     on<EventTypesLoad>(_onEventTypesLoad);
-    add(const EventTypesLoad(completer: null));
     on<CreateEvent>(_onCreateEvent);
   }
 
@@ -45,4 +44,6 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
       event.completer?.complete();
     }
   }
+
+
 }

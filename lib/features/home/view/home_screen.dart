@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yourevent/features/create_event/Presentation/Presentation.dart';
 import 'package:yourevent/features/home/bloc/bloc.dart';
 import 'package:yourevent/features/home/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
@@ -75,6 +76,10 @@ class HomeScreen extends StatelessWidget {
                         text: 'Организую сам',
                         image: package,
                         onPressed: () {
+                          context
+                              .read<CreateEventBloc>()
+                              .add(const EventTypesLoad(completer: null));
+
                           context.router.push(const EventTypeRoute());
                         },
                       ),

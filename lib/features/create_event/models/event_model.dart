@@ -9,7 +9,7 @@ import 'package:yourevent/core/utils/ui.dart';
 class EventModel {
   String name;
   String description;
-  TimeOfDay time;
+  String time;
   DateTime date;
   String? numberOfPeople;
   String? price;
@@ -30,7 +30,9 @@ class EventModel {
     final data = doc.data()!;
     return EventModel(
       name: data['title'] ?? '', // Проверка на null, если поле не заполнено
-      date: (data['date'] as Timestamp).toDate(),
+      date: (data['date'] != null)
+          ? (data['date'] as Timestamp).toDate()
+          : DateTime.now(), // или любое другое значение по умолчанию
       description: data['description'] ?? '',
       time: data['time'] ?? '',
       price: data['cost'] ?? '',
@@ -44,7 +46,7 @@ class EventModel {
       'description': model.description,
       'date': model.date,
       'time': model.time,
-      'cost': model.price,
+      'price': model.price,
       'address': model.address,
     };
   }

@@ -22,6 +22,19 @@ class EventRepository {
     }
   }
 
+  Future<List<EventModel>> fetchEvents() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
+          .collection("users")
+          .doc(_auth.currentUser!.uid)
+          .collection("myEvents")
+          .get();
+      return snapshot.docs.map((doc) => EventModel.fromFireStore(doc)).toList();
+    } catch (e) {
+      throw Exception('Ошибка: $e');
+    }
+  }
+
   Future<void> pushEventFirebase(EventModel eventData) async {
     // Логика сохранения события в Firebase
     try {

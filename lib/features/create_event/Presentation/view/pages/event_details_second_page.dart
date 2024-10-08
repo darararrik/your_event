@@ -1,5 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/Presentation/widgets/widgets.dart';
+import 'package:yourevent/core/utils/images.dart';
+import 'package:yourevent/features/create_event/Presentation/Presentation.dart';
+import 'package:yourevent/router/router.dart';
 
 class EventDetailsSecondPage extends StatelessWidget {
   const EventDetailsSecondPage({
@@ -69,9 +74,6 @@ class EventDetailsSecondPage extends StatelessWidget {
                 controller: addressController,
                 labelText: "Где?",
                 hintText: "Напишите адрес"),
-            const SizedBox(
-              height: 24,
-            ),
           ],
         ),
       ),

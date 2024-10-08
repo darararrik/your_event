@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TimePickerWidget extends StatefulWidget {
-  final Function(TimeOfDay)? onTimeSelected;
+  final Function(String)? onTimeSelected;
 
   const TimePickerWidget({super.key, this.onTimeSelected});
 
@@ -10,7 +10,7 @@ class TimePickerWidget extends StatefulWidget {
 }
 
 class _TimePickerWidget extends State<TimePickerWidget> {
-  TimeOfDay? _selectedTime;
+  String? _selectedTime;
 
   Future<void> _pickTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -30,11 +30,11 @@ class _TimePickerWidget extends State<TimePickerWidget> {
 
     if (picked != null) {
       setState(() {
-        _selectedTime = picked;
+        _selectedTime = formatTime(picked);
       });
       // Возвращаем дату через колбэк
       if (widget.onTimeSelected != null) {
-        widget.onTimeSelected!(picked);
+        widget.onTimeSelected!(formatTime(picked));
       }
     }
   }
@@ -59,7 +59,7 @@ class _TimePickerWidget extends State<TimePickerWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                _selectedTime != null ? formatTime(_selectedTime!) : 'Время',
+                _selectedTime != null ? _selectedTime! : 'Время',
                 style: theme.textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w300,
                   color: Colors.black,

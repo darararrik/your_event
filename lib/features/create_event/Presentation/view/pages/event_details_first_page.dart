@@ -10,7 +10,7 @@ class EventDetailsFirstPage extends StatelessWidget {
   final TextEditingController descriptionController;
   final GlobalKey<FormState> formKey;
   final Function(DateTime) onDateChanged;
-  final Function(TimeOfDay) onTimeChanged;
+  final Function(String) onTimeChanged;
 
   final EventTypeModel eventType;
   const EventDetailsFirstPage(
@@ -51,6 +51,7 @@ class EventDetailsFirstPage extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //TODO: Сделать тчтобы сохранялись значения при переходе назад
                   DateTimePickerWidget(
                     onDateSelected: (date) {
                       onDateChanged(date);

@@ -9,7 +9,7 @@ import 'package:yourevent/features/create_event/models/event_model.dart';
 import 'package:yourevent/features/create_event/Presentation/widgets/event_type_card_widget.dart';
 import 'package:yourevent/router/router.dart';
 import '../../../home/models/models.dart';
-import '../bloc/create_event/create_event_bloc.dart';
+import '../../../../core/Presentation/blocs/create_event/create_event_bloc.dart';
 
 
 
