@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:yourevent/core/Presentation/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/utils/ui.dart';
 import 'package:yourevent/features/profile/bloc/profile_bloc.dart';
 
 import '../../../core/Domain/models/user_model.dart';
+import '../../../core/blocs/blocs.dart';
 import '../../../router/router.dart';
 
 @RoutePage()

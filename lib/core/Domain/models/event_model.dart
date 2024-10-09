@@ -30,9 +30,10 @@ class EventModel {
     final data = doc.data()!;
     return EventModel(
       name: data['title'] ?? '', // Проверка на null, если поле не заполнено
-      date: (data['date'] != null)
-          ? (data['date'] as Timestamp).toDate()
-          : DateTime.now(), // или любое другое значение по умолчанию
+      date: DateTime.fromMicrosecondsSinceEpoch(data['date']),
+      // date: (data['date'] != null)
+      //     ? (data['date'] as Timestamp).toDate()
+      //     : DateTime.now(), // или любое другое значение по умолчанию
       description: data['description'] ?? '',
       time: data['time'] ?? '',
       price: data['cost'] ?? '',

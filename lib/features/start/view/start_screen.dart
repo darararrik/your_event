@@ -1,12 +1,11 @@
-import 'dart:ffi';
 
-import 'package:flutter/material.dart';
-import 'package:yourevent/core/Presentation/widgets/button_widget.dart';
-import 'package:yourevent/router/router.dart';
-import '../../../core/Presentation/blocs/auth/auth.dart';
-import '../../../core/utils/ui.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
+import 'package:yourevent/core/widgets/button_widget.dart';
+import 'package:yourevent/router/router.dart';
+import '../../../core/utils/utils.dart';
 
 @RoutePage()
 class StartScreen extends StatelessWidget {
@@ -24,8 +23,6 @@ class StartScreen extends StatelessWidget {
           // Если пользователь авторизован, перенаправляем на главную страницу
               context.router.replaceAll([const MainRoute()]);
         }
-
-        
       },
       child: Scaffold(
         body: Padding(

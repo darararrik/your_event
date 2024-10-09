@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/ui.dart';
+import '../utils/utils.dart';
+
 
 Container navigationBarWidget(TabsRouter tabsRouter) {
   return Container(

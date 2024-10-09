@@ -6,7 +6,7 @@ import 'package:yourevent/core/utils/images.dart';
 
 import 'package:yourevent/router/router.dart';
 
-import '../../../../core/Presentation/widgets/widgets.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../../features.dart';
 
 @RoutePage()
