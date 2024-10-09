@@ -5,15 +5,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:yourevent/features/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
-import 'package:yourevent/core/Presentation/blocs/my_events/my_events_bloc.dart';
+import 'package:yourevent/features/my_events/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/core/core.dart';
+import 'package:yourevent/features/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/my_events/blocs/tab_bar_bloc/tab_bar_bloc.dart';
+import 'package:yourevent/features/my_events/view/tabs/created_events_page.dart';
 
 @RoutePage()
 class MyEventsScreen extends StatelessWidget {
   const MyEventsScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class MyEventsScreen extends StatelessWidget {
             },
             child: CustomScrollView(
               slivers: [
-                _AppBar(context, tabController),
+                _AppBar(tabController: tabController),
                 _Body(tabController: tabController)
               ],
             ),
@@ -46,48 +47,63 @@ class MyEventsScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  SliverAppBar _AppBar(BuildContext context, TabController tabController) {
+class _AppBar extends StatelessWidget {
+  const _AppBar({
+    required this.tabController,
+  });
+
+  final TabController tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return SliverAppBar(
-                title: const Text("Мои события"),
-                centerTitle: true,
-                bottom: TabBar(
-                  onTap: (index) {
-                    context.read<TabBarBloc>().add(TabChanged(index: index));
-                  },
-                  tabs: const [
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(CupertinoIcons.square_list),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Созданные',
-                          ),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(CupertinoIcons.archivebox),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Выполненные',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  controller: tabController,
+      title: Text(
+        "Мои события",
+        style: theme.textTheme.headlineSmall,
+      ),
+      centerTitle: true,
+      bottom: TabBar(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        onTap: (index) {
+          context.read<TabBarBloc>().add(TabChanged(index: index));
+        },
+        tabs: const [
+          Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(CupertinoIcons.square_list),
+                SizedBox(
+                  width: 8,
                 ),
-              );
+                Text(
+                  'Созданные',
+                ),
+              ],
+            ),
+          ),
+          Tab(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(CupertinoIcons.archivebox),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Выполненные',
+                ),
+              ],
+            ),
+          ),
+        ],
+        controller: tabController,
+      ),
+    );
   }
 }
 
@@ -112,37 +128,5 @@ class _Body extends StatelessWidget {
         ),
       ],
     ));
-  }
-}
-
-class CreatedEventsPage extends StatelessWidget {
-  final String text;
-  const CreatedEventsPage({required this.text, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<MyEventsBloc, MyEventsState>(
-      listener: (BuildContext context, MyEventsState state) 
-      {
-        //TODO: Реализация
-      },
-      builder: (context, state) {
-        if (state is MyEventsError) {
-          final error = state.error;
-          return Center(child: Text(error.toString()));
-        }
-
-        if (state is MyEventsLoaded) {
-          return Center(
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 24),
-            ),
-          );
-        } else {
-          return const Center();
-        }
-      },
-    );
   }
 }

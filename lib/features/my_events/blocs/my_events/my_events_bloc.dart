@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:yourevent/features/create_event/Data/repository/event_repository.dart';
-import 'package:yourevent/features/create_event/models/event_model.dart';
+import 'package:yourevent/core/domain/models/event_model.dart';
 
 part 'my_events_event.dart';
 part 'my_events_state.dart';

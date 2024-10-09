@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yourevent/core/Presentation/blocs/my_events/my_events_bloc.dart';
+import 'package:yourevent/features/my_events/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

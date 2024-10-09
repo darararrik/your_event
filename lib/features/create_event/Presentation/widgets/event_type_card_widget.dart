@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/utils/ui.dart';
 import 'package:yourevent/features/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
-import 'package:yourevent/features/create_event/models/event_model.dart';
+import 'package:yourevent/core/domain/models/event_model.dart';
 import 'package:yourevent/features/home/view/home_screen.dart';
 import 'package:yourevent/router/router.dart';
 

@@ -1,1 +1,1 @@
-export 'event_model.dart';
+export '../../../core/domain/models/event_model.dart';
