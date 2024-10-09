@@ -25,7 +25,7 @@ class MainScreen extends StatelessWidget {
         return Scaffold(
           body:
               child, // Используйте `child` для отображения содержимого ваших вкладок
-          bottomNavigationBar: NavigationBarWidget(tabsRouter),
+          bottomNavigationBar: navigationBarWidget(tabsRouter),
         );
       },
     );

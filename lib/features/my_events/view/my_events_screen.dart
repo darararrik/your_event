@@ -1,11 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:yourevent/core/Presentation/blocs/create_event/create_event_bloc.dart';
 import 'package:yourevent/core/Presentation/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/core/core.dart';
-import 'package:yourevent/core/Presentation/blocs/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/my_events/bloc/tab_bar_bloc.dart';
 
 @RoutePage()
@@ -34,71 +37,81 @@ class MyEventsScreen extends StatelessWidget {
             },
             child: CustomScrollView(
               slivers: [
-                SliverAppBar(
-                  title: const Text("Мои события"),
-                  centerTitle: true,
-                  bottom: TabBar(
-                    onTap: (index) {
-                      context.read<TabBarBloc>().add(TabChanged(index: index));
-                    },
-                    tabs: [
-                      Tab(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.add_circle_outline_outlined),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            //TODO: верстка
-                            Text('Созданные',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(color: orange)),
-                          ],
-                        ),
-                      ),
-                      Tab(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.abc),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            //TODO: верстка
-
-                            Text('Выполненные',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(color: orange)),
-                          ],
-                        ),
-                      ),
-                    ],
-                    controller: tabController,
-                  ),
-                ),
-                SliverFillRemaining(
-                    child: TabBarView(
-                  controller: tabController,
-                  children: const [
-                    CreatedEventsPage(
-                      text: '1',
-                    ),
-                    CreatedEventsPage(
-                      text: '2',
-                    ),
-                  ],
-                ))
+                _AppBar(context, tabController),
+                _Body(tabController: tabController)
               ],
             ),
           );
         },
       ),
     );
+  }
+
+  SliverAppBar _AppBar(BuildContext context, TabController tabController) {
+    return SliverAppBar(
+                title: const Text("Мои события"),
+                centerTitle: true,
+                bottom: TabBar(
+                  onTap: (index) {
+                    context.read<TabBarBloc>().add(TabChanged(index: index));
+                  },
+                  tabs: const [
+                    Tab(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(CupertinoIcons.square_list),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            'Созданные',
+                          ),
+                        ],
+                      ),
+                    ),
+                    Tab(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(CupertinoIcons.archivebox),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            'Выполненные',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  controller: tabController,
+                ),
+              );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({
+    required this.tabController,
+  });
+
+  final TabController tabController;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverFillRemaining(
+        child: TabBarView(
+      controller: tabController,
+      children: const [
+        CreatedEventsPage(
+          text: '1',
+        ),
+        CreatedEventsPage(
+          text: '2',
+        ),
+      ],
+    ));
   }
 }
 
@@ -109,7 +122,10 @@ class CreatedEventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MyEventsBloc, MyEventsState>(
-      listener: (BuildContext context, MyEventsState state) {},
+      listener: (BuildContext context, MyEventsState state) 
+      {
+        //TODO: Реализация
+      },
       builder: (context, state) {
         if (state is MyEventsError) {
           final error = state.error;

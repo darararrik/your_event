@@ -11,11 +11,21 @@ import 'package:yourevent/router/router.dart';
 import '../../../home/models/models.dart';
 import '../../../../core/Presentation/blocs/create_event/create_event_bloc.dart';
 
-
-
 @RoutePage()
-class EventTypeScreen extends StatelessWidget {
+class EventTypeScreen extends StatefulWidget {
   const EventTypeScreen({super.key});
+
+  @override
+  State<EventTypeScreen> createState() => _EventTypeScreenState();
+}
+
+class _EventTypeScreenState extends State<EventTypeScreen> {
+  @override
+  void initState() {
+    final completer = Completer();
+    context.read<CreateEventBloc>().add(EventTypesLoad(completer: completer));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +48,7 @@ class EventTypeScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is EventTypesLoaded) {
                   List<EventTypeModel> list = state.list;
-                // Получаем список типов событий
+                  // Получаем список типов событий
 
                   return SliverPadding(
                     padding: const EdgeInsets.symmetric(
@@ -67,9 +77,7 @@ class EventTypeScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return const SliverFillRemaining(
-                    child: Center(child: Text("Произошла ошибка")),
-                  );
+                  return const SliverFillRemaining(child: SizedBox());
                 }
               },
             ),
