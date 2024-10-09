@@ -11,7 +11,7 @@ class EventDetailsFirstPage extends StatelessWidget {
   final TextEditingController descriptionController;
   final GlobalKey<FormState> formKey;
   final Function(DateTime) onDateChanged;
-  final Function(String) onTimeChanged;
+  final Function(TimeOfDay) onTimeChanged;
 
   final EventTypeModel eventType;
   const EventDetailsFirstPage(

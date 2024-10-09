@@ -49,7 +49,6 @@ class EventRepository {
         'name': eventData.name,
         'description': eventData.description,
         'date': (Timestamp.fromDate(eventData.date)),
-        'time': eventData.time.toString(),
         'numberOfPeople': eventData.numberOfPeople,
         'price': eventData.price,
         'address': eventData.address,
@@ -68,8 +67,7 @@ class EventRepository {
 
     // Проверяем каждое событие
     for (var event in events) {
-      if (event.date.isBefore(now) && event.isCompleted) {
-        // Если событие истекло, обновляем его статус в Firestore
+      if (event.date.isBefore(now) && event.isCompleted == false) {
         await _firestore
             .collection('users')
             .doc(_auth.currentUser!.uid)

@@ -21,13 +21,16 @@ class EventDeatailsPageView extends StatelessWidget {
   EventDeatailsPageView({
     super.key,
     required this.eventType,
+    this.finalDateTime,
+    this.selectedDate,
+    this.selectedTime,
   });
   final _formKeyFirst = GlobalKey<FormState>();
   final _formKeySecond = GlobalKey<FormState>();
 
   DateTime? selectedDate; // Переменная для сохранения даты
-  String? selectedTime;
-
+  TimeOfDay? selectedTime;
+  DateTime? finalDateTime;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -48,7 +51,9 @@ class EventDeatailsPageView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(error,),
+                        Text(
+                          error,
+                        ),
                         const SizedBox(
                           height: 16,
                         ),
@@ -174,6 +179,13 @@ class EventDeatailsPageView extends StatelessWidget {
                                   _formKeyFirst.currentState!.validate() &&
                                   selectedTime != null &&
                                   selectedDate != null) {
+                                finalDateTime = DateTime(
+                                  selectedDate!.year,
+                                  selectedDate!.month,
+                                  selectedDate!.day,
+                                  selectedTime!.hour,
+                                  selectedTime!.minute,
+                                );
                                 pageController.nextPage(
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut,
@@ -182,12 +194,11 @@ class EventDeatailsPageView extends StatelessWidget {
                               if (pageIndex == 1 &&
                                   _formKeySecond.currentState!.validate()) {
                                 context.read<CreateEventBloc>().add(CreateEvent(
-                                    date: selectedDate!,
+                                    date: finalDateTime!,
                                     name: nameController.text.toString().trim(),
                                     description: descriptionController.text
                                         .toString()
                                         .trim(),
-                                    time: selectedTime!,
                                     numberOfPeople: numberOfPeopleController
                                         .text
                                         .toString()

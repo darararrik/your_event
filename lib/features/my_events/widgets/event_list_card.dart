@@ -15,7 +15,9 @@ class EventListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final String formattedDate = DateFormat('dd.MM.yyyy').format(event.date);
+    final String formattedDate =
+        DateFormat('dd.MM.yyyy HH:mm').format(event.date);
+    // final String formattedTime = DateFormat.("HH:mm");
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       decoration: const BoxDecoration(
@@ -49,7 +51,7 @@ class EventListCard extends StatelessWidget {
                       width: 8,
                     ),
                     Text(
-                      "$formattedDate, ${event.time}",
+                      "$formattedDate",
                       style: theme.textTheme.bodyMedium!
                           .copyWith(color: Colors.white),
                     ),

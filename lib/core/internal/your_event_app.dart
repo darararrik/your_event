@@ -1,14 +1,15 @@
-import 'package:auto_route/auto_route.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yourevent/features/my_events/blocs/my_events/my_events_bloc.dart';
-import 'package:yourevent/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/Data/repositories/auth/auth_repository.dart';
-import 'package:yourevent/features/features.dart';
-import '../blocs/blocs.dart';
-import '../data/repositories/event/event.dart';
-import '../utils/ui.dart';
+import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
+import 'package:yourevent/core/data/repositories/event/event_repository.dart';
+import 'package:yourevent/core/utils/theme.dart';
+import 'package:yourevent/features/my_events/blocs/my_events/my_events_bloc.dart'; 
+import 'package:yourevent/router/router.dart';
+
+import '../../features/features.dart';
 
 class YourEventApp extends StatelessWidget {
   final _router = AppRouter();
