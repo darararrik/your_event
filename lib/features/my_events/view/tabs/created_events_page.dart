@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:async';
 
@@ -26,26 +25,33 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
   @override
   Widget build(BuildContext context) {
     //final theme = Theme.of(context);
-    return BlocBuilder<MyEventsBloc, MyEventsState>(
-      builder: (context, state) {
-        if (state is MyEventsError) {
-          final error = state.error;
-          return Center(child: Text(error.toString()));
-        }
-        if (state is MyEventsLoaded) {
-          return ListView.builder(
-              itemCount: state.list.length,
-              itemBuilder: (context, index) {
-                final event = state.list[index];
-
-                return EventListCard(
-                  event: event,
-                );
-              });
-        } else {
-          return const SizedBox();
-        }
+    return RefreshIndicator(
+      onRefresh: () async {
+        final completer = Completer();
+        context.read<MyEventsBloc>().add(MyEventsLoad(completer: completer));
+        return completer.future;
       },
+      child: BlocBuilder<MyEventsBloc, MyEventsState>(
+        builder: (context, state) {
+          if (state is MyEventsError) {
+            final error = state.error;
+            return Center(child: Text(error.toString()));
+          }
+          if (state is MyEventsLoaded) {
+            final list = state.list.where((element) => element.isCompleted == false);
+            return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  final event = state.list[index];
+                  return EventListCard(
+                    event: event,
+                  );
+                });
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
     );
   }
 }

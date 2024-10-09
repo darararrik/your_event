@@ -40,7 +40,8 @@ class CreateEvent extends CreateEventEvent {
             time: time,
             numberOfPeople: numberOfPeople,
             address: address,
-            price: price);
+            price: price,
+            id: const Uuid().v4());
   @override
   List<Object> get props => [event];
 }

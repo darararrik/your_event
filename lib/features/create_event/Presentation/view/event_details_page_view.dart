@@ -40,6 +40,31 @@ class EventDeatailsPageView extends StatelessWidget {
           return Scaffold(
             body: BlocBuilder<CreateEventBloc, CreateEventState>(
               builder: (context, state) {
+                if (state is Error) {
+                  final error = state.error.toString();
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(error,),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ButtonWidget(
+                            text: "Вернуться на главную",
+                            onPressed: () =>
+                                context.router.replaceAll([const MainRoute()]))
+                      ],
+                    ),
+                  );
+                }
+                if (state is Loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                 if (state is EventCreated) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),

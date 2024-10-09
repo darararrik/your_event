@@ -15,7 +15,6 @@ import 'package:yourevent/features/my_events/view/tabs/created_events_page.dart'
 class MyEventsScreen extends StatelessWidget {
   const MyEventsScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,20 +27,11 @@ class MyEventsScreen extends StatelessWidget {
             vsync: Scaffold.of(context),
             initialIndex: tabIndex,
           );
-          return RefreshIndicator(
-            onRefresh: () async {
-              final completer = Completer();
-              context
-                  .read<MyEventsBloc>()
-                  .add(MyEventsLoad(completer: completer));
-              return completer.future;
-            },
-            child: CustomScrollView(
-              slivers: [
-                _AppBar(tabController: tabController),
-                _Body(tabController: tabController)
-              ],
-            ),
+          return CustomScrollView(
+            slivers: [
+              _AppBar(tabController: tabController),
+              _Body(tabController: tabController)
+            ],
           );
         },
       ),

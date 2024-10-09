@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:yourevent/features/create_event/Data/repository/event_repository.dart';
+import 'package:yourevent/core/data/repositories/event/event_repository.dart';
 import 'package:yourevent/core/domain/models/event_model.dart';
 
 part 'my_events_event.dart';
@@ -21,6 +21,8 @@ class MyEventsBloc extends Bloc<MyEventsEvent, MyEventsState> {
         emit(MyEventsLoading());
       }
       final events = await _eventRepository.fetchEvents();
+      await _eventRepository.checkDates(events);
+    
       emit(MyEventsLoaded(list: events));
     } catch (e) {
       emit(MyEventsError(error: e.toString()));

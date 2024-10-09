@@ -22,8 +22,7 @@ class EventTypeScreen extends StatefulWidget {
 class _EventTypeScreenState extends State<EventTypeScreen> {
   @override
   void initState() {
-    final completer = Completer();
-    context.read<CreateEventBloc>().add(EventTypesLoad(completer: completer));
+    context.read<CreateEventBloc>().add(const EventTypesLoad(completer: null));
     super.initState();
   }
 

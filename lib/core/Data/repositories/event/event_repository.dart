@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:yourevent/features/features.dart';
 
 class EventRepository {
@@ -38,24 +39,44 @@ class EventRepository {
   Future<void> pushEventFirebase(EventModel eventData) async {
     // Логика сохранения события в Firebase
     try {
-      await FirebaseFirestore.instance
+      await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)
           .collection('myEvents')
-          .add({
+          .doc(eventData.id)
+          .set({
+        'id': eventData.id,
         'name': eventData.name,
         'description': eventData.description,
-        'date': eventData.date,
+        'date': (Timestamp.fromDate(eventData.date)),
         'time': eventData.time.toString(),
         'numberOfPeople': eventData.numberOfPeople,
         'price': eventData.price,
         'address': eventData.address,
+        'isCompleted': false,
       });
     } catch (e) {
       debugPrint(e.toString());
       throw Exception('Ошибка: $e');
 
       // TODO
+    }
+  }
+
+  checkDates(List<EventModel> events) async {
+    DateTime now = DateTime.now();
+
+    // Проверяем каждое событие
+    for (var event in events) {
+      if (event.date.isBefore(now) && event.isCompleted) {
+        // Если событие истекло, обновляем его статус в Firestore
+        await _firestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid)
+            .collection("myEvents")
+            .doc(event.id)
+            .update({'isCompleted': true});
+      }
     }
   }
 }

@@ -36,4 +36,4 @@ class EventCreated extends CreateEventState {
   List<Object> get props => [event];
 }
 
-class CreateEventLoading extends CreateEventState {}
+class Loading extends CreateEventState {}

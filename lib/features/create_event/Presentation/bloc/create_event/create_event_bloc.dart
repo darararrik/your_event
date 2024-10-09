@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:yourevent/features/features.dart';
+
+import '../../../../../core/data/repositories/event/event.dart';
 
 part 'create_event_event.dart';
 part 'create_event_state.dart';
@@ -18,7 +21,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
 
   Future<void> _onCreateEvent(event, emit) async {
     try {
-      emit(CreateEventLoading());
+      emit(Loading());
       await _eventRepository.pushEventFirebase(event.event);
       emit(EventCreated(event.event));
     } on Exception catch (e) {

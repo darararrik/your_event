@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/Data/repositories/auth/auth_repository.dart';
 import 'package:yourevent/features/features.dart';
 import '../blocs/blocs.dart';
+import '../data/repositories/event/event.dart';
 import '../utils/ui.dart';
 
 class YourEventApp extends StatelessWidget {
