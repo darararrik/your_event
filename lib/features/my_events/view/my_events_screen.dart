@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:yourevent/core/Presentation/blocs/create_event/create_event_bloc.dart';
+import 'package:yourevent/features/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/core/Presentation/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/core/core.dart';
-import 'package:yourevent/features/my_events/bloc/tab_bar_bloc.dart';
+import 'package:yourevent/features/my_events/blocs/tab_bar_bloc/tab_bar_bloc.dart';
 
 @RoutePage()
 class MyEventsScreen extends StatelessWidget {
