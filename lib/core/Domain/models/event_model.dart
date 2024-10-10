@@ -17,7 +17,7 @@ class EventModel {
   String? numberOfPeople;
   String? price;
   String? address;
-  bool isCompleted = false;
+  bool isCompleted;
 
   EventModel(
       {required this.id,
@@ -27,7 +27,7 @@ class EventModel {
       this.numberOfPeople,
       this.price,
       this.address,
-      this.isCompleted = false});
+      required this.isCompleted});
 
   // Создание EventModel из Firestore DocumentSnapshot
   factory EventModel.fromFireStore(DocumentSnapshot<Map<String, dynamic>> doc) {

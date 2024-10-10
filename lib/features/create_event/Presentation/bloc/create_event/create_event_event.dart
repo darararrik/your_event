@@ -33,6 +33,7 @@ class CreateEvent extends CreateEventEvent {
     required String address,
     required String price,
   }) : event = EventModel(
+            isCompleted: false,
             date: date,
             name: name,
             description: description,

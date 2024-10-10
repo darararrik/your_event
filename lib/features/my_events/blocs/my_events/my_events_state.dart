@@ -26,3 +26,15 @@ class MyEventsError extends MyEventsState {
 }
 
 final class MyEventsLoading extends MyEventsState {}
+
+final class MyEventsLoadedCompleted extends MyEventsState {
+  final List<EventModel> list;
+
+  const MyEventsLoadedCompleted({required this.list});
+}
+
+final class MyEventsLoadedCreated extends MyEventsState {
+  final List<EventModel> list;
+
+  const MyEventsLoadedCreated({required this.list});
+}

@@ -12,5 +12,16 @@ class MyEventsLoad extends MyEventsEvent {
   const MyEventsLoad({
     this.completer,
   });
-  
+}
+
+class MyEventsLoadCreated extends MyEventsLoad {
+  List<EventModel> ?list;
+
+  MyEventsLoadCreated(this.list);
+}
+
+class MyEventsLoadCompleted extends MyEventsLoad {
+  List<EventModel> ?list;
+
+  MyEventsLoadCompleted(this.list);
 }

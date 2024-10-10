@@ -111,11 +111,9 @@ class _Body extends StatelessWidget {
       controller: tabController,
       children: const [
         CreatedEventsPage(
-          text: '1',
+          isCompleted: false,
         ),
-        CreatedEventsPage(
-          text: '2',
-        ),
+        CreatedEventsPage(isCompleted: true),
       ],
     ));
   }

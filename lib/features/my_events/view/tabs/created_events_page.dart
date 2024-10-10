@@ -1,15 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/features/my_events/blocs/my_events/my_events_bloc.dart';
+
 import 'package:yourevent/core/core.dart';
+import 'package:yourevent/features/my_events/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/features/my_events/widgets/widgets.dart';
 
 class CreatedEventsPage extends StatefulWidget {
-  final String text;
-  const CreatedEventsPage({required this.text, super.key});
+  final bool isCompleted;
+
+  const CreatedEventsPage({
+    super.key,
+    required this.isCompleted,
+  });
 
   @override
   State<CreatedEventsPage> createState() => _CreatedEventsPageState();
@@ -18,13 +24,13 @@ class CreatedEventsPage extends StatefulWidget {
 class _CreatedEventsPageState extends State<CreatedEventsPage> {
   @override
   void initState() {
-    context.read<MyEventsBloc>().add(const MyEventsLoad(completer: null));
     super.initState();
+    // Загружаем события один раз при инициализации
+    context.read<MyEventsBloc>().add(const MyEventsLoad(completer: null));
   }
 
   @override
   Widget build(BuildContext context) {
-    //final theme = Theme.of(context);
     return RefreshIndicator(
       onRefresh: () async {
         final completer = Completer();
@@ -34,21 +40,25 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
       child: BlocBuilder<MyEventsBloc, MyEventsState>(
         builder: (context, state) {
           if (state is MyEventsError) {
-            final error = state.error;
-            return Center(child: Text(error.toString()));
+            return Center(child: Text(state.error.toString()));
           }
           if (state is MyEventsLoaded) {
-            final list = state.list.where((element) => element.isCompleted == false);
+            // Фильтруем события в зависимости от isCompleted
+            final filteredEvents = state.list
+                .where((event) => event.isCompleted == widget.isCompleted)
+                .toList();
+
             return ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (context, index) {
-                  final event = state.list[index];
-                  return EventListCard(
-                    event: event,
-                  );
-                });
+              itemCount: filteredEvents.length,
+              itemBuilder: (context, index) {
+                final event = filteredEvents[index];
+                return EventListCard(event: event);
+              },
+            );
+          } else if (state is MyEventsLoading) {
+            return const Center(child: CircularProgressIndicator());
           } else {
-            return const SizedBox();
+            return const Center(child: Text("Событий нет"));
           }
         },
       ),
