@@ -2,12 +2,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yourevent/core/data/models/event_model.dart';
 import 'package:yourevent/core/utils/images.dart';
-
+import 'package:yourevent/core/widgets/widgets.dart';
+import 'package:yourevent/features/create_event/presentation/bloc/bloc.dart';
+import 'package:yourevent/features/create_event/presentation/view/pages/pages.dart';
+import 'package:yourevent/features/create_event/presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
-
-import '../../../../core/widgets/widgets.dart';
-import '../../../features.dart';
 
 @RoutePage()
 class EventDeatailsPageView extends StatelessWidget {

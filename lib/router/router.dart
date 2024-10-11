@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:yourevent/core/data/models/event_model.dart';
 import 'package:yourevent/features/features.dart';
 import 'package:yourevent/router/auth_guard.dart';
 

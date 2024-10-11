@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yourevent/core/utils/utils.dart';
 
-import '../utils/ui.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String text;

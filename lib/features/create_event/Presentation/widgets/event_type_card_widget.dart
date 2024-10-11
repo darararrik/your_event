@@ -1,11 +1,10 @@
+
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/core/utils/ui.dart';
-import 'package:yourevent/features/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
-import 'package:yourevent/core/domain/models/event_model.dart';
-import 'package:yourevent/features/home/view/home_screen.dart';
+import 'package:yourevent/core/data/models/models.dart';
 import 'package:yourevent/router/router.dart';
+
 
 class EventTypeCardWidget extends StatelessWidget {
   final bool func;

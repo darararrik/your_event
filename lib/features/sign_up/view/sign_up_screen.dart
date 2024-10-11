@@ -1,11 +1,11 @@
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yourevent/core/blocs/blocs.dart';
+import 'package:yourevent/core/utils/utils.dart';
+import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
-import '../../../core/blocs/blocs.dart';
-import '../../../core/utils/ui.dart';
-import 'package:auto_route/auto_route.dart';
-
-import '../../../core/widgets/widgets.dart';
 
 @RoutePage()
 class SignUpScreen extends StatelessWidget {

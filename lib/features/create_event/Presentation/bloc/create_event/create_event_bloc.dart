@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'package:yourevent/core/data/models/event_model.dart';
 import 'package:yourevent/features/features.dart';
 
 import '../../../../../core/data/repositories/event/event.dart';

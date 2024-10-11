@@ -1,5 +1,5 @@
-export 'bloc/bloc.dart';
-export 'models/models.dart';
-export 'repository/repository.dart';
-export 'view/view.dart';
-export 'widgets/widgets.dart';
+export 'presentation/bloc/bloc.dart';
+export 'data/models/models.dart';
+export 'data/article_repository/repository.dart';
+export 'presentation/view/view.dart';
+export 'presentation/widgets/widgets.dart';

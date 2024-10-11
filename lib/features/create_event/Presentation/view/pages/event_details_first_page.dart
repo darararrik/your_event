@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/features/create_event/create_event.dart';
+import 'package:yourevent/core/data/models/models.dart';
+import 'package:yourevent/core/widgets/widgets.dart';
+import 'package:yourevent/features/create_event/presentation/bloc/bloc.dart';
+import 'package:yourevent/features/create_event/presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-import '../../../../../core/widgets/widgets.dart';
+
 
 class EventDetailsFirstPage extends StatelessWidget {
   final TextEditingController nameController;

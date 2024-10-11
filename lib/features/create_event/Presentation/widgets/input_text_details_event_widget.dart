@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/utils/ui.dart';
+import 'package:yourevent/core/utils/utils.dart';
 
 class InputTextDetailsEventWidget extends StatelessWidget {
   final TextEditingController textController;
