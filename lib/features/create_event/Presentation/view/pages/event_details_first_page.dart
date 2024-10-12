@@ -7,8 +7,6 @@ import 'package:yourevent/features/create_event/presentation/bloc/bloc.dart';
 import 'package:yourevent/features/create_event/presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-
-
 class EventDetailsFirstPage extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController descriptionController;
@@ -29,8 +27,7 @@ class EventDetailsFirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateEventBloc, CreateEventState>(
-      listener: (context, state) {
-      },
+      listener: (context, state) {},
       child: Form(
         key: formKey,
         child: Padding(
@@ -50,18 +47,14 @@ class EventDetailsFirstPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-              // Поле для выбора даты
               Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  //TODO: Сделать тчтобы сохранялись значения при переходе назад
                   DateTimePickerWidget(
                     onDateSelected: (date) {
                       onDateChanged(date);
                     },
                   ),
-                  // const SizedBox(width: 12,),
                   TimePickerWidget(
                     onTimeSelected: (time) {
                       onTimeChanged(time);

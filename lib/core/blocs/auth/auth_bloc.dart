@@ -47,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthSuccess(user!));
     } on FirebaseAuthException catch (e) {
       emit(AuthErrorState(error: e.message));
-    } catch (_) {
+    } catch (e) {
       emit(const AuthErrorState(error: "Произошла ошибка"));
     }
   }
@@ -63,9 +63,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(AuthSuccess(user!));
       await _authRepository.saveUserDataToFirestore(
-        name: event.name,
-        email: event.email,
-      );
+          name: event.name, email: event.email);
     } on FirebaseAuthException catch (e) {
       emit(AuthErrorState(error: e.message));
     } catch (e) {

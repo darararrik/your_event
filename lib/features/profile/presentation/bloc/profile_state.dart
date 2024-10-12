@@ -6,8 +6,7 @@ sealed class ProfileState extends Equatable {
   List<Object> get props => [];
 }
 
-class ProfileInitial extends ProfileState {
-}
+class ProfileInitial extends ProfileState {}
 
 class ProfileLoading extends ProfileState {}
 
@@ -20,7 +19,10 @@ class ProfileLoaded extends ProfileState {
 
 class ProfileError extends ProfileState {
   final Object error;
-  const ProfileError({required this.error}) ;
+  const ProfileError({required this.error});
   @override
   List<Object> get props => [error];
 }
+
+class ProfileEmailUpdated extends ProfileState {}
+class ProfileNameUpdated extends ProfileState {}

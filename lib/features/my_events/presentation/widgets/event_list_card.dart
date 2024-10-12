@@ -7,11 +7,11 @@ import 'package:yourevent/core/utils/utils.dart';
 import '../../../../core/data/models/event_model.dart';
 
 class EventListCard extends StatelessWidget {
-  EventListCard({
+  const EventListCard({
     super.key,
     required this.event,
   });
-  EventModel event;
+  final EventModel event;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

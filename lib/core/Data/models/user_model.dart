@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class User {
@@ -5,22 +6,24 @@ class User {
   final String email;
   final String displayName;
   final String photoURL;
+  final bool emailVerified;
 
   User({
     required this.id,
     required this.email,
     required this.displayName,
     required this.photoURL,
+    required this.emailVerified,
   });
-
 
   // Создание User из FirebaseAuth User
   factory User.fromFirebaseUser(firebase_auth.User user) {
     return User(
       id: user.uid,
-      email: user.email!,
-      displayName: user.displayName!,
-      photoURL: user.photoURL!,
+      email: user.email ?? '',
+      displayName: user.displayName ?? '',
+      photoURL: user.photoURL ?? '',
+      emailVerified: user.emailVerified,
     );
   }
 
@@ -33,15 +36,4 @@ class User {
       'photoURL': photoURL,
     };
   }
-
-  // Создание User из JSON
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      email: json['email'],
-      displayName: json['displayName'],
-      photoURL: json['photoURL'],
-    );
-  }
 }
-

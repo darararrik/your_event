@@ -11,27 +11,37 @@ import 'package:yourevent/features/create_event/presentation/widgets/widgets.dar
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
-class EventDeatailsPageView extends StatelessWidget {
+class EventDeatailsPageView extends StatefulWidget {
   final EventTypeModel eventType;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController numberOfPeopleController =
-      TextEditingController();
-  final TextEditingController adrressController = TextEditingController();
-  EventDeatailsPageView({
+
+  const EventDeatailsPageView({
     super.key,
     required this.eventType,
-    this.finalDateTime,
-    this.selectedDate,
-    this.selectedTime,
   });
-  final _formKeyFirst = GlobalKey<FormState>();
-  final _formKeySecond = GlobalKey<FormState>();
 
+  @override
+  State<EventDeatailsPageView> createState() => _EventDeatailsPageViewState();
+}
+
+class _EventDeatailsPageViewState extends State<EventDeatailsPageView> {
   DateTime? selectedDate; // Переменная для сохранения даты
   TimeOfDay? selectedTime;
   DateTime? finalDateTime;
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController descriptionController = TextEditingController();
+
+  final TextEditingController priceController = TextEditingController();
+
+  final TextEditingController numberOfPeopleController =
+      TextEditingController();
+
+  final TextEditingController adrressController = TextEditingController();
+
+  final _formKeyFirst = GlobalKey<FormState>();
+
+  final _formKeySecond = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -40,7 +50,6 @@ class EventDeatailsPageView extends StatelessWidget {
         builder: (context, state) {
           final pageIndex = (state is PageViewUpdated) ? state.pageIndex : 0;
           final pageController = PageController(initialPage: pageIndex);
-
           return Scaffold(
             body: BlocBuilder<CreateEventBloc, CreateEventState>(
               builder: (context, state) {
@@ -136,7 +145,7 @@ class EventDeatailsPageView extends StatelessWidget {
                       child: Column(
                         children: [
                           EventTypeCardWidget(
-                            eventType: eventType,
+                            eventType: widget.eventType,
                             func: false,
                             width: 380,
                             height: 180,
@@ -155,7 +164,7 @@ class EventDeatailsPageView extends StatelessWidget {
                                 EventDetailsFirstPage(
                                   nameController: nameController,
                                   descriptionController: descriptionController,
-                                  eventType: eventType,
+                                  eventType: widget.eventType,
                                   formKey: _formKeyFirst,
                                   onDateChanged: (date) {
                                     selectedDate = date; // Обновление даты

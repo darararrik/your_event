@@ -24,7 +24,7 @@ class TextFieldWidget extends StatelessWidget {
       required this.hintText,
       this.obscureText = false,
       this.validator,
-      this.maxLines,
+      this.maxLines = 1,
       this.maxLength = 48,
       this.keyboardType});
 

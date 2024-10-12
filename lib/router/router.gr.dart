@@ -10,6 +10,44 @@
 part of 'router.dart';
 
 /// generated route for
+/// [AboutScreen]
+class AboutRoute extends PageRouteInfo<void> {
+  const AboutRoute({List<PageRouteInfo>? children})
+      : super(
+          AboutRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AboutRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AboutScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [AccountScreen]
+class AccountRoute extends PageRouteInfo<void> {
+  const AccountRoute({List<PageRouteInfo>? children})
+      : super(
+          AccountRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AccountScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [AgentsScreen]
 class AgentsRoute extends PageRouteInfo<void> {
   const AgentsRoute({List<PageRouteInfo>? children})
@@ -62,6 +100,60 @@ class ArticlesRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ArticlesScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ChangeEmailScreen]
+class ChangeEmailRoute extends PageRouteInfo<ChangeEmailRouteArgs> {
+  ChangeEmailRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChangeEmailRoute.name,
+          args: ChangeEmailRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangeEmailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ChangeEmailRouteArgs>(
+          orElse: () => const ChangeEmailRouteArgs());
+      return ChangeEmailScreen(key: args.key);
+    },
+  );
+}
+
+class ChangeEmailRouteArgs {
+  const ChangeEmailRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ChangeEmailRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [ChangePasswordScreen]
+class ChangePasswordRoute extends PageRouteInfo<void> {
+  const ChangePasswordRoute({List<PageRouteInfo>? children})
+      : super(
+          ChangePasswordRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangePasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChangePasswordScreen();
     },
   );
 }
@@ -203,6 +295,25 @@ class ProfileRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProfileScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SettingsScreen]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingsScreen();
     },
   );
 }

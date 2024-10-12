@@ -1,18 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:yourevent/core/utils/colors.dart';
 
 final lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
-    colorScheme: _colorShcemeTheme(),
-    tabBarTheme: _tabBarTheme(),
-    navigationBarTheme: _navigationBarThemeData(),
-    appBarTheme: _appBarTheme(),
-    textButtonTheme: _textButtonThemeData(),
-    iconTheme: _iconThemeData(),
-    outlinedButtonTheme: _outlinedButtonTheme(),
-    textTheme: _textTheme());
-
-
+  scaffoldBackgroundColor: Colors.white,
+  colorScheme: _colorShcemeTheme(),
+  tabBarTheme: _tabBarTheme(),
+  navigationBarTheme: _navigationBarThemeData(),
+  appBarTheme: _appBarTheme(),
+  textButtonTheme: _textButtonThemeData(),
+  iconTheme: _iconThemeData(),
+  outlinedButtonTheme: _outlinedButtonTheme(),
+  textTheme: _textTheme(),
+);
 
 //lightTheme
 TabBarTheme _tabBarTheme() {
@@ -22,11 +22,8 @@ TabBarTheme _tabBarTheme() {
       indicatorColor: orange, // Цвет линии под вкладкой
       dividerColor: grey,
       dividerHeight: 0.5, // Стиль текста для активной вкладки
-      unselectedLabelStyle: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: grey
-      ),
+      unselectedLabelStyle:
+          TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: grey),
       labelStyle: TextStyle(
         fontSize: 14,
         fontFamily: "Roboto",
@@ -81,8 +78,6 @@ TextTheme _textTheme() {
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
-
-    //H2
     headlineMedium: TextStyle(
       fontSize: 22,
       fontFamily: "Roboto",
@@ -163,4 +158,10 @@ ColorScheme _colorShcemeTheme() {
     onSurface: Color(0xFF221a15), // Цвет текста на поверхности
     onError: Color(0xFFFFFFFF), // Цвет текста на фоне ошибки
   );
+}
+
+extension ThemePlatformExtension on ThemeData {
+  bool get isAndroid => defaultTargetPlatform == TargetPlatform.android;
+  Color get cupertinoAlertColor => const Color(0xFFF82B10);
+  Color get cupertinoActionColor => const Color(0xFF3478F7);
 }

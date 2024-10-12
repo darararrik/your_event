@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +17,6 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    Object? error;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,9 +35,6 @@ class SignUpScreen extends StatelessWidget {
               context.router
                   .popUntil((route) => route.settings.name == MainRoute.name);
               context.router.push(const HomeRoute());
-            }
-            if (state is AuthErrorState) {
-              error = state.error;
             }
           },
           builder: (context, state) {
@@ -75,11 +70,12 @@ class SignUpScreen extends StatelessWidget {
                           .hasMatch(value)) {
                         return 'Введите корректный email';
                       }
-                      return error.toString();
+                      return null;
                     },
                   ),
                   const SizedBox(height: 24),
                   TextFieldWidget(
+                    maxLines: 1,
                     controller: passwordController,
                     labelText: 'Пароль',
                     hintText: "Придумайте пароль",

@@ -22,11 +22,20 @@ class MyEventsScreen extends StatelessWidget {
             vsync: Scaffold.of(context),
             initialIndex: tabIndex,
           );
-          return CustomScrollView(
-            slivers: [
-              _AppBar(tabController: tabController),
-              _Body(tabController: tabController)
-            ],
+          return RefreshIndicator(
+            onRefresh: () async {
+              final completer = Completer();
+              context
+                  .read<MyEventsBloc>()
+                  .add(MyEventsLoad(completer: completer));
+              return completer.future;
+            },
+            child: CustomScrollView(
+              slivers: [
+                _AppBar(tabController: tabController),
+                _Body(tabController: tabController)
+              ],
+            ),
           );
         },
       ),
@@ -102,14 +111,15 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
+        hasScrollBody: true,
         child: TabBarView(
-      controller: tabController,
-      children: const [
-        CreatedEventsPage(
-          isCompleted: false,
-        ),
-        CreatedEventsPage(isCompleted: true),
-      ],
-    ));
+          controller: tabController,
+          children: const [
+            CreatedEventsPage(
+              isCompleted: false,
+            ),
+            CreatedEventsPage(isCompleted: true),
+          ],
+        ));
   }
 }

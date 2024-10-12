@@ -10,7 +10,7 @@ class AuthRepository {
   AuthRepository({FirebaseAuth? firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
   static const String defaultAvatarUrl =
-      'https://firebasestorage.googleapis.com/v0/b/yourevent0app.appspot.com/o/avatar.png?alt=media&token=99be8cea-5607-441b-adc1-9c1df1d555ea'; // URL фото по умолчанию в Firebase Storage
+      'https://firebasestorage.googleapis.com/v0/b/yourevent0app.appspot.com/o/Avatar.png?alt=media&token=59055445-530a-490c-9101-265c307ecfd4'; // URL фото по умолчанию в Firebase Storage
 
   /// Регистрация нового пользователя с использованием email и пароля.
   Future<User?> createUser(
@@ -23,6 +23,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
+      await userCredential.user?.sendEmailVerification();
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -42,7 +43,25 @@ class AuthRepository {
     }
   }
 
-  /// Сохранение данных пользователя в Firestore.
+  Future<void> saveNewUserNameToFirestore({
+    required String name,
+  }) async {
+    try {
+      final firebaseUser = await getCurrentUser();
+      if (firebaseUser != null) {
+        await firebaseUser.updateDisplayName(name);
+        await _firestore.collection('users').doc(firebaseUser.uid).set({
+          'name': name,
+        });
+      } else {
+        debugPrint('Ошибка: пользовательский объект null.');
+      }
+    } catch (e) {
+      // Логируем ошибку, но не бросаем исключение, чтобы регистрация прошла успешно
+      debugPrint('Ошибка при сохранении данных пользователя в Firestore: $e');
+    }
+  }
+
   Future<void> saveUserDataToFirestore({
     required String name,
     required String email,
@@ -68,6 +87,41 @@ class AuthRepository {
     } catch (e) {
       // Логируем ошибку, но не бросаем исключение, чтобы регистрация прошла успешно
       debugPrint('Ошибка при сохранении данных пользователя в Firestore: $e');
+    }
+  }
+
+  Future<void> updateEmail({
+    required String email,
+    required String
+        currentPassword, // Нужен текущий пароль для реаутентификации
+  }) async {
+    try {
+      final User? firebaseUser = await getCurrentUser();
+
+      if (firebaseUser != null) {
+        // Получаем EmailAuthCredential с использованием текущего email и пароля
+        AuthCredential credential = EmailAuthProvider.credential(
+          email: firebaseUser.email!,
+          password: currentPassword,
+        );
+
+        // Реаутентификация пользователя
+        await firebaseUser.reauthenticateWithCredential(credential);
+
+        // Обновляем email
+        await firebaseUser.verifyBeforeUpdateEmail(email);
+
+        // Обновляем email в Firestore
+        await _firestore.collection('users').doc(firebaseUser.uid).set({
+          'email': email,
+        }, SetOptions(merge: true));
+
+        debugPrint('Email обновлен успешно');
+      } else {
+        debugPrint('Ошибка: пользовательский объект null.');
+      }
+    } catch (e) {
+      debugPrint('Ошибка при обновлении email: $e');
     }
   }
 
@@ -109,38 +163,12 @@ class AuthRepository {
 
   /// Получение текущего авторизованного пользователя.
   Future<User?> getCurrentUser() async {
-    final firebaseUser = _firebaseAuth.currentUser;
+    User? firebaseUser = _firebaseAuth.currentUser;
+    await firebaseUser?.reload();
+    firebaseUser = _firebaseAuth.currentUser;
     if (firebaseUser != null) {
       return firebaseUser;
     }
     return null;
   }
-
-  // Future<User> signInWithGoogle() async {
-  //   try {
-  //     // Trigger the authentication flow
-  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  //     if (googleUser == null) {
-  //       throw AuthException(emailError: 'Вход отменен пользователем.');
-  //     }
-
-  //     // Obtain the auth details from the request
-  //     final GoogleSignInAuthentication googleAuth =
-  //         await googleUser.authentication;
-
-  //     // Create a new credential
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-
-  //     // Once signed in, return the UserCredential
-  //     final userCredential =
-  //         await _firebaseAuth.signInWithCredential(credential);
-  //     return userCredential.user!;
-  //   } catch (e) {
-  //     throw AuthException(emailError: 'Ошибка входа с помощью Google.');
-  //   }
-  // }
 }

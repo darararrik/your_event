@@ -7,7 +7,6 @@ import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
 import 'package:yourevent/features/home/presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
-
 @RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return CustomScrollView(
-      physics: const NeverScrollableScrollPhysics(),
       slivers: [
         SliverAppBar(
           toolbarHeight: 108,
@@ -37,8 +35,9 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         SliverFillRemaining(
+          hasScrollBody: false,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 // Добавляем статический контент
@@ -49,8 +48,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Хотите организовать мероприятие?",
-                        style:
-                            theme.textTheme.headlineLarge!.copyWith(height: 1),
+                        style: theme.textTheme.headlineLarge,
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -62,16 +60,17 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
+                    SizedBox(
                       child: IconButtonWidget(
                         text: 'Выбрать агентство мероприятий',
                         image: faqSearch,
                         onPressed: () {},
                       ),
                     ),
-                    const SizedBox(width: 60),
-                    Expanded(
+
+                    SizedBox(
                       child: IconButtonWidget(
                         text: 'Организую сам',
                         image: package,
@@ -79,7 +78,6 @@ class HomeScreen extends StatelessWidget {
                           context
                               .read<CreateEventBloc>()
                               .add(const EventTypesLoad(completer: null));
-
                           context.router.push(const EventTypeRoute());
                         },
                       ),
@@ -95,9 +93,8 @@ class HomeScreen extends StatelessWidget {
                     icon: const Icon(Icons.arrow_right_rounded),
                   ),
                 ),
-
-                // Добавляем BlocBuilder для отображения статей
-                Expanded(
+                SizedBox(
+                  height: 240,
                   child: BlocBuilder<ArticlesBloc, ArticlesState>(
                     builder: (context, state) {
                       if (state is ArticlesLoading) {

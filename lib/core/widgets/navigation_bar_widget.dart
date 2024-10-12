@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
 
-
 Container navigationBarWidget(TabsRouter tabsRouter) {
   return Container(
     decoration: const BoxDecoration(
@@ -22,50 +21,26 @@ Container navigationBarWidget(TabsRouter tabsRouter) {
         elevation: 32,
         selectedIndex: tabsRouter.activeIndex,
         onDestinationSelected: (index) => _openPage(index, tabsRouter),
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 32,
-            ),
+            icon: home,
             label: 'Home',
-            selectedIcon: Icon(
-              Icons.home_outlined,
-              color: orange,
-              size: 32,
-            ),
+            selectedIcon: homeSelected,
           ),
           NavigationDestination(
-            icon: Icon(Icons.filter_none),
+            icon: agents,
             label: 'Agents',
-            selectedIcon: Icon(
-              Icons.filter_none,
-              color: orange,
-            ),
+            selectedIcon: agentsSelected,
           ),
           NavigationDestination(
-            icon: Icon(
-              Icons.calendar_month,
-              size: 28,
-            ),
+            icon: myEvents,
             label: 'MyEvents',
-            selectedIcon: Icon(
-              Icons.calendar_month,
-              size: 28,
-              color: orange,
-            ),
+            selectedIcon: myEventsSelected,
           ),
           NavigationDestination(
-            icon: Icon(
-              Icons.person_outline,
-              size: 32,
-            ),
+            icon: profile,
             label: 'Profile',
-            selectedIcon: Icon(
-              Icons.person_outline,
-              size: 32,
-              color: orange,
-            ),
+            selectedIcon: profileSelected,
           ),
         ],
       ),

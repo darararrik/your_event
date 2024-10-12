@@ -5,6 +5,7 @@ import 'package:yourevent/core/blocs/blocs.dart';
 import 'package:yourevent/core/data/repositories/auth/auth.dart';
 import 'package:yourevent/core/data/repositories/event/event.dart';
 import 'package:yourevent/core/utils/utils.dart';
+import 'package:yourevent/features/change_email/presentation/bloc/change_email_bloc.dart';
 import 'package:yourevent/features/create_event/presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/home/data/article_repository/articles_repository.dart';
 import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
@@ -25,6 +26,7 @@ class YourEventApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => ChangeEmailBloc(authRepository)),
         BlocProvider(create: (context) => ProfileBloc(authRepository)),
         BlocProvider(create: (context) => AuthBloc(authRepository)),
         BlocProvider(create: (context) => ArticlesBloc(articlesRepository)),

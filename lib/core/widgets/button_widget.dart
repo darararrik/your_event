@@ -18,6 +18,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextButton(
+      
       onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(hasColor ? orange : white),
@@ -30,10 +31,10 @@ class ButtonWidget extends StatelessWidget {
             ),
           ),
         ),
-        fixedSize: WidgetStateProperty.all<Size>(const Size(380, 53)),
+        fixedSize: WidgetStateProperty.all<Size>(const Size(380, 52)),
       ),
       child: Text(text,
-          style: theme.textTheme.labelLarge!.copyWith(fontSize: 14, color: hasColor ? white : orange)),
+          style: theme.textTheme.labelLarge!.copyWith(fontSize: 18, color: hasColor ? white : orange)),
     );
   }
 }

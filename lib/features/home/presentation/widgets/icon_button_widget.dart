@@ -17,11 +17,11 @@ class IconButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      width: 170,
-      height: 150,
+      width: 160,
+      height: 160,
       decoration: BoxDecoration(
         border: Border.all(color: theme.primaryColor, width: 2),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: TextButton(
         onPressed: onPressed,

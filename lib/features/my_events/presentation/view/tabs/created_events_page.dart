@@ -26,37 +26,30 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        final completer = Completer();
-        context.read<MyEventsBloc>().add(MyEventsLoad(completer: completer));
-        return completer.future;
+    return BlocBuilder<MyEventsBloc, MyEventsState>(
+      builder: (context, state) {
+        if (state is MyEventsError) {
+          return Center(child: Text(state.error.toString()));
+        }
+        if (state is MyEventsLoaded) {
+          // Фильтруем события в зависимости от isCompleted
+          final filteredEvents = state.list
+              .where((event) => event.isCompleted == widget.isCompleted)
+              .toList();
+    
+          return ListView.builder(
+            itemCount: filteredEvents.length,
+            itemBuilder: (context, index) {
+              final event = filteredEvents[index];
+              return EventListCard(event: event);
+            },
+          );
+        } else if (state is MyEventsLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return const Center(child: Text("Событий нет"));
+        }
       },
-      child: BlocBuilder<MyEventsBloc, MyEventsState>(
-        builder: (context, state) {
-          if (state is MyEventsError) {
-            return Center(child: Text(state.error.toString()));
-          }
-          if (state is MyEventsLoaded) {
-            // Фильтруем события в зависимости от isCompleted
-            final filteredEvents = state.list
-                .where((event) => event.isCompleted == widget.isCompleted)
-                .toList();
-
-            return ListView.builder(
-              itemCount: filteredEvents.length,
-              itemBuilder: (context, index) {
-                final event = filteredEvents[index];
-                return EventListCard(event: event);
-              },
-            );
-          } else if (state is MyEventsLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            return const Center(child: Text("Событий нет"));
-          }
-        },
-      ),
     );
   }
 }
