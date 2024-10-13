@@ -6,7 +6,7 @@ import 'package:yourevent/core/data/models/user_model.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
-import 'package:yourevent/features/account/presentation/widgets/input_widget.dart';
+import 'package:yourevent/core/widgets/input_widget.dart';
 import 'package:yourevent/features/features.dart';
 import 'package:yourevent/router/router.dart';
 
@@ -34,6 +34,7 @@ class _AccountScreenState extends State<AccountScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
+        physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
         slivers: [
           SliverAppBar(
             title: Text(

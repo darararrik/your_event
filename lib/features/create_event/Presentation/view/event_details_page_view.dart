@@ -82,20 +82,19 @@ class _EventDeatailsPageViewState extends State<EventDeatailsPageView> {
                 }
                 if (state is EventCreated) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 200),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        placeholder,
+                        love,
                         const SizedBox(
-                          height: 24,
+                          height: 36,
                         ),
                         Text(
                           "Событие успешно создано!",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         const SizedBox(
-                          height: 24,
+                          height: 12,
                         ),
                         Text(
                           "Изменить событие и посмотреть его подробности можно в событиях",
@@ -103,7 +102,7 @@ class _EventDeatailsPageViewState extends State<EventDeatailsPageView> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(
-                          height: 32,
+                          height: 80,
                         ),
                         ButtonWidget(
                           text: "Мои события",

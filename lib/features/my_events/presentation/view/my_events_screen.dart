@@ -31,6 +31,7 @@ class MyEventsScreen extends StatelessWidget {
               return completer.future;
             },
             child: CustomScrollView(
+              
               slivers: [
                 _AppBar(tabController: tabController),
                 _Body(tabController: tabController)
@@ -111,6 +112,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
+      
         hasScrollBody: true,
         child: TabBarView(
           controller: tabController,

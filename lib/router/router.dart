@@ -46,6 +46,10 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           guards: [AuthGuard()],
+          page: ArticlesRoute.page,
+        ),
+        AutoRoute(
+          guards: [AuthGuard()],
           page: EventTypeRoute.page,
         ),
         AutoRoute(

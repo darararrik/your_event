@@ -21,7 +21,6 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
   @override
   void initState() {
     super.initState();
-    // Загружаем события один раз при инициализации
     context.read<MyEventsBloc>().add(const MyEventsLoad(completer: null));
   }
 
@@ -50,9 +49,9 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
         } else {
           return Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 100),
+                const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 160),
             child: Column(
-              children: [
+              children: <Widget>[
                 folder,
                 const SizedBox(
                   height: 8,
@@ -70,7 +69,7 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall!
-                      .copyWith(color: grey, fontSize: 14, height: 1.8),
+                      .copyWith(color: grey, fontSize: 14, height: 1.8, fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 ),
               ],

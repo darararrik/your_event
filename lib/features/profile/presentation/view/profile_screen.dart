@@ -62,6 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
         child: CustomScrollView(
+          physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
           slivers: [
             SliverFillRemaining(
               hasScrollBody: false,

@@ -10,13 +10,13 @@ final Widget logo = SvgPicture.asset(
 );
 final Widget faqSearch = SvgPicture.asset(
   "assets/images/search.svg",
-  width: 70,
-  height: 70,
+  width: 56,
+  height: 56,
 );
 final Widget package = SvgPicture.asset(
   "assets/images/package.svg",
-  width: 70,
-  height: 70,
+  width: 48,
+  height: 48,
 );
 final Widget imgStartScreen = SvgPicture.asset(
     'assets/images/img_start_screen.svg',
@@ -24,14 +24,20 @@ final Widget imgStartScreen = SvgPicture.asset(
     height: 220);
 // final Widget bottomSvgPicture = SvgPicture.asset('assets/images/bottomSvgPicture.svg',
 //     fit: BoxFit.fill);
-final Widget placeholder = Image.asset("assets/images/placeholder.png");
-final Widget like = Image.asset("/assets/images/like.png");
-final Widget folder = Image.asset("/assets/images/folder.png");
+final Widget placeholder = Image.asset(
+  "assets/images/placeholder.png",
+);
+final Widget like = Image.asset("assets/images/like.png");
+final Widget folder = Image.asset("assets/images/folder.png");
 
 final Widget home = SvgPicture.asset(
   'assets/images/Nav1Home.svg',
   width: 32, // ширина иконки
   height: 32, // высота иконки
+);
+final Widget love = SvgPicture.asset(
+  'assets/images/love.svg',
+// высота иконки
 );
 final Widget homeSelected = SvgPicture.asset(
   'assets/images/Nav1Home.svg',
@@ -52,7 +58,6 @@ final Widget agentsSelected = SvgPicture.asset(
   height: 32, // высота иконки
 );
 final Widget profile = SvgPicture.asset(
-
   'assets/images/profile.svg',
   width: 32, // ширина иконки
   height: 32, // высота иконки

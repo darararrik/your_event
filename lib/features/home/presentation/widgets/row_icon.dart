@@ -1,45 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:yourevent/core/utils/colors.dart';
 
-class RowIcon extends StatelessWidget {
-  final void Function() onTapFunc;
+class Chips extends StatelessWidget {
   final Icon icon;
   final String title;
-  const RowIcon(
-      {super.key, required this.onTapFunc, required this.icon, required this.title});
+  const Chips({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GestureDetector(
-      onTap: onTapFunc,
+    return Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal: 12, vertical: 4), // Настройка отступов для "кнопки"
+      decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(
+            offset: Offset(0, 5),
+            spreadRadius: 0,
+            color: Color.fromRGBO(0, 0, 0, 0.06),
+            blurRadius: 13,
+          )
+        ],
+        color: white, // Цвет фона "кнопки"
+        borderRadius: BorderRadius.circular(8), // Радиус скругления углов
+      ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            title,
-            style: theme.textTheme.headlineMedium,
+            "Все",
+            style: theme.textTheme.labelSmall!.copyWith(color: grey),
           ),
-          const Spacer(),
-          Container(
-            padding: const EdgeInsets.fromLTRB(
-                12, 2, 4, 2), // Настройка отступов для "кнопки"
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(
-                  100, 201, 195, 195), // Цвет фона "кнопки"
-              borderRadius:
-                  BorderRadius.circular(16), // Радиус скругления углов
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Все",
-                  style: theme.textTheme.labelSmall,
-                ),
-                icon,
-              ],
-            ),
-          ),
+          icon,
         ],
       ),
     );

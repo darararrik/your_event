@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yourevent/features/home/data/models/models.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({
+   const CardWidget({
     super.key,
     required this.article,
     required this.width,
     required this.height,
+    this.onTap,
   });
   final double width;
   final double height;
   final ArticleModel article;
+  
+  final GestureTapCallback? onTap;
+  
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        //TODO Сделать переход на статью
-      },
+      onTap: onTap,
       child: Stack(
         children: [
           // Фотография, полностью покрывающая контейнер
@@ -47,7 +50,7 @@ class CardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    article.time.toString(),
+                    DateFormat('d MMMM y', 'ru').format(article.time),
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w300,

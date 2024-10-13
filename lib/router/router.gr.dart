@@ -67,25 +67,6 @@ class AgentsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ArticleScreen]
-class ArticleRoute extends PageRouteInfo<void> {
-  const ArticleRoute({List<PageRouteInfo>? children})
-      : super(
-          ArticleRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ArticleRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const ArticleScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [ArticlesScreen]
 class ArticlesRoute extends PageRouteInfo<void> {
   const ArticlesRoute({List<PageRouteInfo>? children})

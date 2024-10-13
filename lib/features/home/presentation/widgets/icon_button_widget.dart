@@ -4,31 +4,34 @@ import 'package:yourevent/core/utils/colors.dart';
 class IconButtonWidget extends StatelessWidget {
   final String text;
   final Widget image;
-  final VoidCallback onPressed;
+  final VoidCallback onTap;
 
   const IconButtonWidget({
     super.key,
     required this.text,
     required this.image,
-    required this.onPressed,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      width: 160,
-      height: 160,
-      decoration: BoxDecoration(
-        border: Border.all(color: theme.primaryColor, width: 2),
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: TextButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(Colors.white),
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
-        ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 168,
+        height: 152,
+        decoration: BoxDecoration(
+            color: white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+                color: Color.fromRGBO(0, 0, 0, 0.1),
+                blurRadius: 33,
+              )
+            ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
