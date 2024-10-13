@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
 
-Container navigationBarWidget(TabsRouter tabsRouter) {
+Container NavigationBarWidget(TabsRouter tabsRouter) {
   return Container(
     decoration: const BoxDecoration(
       color: Colors.transparent,
