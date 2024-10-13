@@ -22,7 +22,6 @@ dependencies:
   auto_route: ^9.2.0
   intl: ^0.19.0
   uuid: ^4.5.1
-  iconsax: ^0.0.8
   external_app_launcher: ^4.0.0
 
 dev_dependencies:

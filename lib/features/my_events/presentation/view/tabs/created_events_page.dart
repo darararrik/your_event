@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/features/my_events/presentation/widgets/widgets.dart';
 
@@ -36,7 +37,7 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
           final filteredEvents = state.list
               .where((event) => event.isCompleted == widget.isCompleted)
               .toList();
-    
+
           return ListView.builder(
             itemCount: filteredEvents.length,
             itemBuilder: (context, index) {
@@ -47,7 +48,34 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
         } else if (state is MyEventsLoading) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          return const Center(child: Text("Событий нет"));
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 100),
+            child: Column(
+              children: [
+                folder,
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  "У вас пока нет событий",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  "Создайте мероприятие самостоятельно либо свяжитесь с агентством",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: grey, fontSize: 14, height: 1.8),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
         }
       },
     );

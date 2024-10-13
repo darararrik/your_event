@@ -45,108 +45,112 @@ class _AccountScreenState extends State<AccountScreen> {
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: BlocConsumer<AccountBloc, AccountState>(
+              child: BlocListener<AccountBloc, AccountState>(
                 listener: (context, state) {
-                  if (state is ProfileNameUpdated) {
+                  if (state is AccountNameUpdated) {
+                    context.read<ProfileBloc>().add(ProfileLoadRequested());
                     const snackBar = SnackBar(
+                      behavior: SnackBarBehavior.floating,
                       content: Text('Yay! A SnackBar!'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else {
-                    const snackBar = SnackBar(
-                      content: Text('Хуйня!'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-                builder: (context, state) {
-                  if (state is ProfileLoaded) {
-                    final user = state.user;
-                    nameController.text = user.displayName;
-                    return Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            radius: 70,
-                            backgroundImage: NetworkImage(user.photoURL),
-                            //TODO: Реализация
-                            onBackgroundImageError: (_, __) {
-                              debugPrint('Ошибка загрузки аватарки');
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text(
-                              "Изменить фото",
-                              style: theme.textTheme.titleLarge!
-                                  .copyWith(color: orange),
+                child: BlocBuilder<ProfileBloc, ProfileState>(
+                  builder: (context, state) {
+                    if (state is ProfileLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state is ProfileLoaded) {
+                      final user = state.user;
+                      nameController.text = user.displayName;
+                      return Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              radius: 70,
+                              backgroundImage: NetworkImage(user.photoURL),
+                              //TODO: Реализация
+                              onBackgroundImageError: (_, __) {
+                                debugPrint('Ошибка загрузки аватарки');
+                              },
                             ),
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          InputWidget(
-                            controller: nameController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Введите новое имя';
-                              }
-                              return null;
-                            },
-                            labelText: 'Имя пользователя',
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          InputWidget(
-                              readOnly: true,
-                              text: user.email,
-                              onTap: () =>
-                                  context.router.navigate(ChangeEmailRoute()),
-                              labelText: 'E-mail',
-                              suffixIcon: const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 16,
-                                color: grey,
-                              )),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          InputWidget(
-                              suffixIcon: const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 16,
-                                color: grey,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text(
+                                "Изменить фото",
+                                style: theme.textTheme.titleLarge!
+                                    .copyWith(color: orange),
                               ),
-                              readOnly: true,
-                              text: "Сменить пароль",
-                              onTap: () => context.router
-                                  .navigate(const ChangePasswordRoute()),
-                              labelText: 'Пароль'),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          ButtonWidget(
-                              text: "Сохранить изменения",
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  context.read<AccountBloc>().add(
-                                      AccountNameUpdate(
-                                          name: nameController.text.trim()));
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            InputWidget(
+                              controller: nameController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Введите новое имя';
                                 }
-                              })
-                        ],
-                      ),
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                },
+                                return null;
+                              },
+                              labelText: 'Имя пользователя',
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            InputWidget(
+                                readOnly: true,
+                                text: user.email,
+                                onTap: () =>
+                                    context.router.navigate(ChangeEmailRoute()),
+                                labelText: 'E-mail',
+                                suffixIcon: const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 16,
+                                  color: grey,
+                                )),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            InputWidget(
+                                suffixIcon: const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 16,
+                                  color: grey,
+                                ),
+                                readOnly: true,
+                                text: "Сменить пароль",
+                                onTap: () => context.router
+                                    .navigate(const ChangePasswordRoute()),
+                                labelText: 'Пароль'),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            ButtonWidget(
+                                text: "Сохранить изменения",
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    context.read<AccountBloc>().add(
+                                        AccountUpdateName(
+                                            name: nameController.text.trim()));
+                                  }
+                                })
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

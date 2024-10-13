@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/auth/auth.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
-import 'package:yourevent/features/change_email/presentation/bloc/change_email_bloc.dart';
+import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/account/presentation/view/account_screen.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -20,9 +21,9 @@ class ChangeEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: BlocBuilder<ChangeEmailBloc, ChangeEmailState>(
+      body: BlocBuilder<AccountBloc, AccountState>(
         builder: (context, state) {
-          if (state is EmailUpdated) {
+          if (state is AccountEmailUpdated) {
             return Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 120),
@@ -61,7 +62,7 @@ class ChangeEmailScreen extends StatelessWidget {
               ),
             );
           }
-          if (state is Loading) {
+          if (state is AccountLoading) {
             return const Center(child: CircularProgressIndicator());
           }
           return CustomScrollView(
@@ -115,8 +116,8 @@ class ChangeEmailScreen extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 context
-                                    .read<ChangeEmailBloc>()
-                                    .add(RequestedUpdateEmailEvent(
+                                    .read<AccountBloc>()
+                                    .add(AccountUpdateEmail(
                                       email: emailController.text.trim(),
                                       password: passwordController.text.trim(),
                                     ));

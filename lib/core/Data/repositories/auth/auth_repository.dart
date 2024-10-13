@@ -43,14 +43,15 @@ class AuthRepository {
     }
   }
 
-  Future<void> saveNewUserNameToFirestore({
+  Future<void> updateName({
     required String name,
   }) async {
     try {
       final firebaseUser = await getCurrentUser();
       if (firebaseUser != null) {
-        await firebaseUser.updateDisplayName(name);
-        await _firestore.collection('users').doc(firebaseUser.uid).set({
+
+        // await firebaseUser.updateDisplayName(name);
+        await _firestore.collection('users').doc(firebaseUser.uid).update({
           'name': name,
         });
       } else {

@@ -10,11 +10,3 @@ sealed class ProfileEvent extends Equatable {
 
 class ProfileLoadRequested extends ProfileEvent {}
 
-class ProfileNewNameRequested extends ProfileEvent {
-  final String name;
-  const ProfileNewNameRequested({
-    required this.name,
-  });
-  @override
-  List<Object> get props => [name];
-}

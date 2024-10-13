@@ -6,6 +6,7 @@ import '../utils/utils.dart';
 Container navigationBarWidget(TabsRouter tabsRouter) {
   return Container(
     decoration: const BoxDecoration(
+      color: Colors.transparent,
       boxShadow: [
         BoxShadow(
             color: Color.fromRGBO(0, 0, 0, 0.1),

@@ -26,6 +26,7 @@ final Widget imgStartScreen = SvgPicture.asset(
 //     fit: BoxFit.fill);
 final Widget placeholder = Image.asset("assets/images/placeholder.png");
 final Widget like = Image.asset("/assets/images/like.png");
+final Widget folder = Image.asset("/assets/images/folder.png");
 
 final Widget home = SvgPicture.asset(
   'assets/images/Nav1Home.svg',
