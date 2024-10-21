@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/auth/auth.dart';
@@ -52,11 +51,6 @@ class ChangeEmailScreen extends StatelessWidget {
                       text: "Проверить почту",
                       onPressed: () async {
                         context.read<AuthBloc>().add(SignOutRequested());
-
-                        await LaunchApp.openApp(
-                          androidPackageName: 'com.google.android.gm',
-                          openStore: true,
-                        );
                       })
                 ],
               ),
