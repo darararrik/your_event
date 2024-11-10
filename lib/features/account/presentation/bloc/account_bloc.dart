@@ -24,7 +24,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   FutureOr<void> _onUpdateName(
       AccountUpdateName event, Emitter<AccountState> emit) async {
     try {
-      await _authRepository.updateName(name: event.name);
+      //await _authRepository.updateName(name: event.name);
       emit(AccountNameUpdated());
     } catch (e) {
       emit(Error(error: e.toString()));
@@ -34,8 +34,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   Future<void> _onUpdateEmail(
       AccountUpdateEmail event, Emitter<AccountState> emit) async {
     try {
-      await _authRepository.updateEmail(
-          email: event.email, currentPassword: event.password);
+      // await _authRepository.updateEmail(
+      //     email: event.email, currentPassword: event.password);
     } catch (e) {
       emit(Error(error: e.toString()));
     }

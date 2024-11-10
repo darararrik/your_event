@@ -1,38 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
-class User {
-  final String id;
+class UserEntity {
   final String email;
-  final String displayName;
-  final String photoURL;
-  final bool emailVerified;
+  final String name;
+  final String surname;
 
-  User({
-    required this.id,
+  UserEntity({
     required this.email,
-    required this.displayName,
-    required this.photoURL,
-    required this.emailVerified,
+    required this.name,
+    required this.surname,
   });
 
-  // Создание User из FirebaseAuth User
-  factory User.fromFirebaseUser(firebase_auth.User user) {
-    return User(
-      id: user.uid,
-      email: user.email ?? '',
-      displayName: user.displayName ?? '',
-      photoURL: user.photoURL ?? '',
-      emailVerified: user.emailVerified,
-    );
-  }
-
-  // Преобразование User в JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'email': email,
-      'displayName': displayName,
-      'photoURL': photoURL,
-    };
-  }
 }

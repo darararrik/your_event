@@ -11,7 +11,7 @@ class ProfileInitial extends ProfileState {}
 class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
-  final user_model.User user;
+  final user_model.UserEntity user;
   const ProfileLoaded({required this.user});
   @override
   List<Object> get props => [user];

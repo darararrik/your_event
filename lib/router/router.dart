@@ -7,7 +7,6 @@ import 'package:yourevent/features/change_email/presentation/view/change_email_s
 import 'package:yourevent/features/change_password/presentation/view/change_password.dart';
 import 'package:yourevent/features/features.dart';
 import 'package:yourevent/features/options/presentation/view/settings_screen.dart';
-import 'package:yourevent/router/auth_guard.dart';
 
 part 'router.gr.dart';
 
@@ -27,7 +26,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainRoute.page,
-          guards: [AuthGuard()],
           children: [
             AutoRoute(
               page: HomeRoute.page,
@@ -45,35 +43,27 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: ArticlesRoute.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: EventTypeRoute.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: EventDeatailsRouteView.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: AccountRoute.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: SettingsRoute.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: AboutRoute.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: ChangeEmailRoute.page,
         ),
         AutoRoute(
-          guards: [AuthGuard()],
           page: ChangePasswordRoute.page,
         ),
       ];

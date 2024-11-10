@@ -16,7 +16,7 @@ class StartScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     // Отправляем событие для проверки аутентификации при загрузке экрана
-    context.read<AuthBloc>().add(AuthCheckRequested());
+    //context.read<AuthBloc>().add(AuthCheckRequested());
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {

@@ -10,6 +10,8 @@ import 'package:yourevent/router/router.dart';
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController surnameController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -49,11 +51,23 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   TextFieldWidget(
                     controller: nameController,
-                    labelText: 'Имя пользователя',
+                    labelText: 'Имя',
                     hintText: "Light",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите имя пользователя';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  TextFieldWidget(
+                    controller: surnameController,
+                    labelText: 'Фамилия',
+                    hintText: "Light",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Введите фамилию пользователя';
                       }
                       return null;
                     },
@@ -96,6 +110,7 @@ class SignUpScreen extends StatelessWidget {
                         context.read<AuthBloc>().add(
                               SignUpRequested(
                                 name: nameController.text.trim(),
+                                surname: surnameController.text.trim(),
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               ),

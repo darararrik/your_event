@@ -61,7 +61,6 @@ class AboutScreen extends StatelessWidget {
 
 class _Information extends StatelessWidget {
   const _Information({
-    super.key,
     required this.theme,
   });
 

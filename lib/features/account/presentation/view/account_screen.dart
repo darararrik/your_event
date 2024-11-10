@@ -66,7 +66,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     }
                     if (state is ProfileLoaded) {
                       final user = state.user;
-                      nameController.text = user.displayName;
+                      nameController.text = user.name;
                       return Form(
                         key: _formKey,
                         child: Column(
@@ -74,7 +74,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             CircleAvatar(
                               backgroundColor: Colors.transparent,
                               radius: 70,
-                              backgroundImage: NetworkImage(user.photoURL),
+                              //backgroundImage: NetworkImage(user.photoURL),
                               //TODO: Реализация
                               onBackgroundImageError: (_, __) {
                                 debugPrint('Ошибка загрузки аватарки');

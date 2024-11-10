@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/src/shared_preferences_legacy.dart';
+import 'package:yourevent/api/your_event_client.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
 import 'package:yourevent/core/data/repositories/auth/auth.dart';
 import 'package:yourevent/core/data/repositories/event/event.dart';
+import 'package:yourevent/core/internal/app_config.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
 import 'package:yourevent/features/create_event/presentation/bloc/create_event/create_event_bloc.dart';
@@ -16,13 +20,22 @@ import 'package:yourevent/router/router.dart';
 class YourEventApp extends StatelessWidget {
   final _router = AppRouter();
 
-  YourEventApp({super.key});
+  YourEventApp({super.key,required this.config});
+  final AppConfig config;
+
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final AuthRepository authRepository = AuthRepository();
-    final ArticlesRepository articlesRepository = ArticlesRepository(firestore);
-    final EventRepository eventRepository = EventRepository(firestore);
+    final AuthRepository authRepository = AuthRepository(
+      client: config.apiClient,
+      prefs: config.preferences,
+    );
+    final ArticlesRepository articlesRepository = ArticlesRepository(
+      firestore,
+    );
+    final EventRepository eventRepository = EventRepository(
+      firestore,
+    );
 
     return MultiBlocProvider(
       providers: [

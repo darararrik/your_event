@@ -10,6 +10,7 @@ pubspec.lock
 # macOS
 *.DS_Store
 *.localized
+*.env
 
 # iOS
 ios/Flutter/Flutter.framework

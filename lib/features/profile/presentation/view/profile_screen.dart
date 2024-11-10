@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return _errorState(state, context);
           }
           if (state is ProfileLoaded) {
-            User user = state.user;
+            UserEntity user = state.user;
             return _profileLoadedState(user, theme, context);
           }
           return const SizedBox();
@@ -56,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Scaffold _profileLoadedState(
-      User user, ThemeData theme, BuildContext context) {
+      UserEntity user, ThemeData theme, BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Padding(
@@ -72,20 +71,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 70,
-                      backgroundImage: NetworkImage(
-                          //TODO: Реализация
-                          user.photoURL),
+                      // backgroundImage: NetworkImage(
+                      //     //TODO: Реализация
+                      //     user.photoURL),
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      user.displayName,
+                      user.name,
                       style: theme.textTheme.headlineSmall,
                     ),
                     Text(
                       user.email,
                       style: theme.textTheme.titleSmall,
                     ),
-                    _emailVerfied(user.emailVerified),
+                    //_emailVerfied(user.emailVerified),
                     const SizedBox(
                       height: 40,
                     ),
