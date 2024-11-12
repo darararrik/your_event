@@ -23,8 +23,8 @@ void main() async {
   );
   final apiService = ApiService(dio, prefs, client);
 
-  final config = AppConfig(
-      preferences: prefs, apiClient: client, dio: dio, apiService: apiService);
+  final config =
+      AppConfig(preferences: prefs, dio: dio, apiService: apiService);
   apiService
       .init(); // Настройка перехватчиков для автоматического управления токенами
 

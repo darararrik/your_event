@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:yourevent/core/data/repositories/models/event_model.dart';
 import 'package:yourevent/features/about/presentation/view/about_screen.dart';
 import 'package:yourevent/features/account/presentation/view/account_screen.dart';
-import 'package:yourevent/features/change_email/presentation/view/change_email_screen.dart';
-import 'package:yourevent/features/change_password/presentation/view/change_password.dart';
+import 'package:yourevent/features/profile_screens/change_email/presentation/view/change_email_screen.dart';
+import 'package:yourevent/features/profile_screens/change_password/presentation/view/change_password.dart';
 import 'package:yourevent/features/features.dart';
-import 'package:yourevent/features/options/presentation/view/settings_screen.dart';
+import 'package:yourevent/features/profile_screens/options/presentation/view/settings_screen.dart';
 
 part 'router.gr.dart';
 

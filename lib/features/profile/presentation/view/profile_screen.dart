@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
 import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
-import 'package:yourevent/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:yourevent/features/profile/presentation/widgets/card_options.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/widgets/card_options.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 70,
                       // backgroundImage: NetworkImage(

@@ -5,8 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yourevent/core/data/api/your_event_client.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/core/data/repositories/auth/auth.dart';
-import 'package:yourevent/core/data/repositories/event/event.dart';
+import 'package:yourevent/core/data/data.dart';
 import 'package:yourevent/core/internal/app_config.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
@@ -14,7 +13,7 @@ import 'package:yourevent/features/create_event/presentation/bloc/create_event/c
 import 'package:yourevent/features/home/data/article_repository/articles_repository.dart';
 import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
 import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
-import 'package:yourevent/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
 class YourEventApp extends StatelessWidget {
   final _router = AppRouter();
@@ -26,7 +25,6 @@ class YourEventApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final AuthRepository authRepository = AuthRepository(
-      client: config.apiClient,
       prefs: config.preferences,
       apiService: config.apiService,
     );
@@ -58,21 +56,14 @@ class YourEventApp extends StatelessWidget {
 
 Future<void> _checkLoginStatus(SharedPreferences preferences) async {
     final token = preferences.getString('accessToken');
-    print(token);
     if (token != null) {
-      // Проверка токена (например, запрос к /me или другому защищённому эндпоинту)
       final isValid = await _validateToken(token);
-      
       if (isValid) {
-        print("User is already logged in with a valid token.");
-        // Перенаправление на главный экран
         _router.replace(const HomeRoute());
       } else {
-        print("Token is invalid or expired, redirecting to login.");
-        _router.replace(const StartRoute());
+                _router.replace(const StartRoute());
       }
     } else {
-      print("No token found, user needs to log in.");
       _router.replace(const StartRoute());
     }
   }

@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yourevent/core/data/api/models/models.dart';
-import 'package:yourevent/core/data/api/models/register_request.dart';
+import 'package:yourevent/core/data/api/apiModels/models.dart';
 import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
 import 'dart:async';
 
@@ -30,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           name: event.name,
           surname: event.surname,
           password: event.password);
-      await _authRepository.register(userRequestRegister);
+      await _authRepository.singUp(userRequestRegister);
       emit(const AuthSuccess());
     } catch (e) {
       emit(const AuthErrorState(error: 'Ошибка при регистрации.'));
@@ -43,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final loginRequest =
           LoginRequest(email: event.email, password: event.password);
-      await _authRepository.login(loginRequest);
+      await _authRepository.signIn(loginRequest);
       emit(const AuthSuccess());
     } catch (e) {
       emit(const AuthErrorState(error: 'Ошибка при авторизации.'));
