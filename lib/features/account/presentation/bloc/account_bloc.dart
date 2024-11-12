@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yourevent/core/data/models/user_model.dart';
 
 import 'package:yourevent/core/data/repositories/auth/auth_repository.dart';
 

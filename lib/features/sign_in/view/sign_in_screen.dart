@@ -27,8 +27,8 @@ class SignInScreen extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthErrorState) {
-            // Перепроверяем форму для отображения ошибки
-            _formKey.currentState!.validate();
+            // // Перепроверяем форму для отображения ошибки
+            // _formKey.currentState!.validate();
           } else if (state is AuthSuccess) {
             // Если вход успешен, перенаправляем на главную страницу
             context.router.replaceAll([const MainRoute()]);
@@ -104,14 +104,15 @@ class SignInScreen extends StatelessWidget {
                       if (state is AuthErrorState) {
                         _formKey.currentState!.validate();
                       }
-                      if (_formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
+                         context.read<AuthBloc>().add(
                               SignInRequested(
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               ),
                             );
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                     
+                      // }
                     },
                   ),
                 ],

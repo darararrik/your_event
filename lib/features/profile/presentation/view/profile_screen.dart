@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/core/data/models/user_model.dart';
+import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/features/profile/presentation/widgets/card_options.dart';
@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             return _errorState(state, context);
           }
           if (state is ProfileLoaded) {
-            UserEntity user = state.user;
+            UserDto user = state.user;
             return _profileLoadedState(user, theme, context);
           }
           return const SizedBox();
@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Scaffold _profileLoadedState(
-      UserEntity user, ThemeData theme, BuildContext context) {
+      UserDto user, ThemeData theme, BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Padding(

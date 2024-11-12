@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yourevent/core/data/repositories/auth/auth.dart';
-import 'package:yourevent/core/data/models/user_model.dart' as user_model;
+import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

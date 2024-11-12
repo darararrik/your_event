@@ -2,7 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/core/data/models/event_model.dart';
+import 'package:yourevent/core/data/repositories/models/event_model.dart';
 import 'package:yourevent/core/utils/images.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/features/create_event/presentation/bloc/bloc.dart';

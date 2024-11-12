@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/core/data/models/user_model.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';

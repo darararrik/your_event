@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yourevent/core/data/models/user_model.dart';
+import 'package:yourevent/core/data/api/models/models.dart';
+import 'package:yourevent/core/data/api/models/register_request.dart';
+import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
 import 'dart:async';
 
 import 'package:yourevent/core/data/repositories/auth/auth_repository.dart';
@@ -14,35 +16,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authRepository) : super(AuthInitial()) {
     //on<AuthCheckRequested>(_onAuthCheckRequested);
-    //on<SignInRequested>(_onSignInRequested);
+    on<SignInRequested>(_onSignInRequested);
     //on<SignOutRequested>(_onSignOutRequested);
     on<SignUpRequested>(_onSignUpRequested);
   }
-
 
   Future<void> _onSignUpRequested(
       SignUpRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      // Регистрируем пользователя и получаем ответ с токенами
-      final response = await _authRepository.register(
-        name: event.name,
-        surname: event.surname,
-        email: event.email,
-        password: event.password,
-      );
-
-      // Создаем объект UserEntity
-      final user = UserEntity(
-        name: event.name,
-        surname: event.surname,
-        email: event.email,
-      );
-
-      // Возвращаем успешное состояние с UserEntity
-      emit(AuthSuccess(user));
+      final userRequestRegister = RegisterRequest(
+          email: event.email,
+          name: event.name,
+          surname: event.surname,
+          password: event.password);
+      await _authRepository.register(userRequestRegister);
+      emit(const AuthSuccess());
     } catch (e) {
       emit(const AuthErrorState(error: 'Ошибка при регистрации.'));
+    }
+  }
+
+  Future<void> _onSignInRequested(
+      SignInRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final loginRequest =
+          LoginRequest(email: event.email, password: event.password);
+      await _authRepository.login(loginRequest);
+      emit(const AuthSuccess());
+    } catch (e) {
+      emit(const AuthErrorState(error: 'Ошибка при авторизации.'));
     }
   }
 }
