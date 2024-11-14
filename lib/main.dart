@@ -16,7 +16,8 @@ void main() async {
   final prefs = await _initPrefs();
   await dotenv.load(fileName: ".env");
   final dio = Dio(); // Создание экземпляра Dio
-  final client = YourEventClient.create(apiUrl: dotenv.env['API_URL']);
+  final client =
+      YourEventClient.create(dio: dio, apiUrl: dotenv.env['API_URL']);
   await initializeDateFormatting('ru, null');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -25,8 +26,7 @@ void main() async {
 
   final config =
       AppConfig(preferences: prefs, dio: dio, apiService: apiService);
-  apiService
-      .init(); // Настройка перехватчиков для автоматического управления токенами
+  // Настройка перехватчиков для автоматического управления токенами
 
   runApp(YourEventApp(
     config: config,

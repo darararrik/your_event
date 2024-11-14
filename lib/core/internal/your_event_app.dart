@@ -15,6 +15,7 @@ import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
 import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
 import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
+
 class YourEventApp extends StatelessWidget {
   final _router = AppRouter();
 
@@ -54,27 +55,28 @@ class YourEventApp extends StatelessWidget {
     );
   }
 
-Future<void> _checkLoginStatus(SharedPreferences preferences) async {
-    final token = preferences.getString('accessToken');
-    if (token != null) {
-      final isValid = await _validateToken(token);
+  Future<void> _checkLoginStatus(SharedPreferences preferences) async {
+    final accessToken = preferences.getString('accessToken');
+    final refreshToken = preferences.getString("refreshToken");
+    if (accessToken != null) {
+      final isValid = await _validateToken(accessToken);
       if (isValid) {
         _router.replace(const HomeRoute());
       } else {
-                _router.replace(const StartRoute());
+        _router.replace(const StartRoute());
       }
     } else {
       _router.replace(const StartRoute());
     }
   }
 
-Future<bool> _validateToken(String token) async {
-  try {
-    final response = await config.apiService.getCurrentUser();
-    return response != null;  // Токен действителен, если получен ответ
-  } catch (e) {
-    print("Token validation failed: $e");
-    return false;  // Токен недействителен
+  Future<bool> _validateToken(String token) async {
+    try {
+      final response = await config.apiService.getCurrentUser();
+      return response != null; // Токен действителен, если получен ответ
+    } catch (e) {
+      print("Token validation failed: $e");
+      return false; // Токен недействителен
+    }
   }
-}
 }

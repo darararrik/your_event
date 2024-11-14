@@ -18,6 +18,11 @@ final Widget package = SvgPicture.asset(
   width: 48,
   height: 48,
 );
+final Widget surprise = SvgPicture.asset(
+  "assets/images/surprise.svg",
+  width: 24,
+  height: 24,
+);
 final Widget imgStartScreen = SvgPicture.asset(
     'assets/images/img_start_screen.svg',
     width: 220,
