@@ -5,46 +5,49 @@ import '../utils/utils.dart';
 
 Container NavigationBarWidget(TabsRouter tabsRouter) {
   return Container(
+    height: 80,
+    padding: const EdgeInsets.only(bottom: 20),
     decoration: const BoxDecoration(
-      color: Colors.transparent,
+      // Цвет фона контейнера, чтобы тень была заметна
+      color: Colors.white,
       boxShadow: [
-        BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-            spreadRadius: 0,
-            blurStyle: BlurStyle.normal,
-            blurRadius: 15,
-            offset: Offset(0, -3))
+        const BoxShadow(
+          color: Color.fromRGBO(0, 0, 0, 0.1), // Цвет тени
+          spreadRadius: 0,
+          blurRadius: 15,
+          offset: Offset(0, -3), // Смещение тени вверх
+        ),
       ],
-    ),
-    child: ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
-      child: NavigationBar(
-        elevation: 32,
-        selectedIndex: tabsRouter.activeIndex,
-        onDestinationSelected: (index) => _openPage(index, tabsRouter),
-        destinations: [
-          NavigationDestination(
-            icon: home,
-            label: 'Home',
-            selectedIcon: homeSelected,
-          ),
-          NavigationDestination(
-            icon: agents,
-            label: 'Agents',
-            selectedIcon: agentsSelected,
-          ),
-          NavigationDestination(
-            icon: myEvents,
-            label: 'MyEvents',
-            selectedIcon: myEventsSelected,
-          ),
-          NavigationDestination(
-            icon: profile,
-            label: 'Profile',
-            selectedIcon: profileSelected,
-          ),
-        ],
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(32), // Закругление для контейнера
       ),
+    ),
+    child: NavigationBar(
+      backgroundColor: Colors.transparent, // Цвет самого NavigationBar
+      selectedIndex: tabsRouter.activeIndex,
+      onDestinationSelected: (index) => _openPage(index, tabsRouter),
+      destinations: [
+        NavigationDestination(
+          icon: home,
+          label: 'Home',
+          selectedIcon: homeSelected,
+        ),
+        NavigationDestination(
+          icon: agents,
+          label: 'Agents',
+          selectedIcon: agentsSelected,
+        ),
+        NavigationDestination(
+          icon: myEvents,
+          label: 'MyEvents',
+          selectedIcon: myEventsSelected,
+        ),
+        NavigationDestination(
+          icon: profile,
+          label: 'Profile',
+          selectedIcon: profileSelected,
+        ),
+      ],
     ),
   );
 }

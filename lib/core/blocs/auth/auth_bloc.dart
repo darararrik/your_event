@@ -1,11 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:yourevent/core/data/api/apiModels/models.dart';
-import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
+import 'package:yourevent/core/Data/data.dart';
 import 'dart:async';
 
-import 'package:yourevent/core/data/repositories/auth/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

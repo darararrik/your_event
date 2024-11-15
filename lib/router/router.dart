@@ -1,12 +1,26 @@
+
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/data/repositories/models/event_model.dart';
+import 'package:yourevent/core/Data/repositories/models/event_type/event_type_model.dart';
 import 'package:yourevent/features/about/presentation/view/about_screen.dart';
 import 'package:yourevent/features/account/presentation/view/account_screen.dart';
+import 'package:yourevent/features/agents/view/agents_screen.dart';
+import 'package:yourevent/features/articles/view/articles_screen.dart';
+import 'package:yourevent/features/auth_screens/sign_in/view/sign_in_screen.dart';
+import 'package:yourevent/features/auth_screens/sign_up/view/sign_up_screen.dart';
+import 'package:yourevent/features/create_event/Presentation/view/event_details_page_view.dart';
+import 'package:yourevent/features/create_event/presentation/view/event_type_screen.dart';
+import 'package:yourevent/features/home/presentation/view/home_screen.dart';
+import 'package:yourevent/features/main/view/main_screen.dart';
+import 'package:yourevent/features/my_events/presentation/view/my_events_screen.dart';
 import 'package:yourevent/features/profile_screens/change_email/presentation/view/change_email_screen.dart';
 import 'package:yourevent/features/profile_screens/change_password/presentation/view/change_password.dart';
-import 'package:yourevent/features/features.dart';
 import 'package:yourevent/features/profile_screens/options/presentation/view/settings_screen.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/view/profile_screen.dart';
+import 'package:yourevent/features/start/view/start_screen.dart';
+
+import '../features/create_event/presentation/view/event_details_page_view.dart';
 
 part 'router.gr.dart';
 
@@ -48,9 +62,9 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: EventTypeRoute.page,
         ),
-        AutoRoute(
-          page: EventDeatailsRouteView.page,
-        ),
+        // AutoRoute(
+        //   page: EventDetailsRouteView.page,
+        // ),
         AutoRoute(
           page: AccountRoute.page,
         ),

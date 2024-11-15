@@ -1,4 +1,6 @@
-import '../../api/apiModels/models.dart';
+
+
+import 'package:yourevent/core/Data/repositories/models/models.dart';
 
 abstract interface class IAuthRepository {
   Future<AuthResponse> singUp(RegisterRequest registerRequest);

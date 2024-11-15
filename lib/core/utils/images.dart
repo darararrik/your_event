@@ -8,6 +8,7 @@ final Widget logo = SvgPicture.asset(
   width: 134,
   height: 52,
 );
+
 final Widget faqSearch = SvgPicture.asset(
   "assets/images/search.svg",
   width: 56,
@@ -17,6 +18,21 @@ final Widget package = SvgPicture.asset(
   "assets/images/package.svg",
   width: 48,
   height: 48,
+);
+final Widget favorite = SvgPicture.asset(
+  "assets/images/heart.svg",
+  width: 24,
+  height: 24,
+);
+final Widget filterIcon = SvgPicture.asset(
+  "assets/images/filterIcon.svg",
+  width: 24,
+  height: 24,
+);
+final Widget sortIcon = SvgPicture.asset(
+  "assets/images/sort.svg",
+  width: 24,
+  height: 24,
 );
 final Widget surprise = SvgPicture.asset(
   "assets/images/surprise.svg",

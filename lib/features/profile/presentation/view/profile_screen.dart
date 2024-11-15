@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/core/data/repositories/models/user_dto/user_dto.dart';
+import 'package:yourevent/core/Data/repositories/models/user/user_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/features/profile_screens/profile/presentation/widgets/card_options.dart';

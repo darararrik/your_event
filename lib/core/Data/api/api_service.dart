@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/data/api/apiModels/models.dart';
-import 'package:yourevent/core/data/api/apiModels/refresh_token_request.dart';
-import 'package:yourevent/core/data/api/your_event_client.dart';
-import 'package:yourevent/core/data/repositories/models/models.dart';
+import 'package:yourevent/core/Data/data.dart';
 
 class ApiService {
   final Dio dio;
@@ -136,5 +133,10 @@ class ApiService {
     } else {
       throw Exception("No token found");
     }
+  }
+
+  Future<List<EventTypeModel>> getListCategories() async {
+    final response = await client.getListCategories();
+    return response;
   }
 }

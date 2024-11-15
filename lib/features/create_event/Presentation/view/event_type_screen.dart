@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/core/data/repositories/models/event_model.dart';
-import 'package:yourevent/core/utils/images.dart';
-import 'package:yourevent/features/create_event/presentation/bloc/bloc.dart';
-import 'package:yourevent/features/create_event/presentation/bloc/page_view/page_view_bloc.dart';
-import 'package:yourevent/features/create_event/presentation/widgets/event_type_card_widget.dart';
+import 'package:yourevent/core/Data/repositories/models/event_type/event_type_model.dart';
+import 'package:yourevent/core/blocs/event_type/event_type_bloc.dart';
+import 'package:yourevent/features/create_event/Presentation/widgets/event_type_card_widget.dart';
 
 @RoutePage()
 class EventTypeScreen extends StatefulWidget {
@@ -20,8 +18,8 @@ class EventTypeScreen extends StatefulWidget {
 class _EventTypeScreenState extends State<EventTypeScreen> {
   @override
   void initState() {
-    context.read<CreateEventBloc>().add(const EventTypesLoad(completer: null));
     super.initState();
+    //context.read<CreateEventBloc>().add(const EventTypesLoad(completer: null));
   }
 
   @override
@@ -29,11 +27,9 @@ class _EventTypeScreenState extends State<EventTypeScreen> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          final completer = Completer();
-          context
-              .read<CreateEventBloc>()
-              .add(EventTypesLoad(completer: completer));
-          return completer.future;
+          //final completer = Completer();
+          context.read<EventTypeBloc>().add(LoadEvent());
+          //return completer.future;
         },
         child: CustomScrollView(
           slivers: [
@@ -41,7 +37,7 @@ class _EventTypeScreenState extends State<EventTypeScreen> {
               title: Text("Выберите тип события"),
               centerTitle: true,
             ),
-            BlocBuilder<CreateEventBloc, CreateEventState>(
+            BlocBuilder<EventTypeBloc, EventTypeState>(
               builder: (context, state) {
                 if (state is EventTypesLoaded) {
                   List<EventTypeModel> list = state.list;

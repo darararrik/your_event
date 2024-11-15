@@ -140,52 +140,6 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EventDeatailsPageView]
-class EventDeatailsRouteView extends PageRouteInfo<EventDeatailsRouteViewArgs> {
-  EventDeatailsRouteView({
-    Key? key,
-    required EventTypeModel eventType,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EventDeatailsRouteView.name,
-          args: EventDeatailsRouteViewArgs(
-            key: key,
-            eventType: eventType,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EventDeatailsRouteView';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<EventDeatailsRouteViewArgs>();
-      return EventDeatailsPageView(
-        key: args.key,
-        eventType: args.eventType,
-      );
-    },
-  );
-}
-
-class EventDeatailsRouteViewArgs {
-  const EventDeatailsRouteViewArgs({
-    this.key,
-    required this.eventType,
-  });
-
-  final Key? key;
-
-  final EventTypeModel eventType;
-
-  @override
-  String toString() {
-    return 'EventDeatailsRouteViewArgs{key: $key, eventType: $eventType}';
-  }
-}
-
-/// generated route for
 /// [EventTypeScreen]
 class EventTypeRoute extends PageRouteInfo<void> {
   const EventTypeRoute({List<PageRouteInfo>? children})

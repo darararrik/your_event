@@ -1,8 +1,6 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
-import 'package:yourevent/core/data/api/apiModels/refresh_token_request.dart';
-import 'package:yourevent/core/data/repositories/models/models.dart';
-import 'apiModels/models.dart';
+import 'package:yourevent/core/Data/data.dart';
 
 part 'your_event_client.g.dart';
 
@@ -26,4 +24,6 @@ abstract class YourEventClient {
   @POST("auth/refresh") // Новый метод для обновления токена
   Future<AuthResponse> refreshAccessToken(
       @Body() RefreshTokenRequest refreshTokenRequest);
+  @GET("categories")
+  Future<List<EventTypeModel>> getListCategories();
 }

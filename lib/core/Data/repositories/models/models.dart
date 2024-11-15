@@ -1,2 +1,12 @@
-export 'user_dto/user_dto.dart';
-export 'event_model.dart';
+export 'authResponse/authResponse.dart';
+export 'authResponse/auth_response.dart';
+export 'eventModel.dart';
+export 'event_type/event_type_model.dart';
+export 'loginRequest/loginRequest.dart';
+export 'loginRequest/login_request.dart';
+export 'refreshTokenRequest/refreshTokenRequest.dart';
+export 'refreshTokenRequest/refresh_token_request.dart';
+export 'registerRequest/registerRequest.dart';
+export 'registerRequest/register_request.dart';
+export 'user/user.dart';
+export 'user/user_dto.dart';

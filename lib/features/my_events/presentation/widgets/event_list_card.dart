@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:yourevent/core/data/repositories/models/event_model.dart';
+import 'package:yourevent/core/Data/repositories/models/eventModel.dart';
 import 'package:yourevent/core/utils/utils.dart';
 
 

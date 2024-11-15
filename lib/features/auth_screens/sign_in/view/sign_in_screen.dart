@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +6,6 @@ import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
 import '../../../../core/utils/utils.dart';
-
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
@@ -31,7 +29,7 @@ class SignInScreen extends StatelessWidget {
             // _formKey.currentState!.validate();
           } else if (state is AuthSuccess) {
             // Если вход успешен, перенаправляем на главную страницу
-            context.router.replaceAll([const MainRoute()]);
+            context.router.replace(const MainRoute());
           }
         },
         builder: (context, state) {
@@ -104,14 +102,14 @@ class SignInScreen extends StatelessWidget {
                       if (state is AuthErrorState) {
                         _formKey.currentState!.validate();
                       }
-                         context.read<AuthBloc>().add(
-                              SignInRequested(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              ),
-                            );
+                      context.read<AuthBloc>().add(
+                            SignInRequested(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            ),
+                          );
                       // if (_formKey.currentState!.validate()) {
-                     
+
                       // }
                     },
                   ),

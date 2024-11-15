@@ -4,10 +4,6 @@ abstract class AuthEvent extends Equatable {
   const AuthEvent();
 }
 
-// class AuthCheckRequested extends AuthEvent {
-//   @override
-//   List<Object?> get props => [];
-// }
 
 class SignInRequested extends AuthEvent {
   final String email;

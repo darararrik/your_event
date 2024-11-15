@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:yourevent/core/data/repositories/models/models.dart';
+import 'package:yourevent/core/Data/repositories/models/user/user_dto.dart';
 
 part 'auth_response.g.dart';
 

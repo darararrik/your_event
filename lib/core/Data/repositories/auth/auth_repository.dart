@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yourevent/core/data/api/api_service.dart';
-import 'package:yourevent/core/data/api/apiModels/models.dart';
-import 'package:yourevent/core/data/api/your_event_client.dart';
-import 'package:yourevent/core/data/repositories/auth/auth_interface_repository.dart';
+import 'package:yourevent/core/Data/data.dart';
+
 
 class AuthRepository implements IAuthRepository {
   final ApiService apiService;

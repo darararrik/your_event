@@ -2,79 +2,44 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:yourevent/core/data/repositories/models/models.dart';
+import 'package:yourevent/core/Data/api/api_service.dart';
+import 'package:yourevent/core/Data/repositories/event/event_interface_repository.dart';
+import 'package:yourevent/core/Data/repositories/models/eventModel.dart';
+import 'package:yourevent/core/Data/repositories/models/event_type/event_type_model.dart';
 import 'package:yourevent/features/features.dart';
 
-class EventRepository {
-  final FirebaseFirestore _firestore;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+class EventRepository implements IEventRepository {
+  final ApiService apiService;
 
-  EventRepository(this._firestore);
+  EventRepository({required this.apiService});
 
-  Future<List<EventTypeModel>> fetchEventTypesModel() async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await _firestore.collection('eventTypes').get();
+  @override
+  Future<List<EventTypeModel>> getListEventType() async {
+    final response =  await apiService.getListCategories();
+    return response;
 
-      return snapshot.docs
-          .map((doc) => EventTypeModel.fromFireStore(doc))
-          .toList();
-    } catch (e) {
-      throw Exception('Ошибка: $e');
-    }
   }
 
-  Future<List<EventModel>> fetchEvents() async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
-          .collection("users")
-          .doc(_auth.currentUser!.uid)
-          .collection("myEvents")
-          .get();
-      return snapshot.docs.map((doc) => EventModel.fromFireStore(doc)).toList();
-    } catch (e) {
-      throw Exception('Ошибка: $e');
-    }
+  @override
+  Future<void> createEvent(EventModel eventData) {
+    // TODO: implement createEvent
+    throw UnimplementedError();
   }
 
-  Future<void> pushEventFirebase(EventModel eventData) async {
-    // Логика сохранения события в Firebase
-    try {
-      await _firestore
-          .collection('users')
-          .doc(_auth.currentUser!.uid)
-          .collection('myEvents')
-          .doc(eventData.id)
-          .set({
-        'id': eventData.id,
-        'name': eventData.name,
-        'description': eventData.description,
-        'date': (Timestamp.fromDate(eventData.date)),
-        'numberOfPeople': eventData.numberOfPeople,
-        'price': eventData.price,
-        'address': eventData.address,
-        'isCompleted': false,
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-      throw Exception('Ошибка: $e');
-
-      // TODO
-    }
+  @override
+  Future<List<EventModel>> getListEvents() {
+    // TODO: implement getListEvents
+    throw UnimplementedError();
   }
 
+  @override
   checkDates(List<EventModel> events) async {
     DateTime now = DateTime.now();
 
     // Проверяем каждое событие
     for (var event in events) {
       if (event.date.isBefore(now) && event.isCompleted == false) {
-        await _firestore
-            .collection('users')
-            .doc(_auth.currentUser!.uid)
-            .collection("myEvents")
-            .doc(event.id)
-            .update({'isCompleted': true});
+        //РЕализация
       }
     }
   }

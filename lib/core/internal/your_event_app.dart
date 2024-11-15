@@ -1,15 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yourevent/core/data/api/your_event_client.dart';
-import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/core/data/data.dart';
+import 'package:yourevent/core/Data/data.dart';
+import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
+import 'package:yourevent/core/blocs/event_type/event_type_bloc.dart';
 import 'package:yourevent/core/internal/app_config.dart';
-import 'package:yourevent/core/utils/utils.dart';
+import 'package:yourevent/core/utils/theme.dart';
 import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
-import 'package:yourevent/features/create_event/presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/home/data/article_repository/articles_repository.dart';
 import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
 import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
@@ -24,16 +22,13 @@ class YourEventApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final AuthRepository authRepository = AuthRepository(
       prefs: config.preferences,
       apiService: config.apiService,
     );
-    final ArticlesRepository articlesRepository = ArticlesRepository(
-      firestore,
-    );
+
     final EventRepository eventRepository = EventRepository(
-      firestore,
+      apiService: config.apiService,
     );
 
     // Проверка токенов при запуске
@@ -41,12 +36,9 @@ class YourEventApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AccountBloc(authRepository)),
-        BlocProvider(create: (context) => ProfileBloc(authRepository)),
-        BlocProvider(create: (context) => AuthBloc(authRepository)),
-        BlocProvider(create: (context) => ArticlesBloc(articlesRepository)),
-        BlocProvider(create: (context) => CreateEventBloc(eventRepository)),
-        BlocProvider(create: (context) => MyEventsBloc(eventRepository)),
+        BlocProvider<EventTypeBloc>(
+            create: (context) => EventTypeBloc(eventRepository)),
+        BlocProvider<AuthBloc>(create: (context) => AuthBloc(authRepository)),
       ],
       child: MaterialApp.router(
         theme: lightTheme,
@@ -57,13 +49,11 @@ class YourEventApp extends StatelessWidget {
 
   Future<void> _checkLoginStatus(SharedPreferences preferences) async {
     final accessToken = preferences.getString('accessToken');
-    final refreshToken = preferences.getString("refreshToken");
+    //final refreshToken = preferences.getString("refreshToken");
     if (accessToken != null) {
       final isValid = await _validateToken(accessToken);
       if (isValid) {
         _router.replace(const HomeRoute());
-      } else {
-        _router.replace(const StartRoute());
       }
     } else {
       _router.replace(const StartRoute());
