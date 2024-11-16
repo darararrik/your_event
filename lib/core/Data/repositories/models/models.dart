@@ -1,7 +1,7 @@
 export 'authResponse/authResponse.dart';
 export 'authResponse/auth_response.dart';
-export 'eventModel.dart';
-export 'event_type/event_type_model.dart';
+export 'eventModel/event_model.dart';
+export 'eventType/event_type_model.dart';
 export 'loginRequest/loginRequest.dart';
 export 'loginRequest/login_request.dart';
 export 'refreshTokenRequest/refreshTokenRequest.dart';

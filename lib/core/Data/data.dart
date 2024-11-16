@@ -9,7 +9,7 @@ export 'repositories/auth/auth_interface_repository.dart';
 export 'repositories/auth/auth_repository.dart';
 export 'repositories/event/event.dart';
 export 'repositories/event/event_repository.dart';
-export 'repositories/models/eventModel.dart';
+export 'repositories/models/eventModel/event_model.dart';
 export 'repositories/models/models.dart';
 export 'repositories/models/user/user_dto.dart';
 export 'repositories/user/user_repository.dart';

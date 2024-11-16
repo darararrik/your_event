@@ -26,4 +26,7 @@ abstract class YourEventClient {
       @Body() RefreshTokenRequest refreshTokenRequest);
   @GET("categories")
   Future<List<EventTypeModel>> getListCategories();
+
+  @POST("events")
+  Future<List<EventTypeModel>> createEvent(@Body() EventModel event);
 }

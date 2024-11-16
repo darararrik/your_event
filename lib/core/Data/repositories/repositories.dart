@@ -5,7 +5,7 @@ export 'event/event.dart';
 export 'event/event_repository.dart';
 export 'models/authResponse/authResponse.dart';
 export 'models/authResponse/auth_response.dart';
-export 'models/eventModel.dart';
+export 'models/eventModel/event_model.dart';
 export 'models/loginRequest/loginRequest.dart';
 export 'models/loginRequest/login_request.dart';
 export 'models/models.dart';
