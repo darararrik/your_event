@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/core/Data/repositories/models/event_type/event_type_model.dart';
+import 'package:yourevent/core/Data/repositories/models/eventType/event_type_model.dart';
 import 'package:yourevent/core/blocs/event_type/event_type_bloc.dart';
 import 'package:yourevent/features/create_event/Presentation/widgets/event_type_card_widget.dart';
 
@@ -19,7 +19,7 @@ class _EventTypeScreenState extends State<EventTypeScreen> {
   @override
   void initState() {
     super.initState();
-    //context.read<CreateEventBloc>().add(const EventTypesLoad(completer: null));
+    context.read<EventTypeBloc>().add(const LoadEvent(completer: null));
   }
 
   @override
@@ -27,9 +27,9 @@ class _EventTypeScreenState extends State<EventTypeScreen> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          //final completer = Completer();
-          context.read<EventTypeBloc>().add(LoadEvent());
-          //return completer.future;
+          final completer = Completer();
+          context.read<EventTypeBloc>().add(LoadEvent(completer: completer));
+          return completer.future;
         },
         child: CustomScrollView(
           slivers: [
@@ -60,6 +60,7 @@ class _EventTypeScreenState extends State<EventTypeScreen> {
                         (BuildContext context, int index) {
                           final eventType = list[index];
                           return EventTypeCardWidget(
+                            func: true,
                             eventType: eventType,
                             height: 180,
                             width: 200,

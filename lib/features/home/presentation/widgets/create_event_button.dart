@@ -17,7 +17,7 @@ class CreateEventButton extends StatelessWidget {
     final theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
-        context.read<EventTypeBloc>().add(LoadEvent());
+        context.read<EventTypeBloc>().add(const LoadEvent());
         context.router.push(const EventTypeRoute());
       },
       child: Container(

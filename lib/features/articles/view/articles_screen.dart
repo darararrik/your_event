@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:yourevent/core/utils/colors.dart';
 import 'package:yourevent/features/home/data/models/article_model.dart';
-import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
-import 'package:yourevent/features/home/presentation/widgets/widgets.dart';
+import 'package:yourevent/features/home/Presentation/bloc/articles_bloc.dart';
+import 'package:yourevent/features/home/Presentation/widgets/widgets.dart';
 
 @RoutePage()
 class ArticlesScreen extends StatelessWidget {

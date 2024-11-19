@@ -1,21 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_dto.dart';
+part of 'event_type_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
+EventTypeModel _$EventTypeModelFromJson(Map<String, dynamic> json) =>
+    EventTypeModel(
       id: (json['id'] as num).toInt(),
-      email: json['email'] as String,
       name: json['name'] as String,
-      surname: json['surname'] as String,
+      imageUrl: json['imageUrl'] as String,
     );
 
-Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
+Map<String, dynamic> _$EventTypeModelToJson(EventTypeModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'surname': instance.surname,
-      'email': instance.email,
+      'imageUrl': instance.imageUrl,
     };

@@ -4,8 +4,6 @@ import 'package:yourevent/core/cubits/inputField/input_field_cubit.dart';
 
 import '../utils/utils.dart';
 
-
-
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
@@ -15,7 +13,7 @@ class TextFieldWidget extends StatelessWidget {
   final int? maxLines;
   final int? maxLength;
 
-  final TextInputType? keyboardType ;
+  final TextInputType? keyboardType;
 
   const TextFieldWidget(
       {super.key,
@@ -45,6 +43,7 @@ class TextFieldWidget extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                //textAlignVertical: const TextAlignVertical(y: 0.5),
                 keyboardType: keyboardType,
 
                 maxLines: maxLines, // Позволяет текстовому полю расширяться

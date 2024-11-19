@@ -34,6 +34,20 @@ final Widget sortIcon = SvgPicture.asset(
   width: 24,
   height: 24,
 );
+final Widget editIcon = SvgPicture.asset(
+  "assets/images/edit.svg",
+);
+final Widget rubIcon = SvgPicture.asset(
+  "assets/images/rub.svg",
+);
+final Widget location = SvgPicture.asset(
+  "assets/images/location.svg",
+  width: 20,
+  height: 20,
+);
+final Widget people = SvgPicture.asset(
+  "assets/images/people.svg",
+);
 final Widget surprise = SvgPicture.asset(
   "assets/images/surprise.svg",
   width: 24,
@@ -66,15 +80,15 @@ final Widget homeSelected = SvgPicture.asset(
   width: 32, // ширина иконки
   height: 32, // высота иконки
 );
-final Widget agents = SvgPicture.asset(
-  'assets/images/Agents.svg',
+final Widget chat = SvgPicture.asset(
+  'assets/images/chat.svg',
   width: 32, // ширина иконки
   height: 32, // высота иконки
 );
-final Widget agentsSelected = SvgPicture.asset(
+final Widget chatSelected = SvgPicture.asset(
   colorFilter: const ColorFilter.mode(orange, BlendMode.srcIn),
 
-  'assets/images/Agents.svg',
+  'assets/images/chat.svg',
   width: 32, // ширина иконки
   height: 32, // высота иконки
 );

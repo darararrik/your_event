@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -15,32 +16,20 @@ class EventRepository implements IEventRepository {
 
   @override
   Future<List<EventTypeModel>> getListEventType() async {
-    final response =  await apiService.getListCategories();
+    final response = await apiService.getListCategories();
     return response;
-
   }
 
   @override
-  Future<void> createEvent(EventModel eventData) {
-    // TODO: implement createEvent
-    throw UnimplementedError();
+  Future<int> createEvent(EventModel eventData) async {
+    final response = await apiService.createEvent(eventData);
+    return response;
   }
 
   @override
-  Future<List<EventModel>> getListEvents() {
-    // TODO: implement getListEvents
-    throw UnimplementedError();
+  Future<List<EventModel>> getListEvents(int userId) async {
+    final response = await apiService.getListEvents(userId);
+    return response;
   }
 
-  @override
-  checkDates(List<EventModel> events) async {
-    DateTime now = DateTime.now();
-
-    // Проверяем каждое событие
-    for (var event in events) {
-      if (event.endDate.isBefore(now) && event.isCompleted == false) {
-        //РЕализация
-      }
-    }
-  }
 }

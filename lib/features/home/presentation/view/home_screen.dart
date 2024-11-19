@@ -5,10 +5,10 @@ import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/agent_card.dart';
 import 'package:yourevent/core/widgets/button_widget.dart';
 import 'package:yourevent/features/create_event/presentation/presentation.dart';
-import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
-import 'package:yourevent/features/home/presentation/widgets/create_event_button.dart';
-import 'package:yourevent/features/home/presentation/widgets/sort_filter_icon_widget.dart';
-import 'package:yourevent/features/home/presentation/widgets/widgets.dart';
+import 'package:yourevent/features/home/Presentation/bloc/articles_bloc.dart';
+import 'package:yourevent/features/home/Presentation/widgets/create_event_button.dart';
+import 'package:yourevent/features/home/Presentation/widgets/sort_filter_icon_widget.dart';
+import 'package:yourevent/features/home/Presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(0, 12, 0, 80),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return const AgentCard();

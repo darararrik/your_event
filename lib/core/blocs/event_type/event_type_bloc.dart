@@ -16,13 +16,18 @@ class EventTypeBloc extends Bloc<EventTypeEvent, EventTypeState> {
     on<LoadEvent>(_onGetList);
   }
 
-  FutureOr<void> _onGetList(LoadEvent event, Emitter<EventTypeState> emit) async {
-    emit(EventTypesLoading());
+  FutureOr<void> _onGetList(
+      LoadEvent event, Emitter<EventTypeState> emit) async {
     try {
+      if (state is! EventTypesLoaded) {
+        emit(EventTypesLoading());
+      }
       final list = await _eventRepository.getListEventType();
       emit(EventTypesLoaded(list: list));
     } catch (e) {
       emit(EventTypesError(error: e));
+    } finally {
+      event.completer?.complete();
     }
   }
 }

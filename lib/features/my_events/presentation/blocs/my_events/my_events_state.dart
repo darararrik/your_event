@@ -31,10 +31,16 @@ final class MyEventsLoadedCompleted extends MyEventsState {
   final List<EventModel> list;
 
   const MyEventsLoadedCompleted({required this.list});
+
+  @override
+  List<Object> get props => [list];
 }
 
 final class MyEventsLoadedCreated extends MyEventsState {
   final List<EventModel> list;
 
   const MyEventsLoadedCreated({required this.list});
+
+  @override
+  List<Object> get props => [list];
 }

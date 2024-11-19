@@ -21,14 +21,13 @@ class MyEventsBloc extends Bloc<MyEventsEvent, MyEventsState> {
       if (state is! MyEventsLoaded) {
         emit(MyEventsLoading());
       }
-      //List<EventModel> events = await _eventRepository.fetchEvents();
-      //await _eventRepository.checkDates(events);
-      //events = await _eventRepository.fetchEvents();
-      // if (events.isNotEmpty) {
-      //   emit(MyEventsLoaded(list: events));
-      // } else {
-      //   emit(MyEventsInitial());
-      // }
+        //TODO: нужно начать хранить
+      List<EventModel> events = await _eventRepository.getListEvents(18);
+      if (events.isNotEmpty) {
+        emit(MyEventsLoaded(list: events));
+      } else {
+        emit(MyEventsInitial());
+      }
     } catch (e) {
       emit(MyEventsError(error: e.toString()));
     } finally {

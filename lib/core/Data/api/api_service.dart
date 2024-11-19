@@ -89,14 +89,9 @@ class ApiService {
       final response = await client.refreshAccessToken(refreshTokenRequest);
 
       final newAccessToken = response.accessToken;
-      if (newAccessToken != null) {
-        prefs.setString('accessToken', newAccessToken);
-        return newAccessToken;
-      } else {
-        print("Не удалось обновить токен.");
-        return null;
-      }
-    } catch (e) {
+      prefs.setString('accessToken', newAccessToken);
+      return newAccessToken;
+        } catch (e) {
       print("Ошибка при обновлении токена: $e");
       return null;
     }
@@ -137,6 +132,16 @@ class ApiService {
 
   Future<List<EventTypeModel>> getListCategories() async {
     final response = await client.getListCategories();
+    return response;
+  }
+
+  Future<int> createEvent(EventModel event) async {
+    final response = await client.createEvent(event);
+    return response;
+  }
+
+  Future<List<EventModel>> getListEvents(int userId) async {
+    final response = await client.getListEvents(userId);
     return response;
   }
 }

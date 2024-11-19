@@ -3,8 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/features/my_events/presentation/blocs/blocs.dart';
-import 'package:yourevent/features/my_events/presentation/view/tabs/tabs.dart';
+import 'package:yourevent/features/my_events/Presentation/blocs/blocs.dart';
+import 'package:yourevent/features/my_events/Presentation/view/tabs/tabs.dart';
 
 @RoutePage()
 class MyEventsScreen extends StatelessWidget {
@@ -31,7 +31,6 @@ class MyEventsScreen extends StatelessWidget {
               return completer.future;
             },
             child: CustomScrollView(
-              
               slivers: [
                 _AppBar(tabController: tabController),
                 _Body(tabController: tabController)
@@ -76,7 +75,7 @@ class _AppBar extends StatelessWidget {
                   width: 8,
                 ),
                 Text(
-                  'Созданные',
+                  'Активные',
                 ),
               ],
             ),
@@ -90,7 +89,7 @@ class _AppBar extends StatelessWidget {
                   width: 8,
                 ),
                 Text(
-                  'Выполненные',
+                  'Архив',
                 ),
               ],
             ),
@@ -112,15 +111,14 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverFillRemaining(
-      
         hasScrollBody: true,
         child: TabBarView(
           controller: tabController,
           children: const [
             CreatedEventsPage(
-              isCompleted: false,
+              statuses: ["PLANNED"],
             ),
-            CreatedEventsPage(isCompleted: true),
+            CreatedEventsPage(statuses: ["CLOSED", "COMPLETED"]),
           ],
         ));
   }

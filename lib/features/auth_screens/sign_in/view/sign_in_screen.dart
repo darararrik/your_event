@@ -29,7 +29,7 @@ class SignInScreen extends StatelessWidget {
             // _formKey.currentState!.validate();
           } else if (state is AuthSuccess) {
             // Если вход успешен, перенаправляем на главную страницу
-            context.router.replace(const MainRoute());
+            context.router.replaceAll([const MainRoute()]);
           }
         },
         builder: (context, state) {

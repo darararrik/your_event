@@ -28,5 +28,7 @@ abstract class YourEventClient {
   Future<List<EventTypeModel>> getListCategories();
 
   @POST("events")
-  Future<List<EventTypeModel>> createEvent(@Body() EventModel event);
+  Future<int> createEvent(@Body() EventModel event);
+  @GET("events/{id}")
+  Future<List<EventModel>> getListEvents(@Path("id") int userId);
 }

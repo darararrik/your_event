@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/Data/repositories/models/event_type/event_type_model.dart';
+import 'package:yourevent/core/Data/repositories/models/eventType/event_type_model.dart';
 import 'package:yourevent/router/router.dart';
 
 class EventTypeCardWidget extends StatelessWidget {
@@ -18,7 +18,7 @@ class EventTypeCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => func ? context.router.push(EventDetailsRouteView(eventType: eventType)) : null,
+      onTap: () => func ? context.router.push(EventDetailsRouteView(eventType: eventType)) : null,
       //TODO: ПРи повороте стэк изменяет размеры
       child: SizedBox(
         width: width,

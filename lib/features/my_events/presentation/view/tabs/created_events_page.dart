@@ -2,15 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/utils/utils.dart';
-import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
-import 'package:yourevent/features/my_events/presentation/widgets/widgets.dart';
+import 'package:yourevent/features/my_events/Presentation/blocs/my_events/my_events_bloc.dart';
+import 'package:yourevent/features/my_events/Presentation/widgets/widgets.dart';
 
 class CreatedEventsPage extends StatefulWidget {
-  final bool isCompleted;
+  final List<String> statuses;
 
   const CreatedEventsPage({
     super.key,
-    required this.isCompleted,
+    required this.statuses,
   });
 
   @override
@@ -18,6 +18,7 @@ class CreatedEventsPage extends StatefulWidget {
 }
 
 class _CreatedEventsPageState extends State<CreatedEventsPage> {
+  //TODO: кждый раз происходит запрос в сервер fix
   @override
   void initState() {
     super.initState();
@@ -34,7 +35,7 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
         if (state is MyEventsLoaded) {
           // Фильтруем события в зависимости от isCompleted
           final filteredEvents = state.list
-              .where((event) => event.isCompleted == widget.isCompleted)
+              .where((event) => widget.statuses.contains(event.status))
               .toList();
 
           return ListView.builder(
@@ -66,10 +67,11 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
                 ),
                 Text(
                   "Создайте мероприятие самостоятельно либо свяжитесь с агентством",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: grey, fontSize: 14, height: 1.8, fontWeight: FontWeight.w400),
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: grey,
+                      fontSize: 14,
+                      height: 1.8,
+                      fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 ),
               ],

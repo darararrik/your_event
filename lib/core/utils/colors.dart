@@ -5,6 +5,8 @@ import 'dart:ui';
 
 const Color orange = Color(0xFFDF853B);
 const Color grey = Color(0xFF898989);
+const Color greyLabel = Color(0xFFAEAEAE);
+
 const Color white = Color(0xFFFFFFFF); // Белый цвет
 const Color black = Color(0xFF000000); // Черный цвет
 const Color outline_Grey = Color(0xFFDADADA);

@@ -11,7 +11,7 @@ Container NavigationBarWidget(TabsRouter tabsRouter) {
       // Цвет фона контейнера, чтобы тень была заметна
       color: Colors.white,
       boxShadow: [
-        const BoxShadow(
+        BoxShadow(
           color: Color.fromRGBO(0, 0, 0, 0.1), // Цвет тени
           spreadRadius: 0,
           blurRadius: 15,
@@ -33,9 +33,9 @@ Container NavigationBarWidget(TabsRouter tabsRouter) {
           selectedIcon: homeSelected,
         ),
         NavigationDestination(
-          icon: agents,
-          label: 'Agents',
-          selectedIcon: agentsSelected,
+          icon: chat,
+          label: 'Chat',
+          selectedIcon: chatSelected,
         ),
         NavigationDestination(
           icon: myEvents,

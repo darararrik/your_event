@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
 import 'package:yourevent/core/Data/repositories/models/user/user_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
-import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
-import 'package:yourevent/features/profile_screens/profile/presentation/widgets/card_options.dart';
+import 'package:yourevent/features/profile_screens/profile/Presentation/bloc/profile_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/Presentation/widgets/card_options.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()

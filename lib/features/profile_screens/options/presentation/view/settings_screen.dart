@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/features/profile_screens/options/presentation/widgets/settings_action_card.dart';
-import 'package:yourevent/features/profile_screens/options/presentation/widgets/settings_toggle_card.dart';
+import 'package:yourevent/features/profile_screens/options/Presentation/widgets/settings_action_card.dart';
+import 'package:yourevent/features/profile_screens/options/Presentation/widgets/settings_toggle_card.dart';
 
 @RoutePage()
 class SettingsScreen extends StatelessWidget {

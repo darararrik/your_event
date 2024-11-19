@@ -1,2 +1,2 @@
-export 'presentation/bloc/bloc.dart';
-export 'presentation/view/view.dart';
+export 'Presentation/bloc/bloc.dart';
+export 'Presentation/view/view.dart';

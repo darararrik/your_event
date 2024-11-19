@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'event_type_bloc.dart';
 
 sealed class EventTypeEvent extends Equatable {
@@ -7,4 +8,9 @@ sealed class EventTypeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadEvent extends EventTypeEvent {}
+class LoadEvent extends EventTypeEvent {
+  final Completer? completer;
+  const LoadEvent({
+    this.completer,
+  });
+}

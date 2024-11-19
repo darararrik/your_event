@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,10 +9,11 @@ import 'package:yourevent/core/blocs/event_type/event_type_bloc.dart';
 import 'package:yourevent/core/internal/app_config.dart';
 import 'package:yourevent/core/utils/theme.dart';
 import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/home/data/article_repository/articles_repository.dart';
-import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
-import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
-import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yourevent/features/home/Presentation/bloc/articles_bloc.dart';
+import 'package:yourevent/features/my_events/Presentation/blocs/my_events/my_events_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/Presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
 class YourEventApp extends StatelessWidget {
@@ -32,13 +34,23 @@ class YourEventApp extends StatelessWidget {
     );
 
     // Проверка токенов при запуске
-    _checkLoginStatus(config.preferences);
+    _checkLoginStatus(context, config.preferences);
 
     return MultiBlocProvider(
       providers: [
         BlocProvider<EventTypeBloc>(
-            create: (context) => EventTypeBloc(eventRepository)),
-        BlocProvider<AuthBloc>(create: (context) => AuthBloc(authRepository)),
+          create: (context) => EventTypeBloc(eventRepository),
+        ),
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(authRepository),
+        ),
+        BlocProvider<CreateEventBloc>(
+            create: (context) => CreateEventBloc(
+                eventRepository: eventRepository,
+                apiService: config.apiService)),
+        BlocProvider<MyEventsBloc>(
+          create: (context) => MyEventsBloc(eventRepository),
+        ),
       ],
       child: MaterialApp.router(
         theme: lightTheme,
@@ -47,26 +59,28 @@ class YourEventApp extends StatelessWidget {
     );
   }
 
-  Future<void> _checkLoginStatus(SharedPreferences preferences) async {
+  Future<void> _checkLoginStatus(
+      BuildContext context, SharedPreferences preferences) async {
     final accessToken = preferences.getString('accessToken');
-    //final refreshToken = preferences.getString("refreshToken");
     if (accessToken != null) {
       final isValid = await _validateToken(accessToken);
       if (isValid) {
-        _router.replace(const HomeRoute());
+        _router.replaceAll([const MainRoute()]);
+      } else {
+        _router.replaceAll([const StartRoute()]);
       }
     } else {
-      _router.replace(const StartRoute());
+      _router.replaceAll([const StartRoute()]);
     }
   }
 
   Future<bool> _validateToken(String token) async {
     try {
       final response = await config.apiService.getCurrentUser();
-      return response != null; // Токен действителен, если получен ответ
-    } catch (e) {
-      print("Token validation failed: $e");
-      return false; // Токен недействителен
+      return response != null;
+    } catch (e, stacktrace) {
+      print("Token validation failed: $e\n$stacktrace");
+      return false;
     }
   }
 }

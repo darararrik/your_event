@@ -9,7 +9,7 @@ class AgentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
           boxShadow: [
@@ -64,7 +64,7 @@ class AgentCard extends StatelessWidget {
                   ),
                 ],
               ),
-              favorite,
+              chat,
             ],
           ),
           const SizedBox(

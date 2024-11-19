@@ -140,6 +140,98 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EventDetailsPageView]
+class EventDetailsRouteView extends PageRouteInfo<EventDetailsRouteViewArgs> {
+  EventDetailsRouteView({
+    Key? key,
+    required EventTypeModel eventType,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EventDetailsRouteView.name,
+          args: EventDetailsRouteViewArgs(
+            key: key,
+            eventType: eventType,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EventDetailsRouteView';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EventDetailsRouteViewArgs>();
+      return EventDetailsPageView(
+        key: args.key,
+        eventType: args.eventType,
+      );
+    },
+  );
+}
+
+class EventDetailsRouteViewArgs {
+  const EventDetailsRouteViewArgs({
+    this.key,
+    required this.eventType,
+  });
+
+  final Key? key;
+
+  final EventTypeModel eventType;
+
+  @override
+  String toString() {
+    return 'EventDetailsRouteViewArgs{key: $key, eventType: $eventType}';
+  }
+}
+
+/// generated route for
+/// [EventScreen]
+class EventRoute extends PageRouteInfo<EventRouteArgs> {
+  EventRoute({
+    Key? key,
+    required EventModel eventData,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EventRoute.name,
+          args: EventRouteArgs(
+            key: key,
+            eventData: eventData,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EventRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EventRouteArgs>();
+      return EventScreen(
+        key: args.key,
+        eventData: args.eventData,
+      );
+    },
+  );
+}
+
+class EventRouteArgs {
+  const EventRouteArgs({
+    this.key,
+    required this.eventData,
+  });
+
+  final Key? key;
+
+  final EventModel eventData;
+
+  @override
+  String toString() {
+    return 'EventRouteArgs{key: $key, eventData: $eventData}';
+  }
+}
+
+/// generated route for
 /// [EventTypeScreen]
 class EventTypeRoute extends PageRouteInfo<void> {
   const EventTypeRoute({List<PageRouteInfo>? children})

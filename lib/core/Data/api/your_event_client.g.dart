@@ -195,13 +195,13 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<List<EventTypeModel>> createEvent(EventModel event) async {
+  Future<int> createEvent(EventModel event) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(event.toJson());
-    final _options = _setStreamType<List<EventTypeModel>>(Options(
+    final _options = _setStreamType<int>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -217,12 +217,44 @@ class _YourEventClient implements YourEventClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
+    final _result = await _dio.fetch<int>(_options);
+    late int _value;
+    try {
+      _value = _result.data!;
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<EventModel>> getListEvents(int userId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<EventModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'events/${userId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<EventTypeModel> _value;
+    late List<EventModel> _value;
     try {
       _value = _result.data!
-          .map(
-              (dynamic i) => EventTypeModel.fromJson(i as Map<String, dynamic>))
+          .map((dynamic i) => EventModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
