@@ -29,7 +29,7 @@ class MainScreen extends StatelessWidget {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                child: NavigationBarWidget(tabsRouter))
+                child: navigationBarWidget(tabsRouter))
           ]), // Используйте `child` для отображения содержимого ваших вкладок
         );
       },

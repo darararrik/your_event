@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
 
-Container NavigationBarWidget(TabsRouter tabsRouter) {
+Container navigationBarWidget(TabsRouter tabsRouter) {
   return Container(
     height: 80,
     padding: const EdgeInsets.only(bottom: 20),

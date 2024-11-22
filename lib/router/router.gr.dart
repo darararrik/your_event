@@ -144,7 +144,7 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 class EventDetailsRouteView extends PageRouteInfo<EventDetailsRouteViewArgs> {
   EventDetailsRouteView({
     Key? key,
-    required EventTypeModel eventType,
+    required EventTypeDto eventType,
     List<PageRouteInfo>? children,
   }) : super(
           EventDetailsRouteView.name,
@@ -177,7 +177,7 @@ class EventDetailsRouteViewArgs {
 
   final Key? key;
 
-  final EventTypeModel eventType;
+  final EventTypeDto eventType;
 
   @override
   String toString() {
@@ -190,7 +190,7 @@ class EventDetailsRouteViewArgs {
 class EventRoute extends PageRouteInfo<EventRouteArgs> {
   EventRoute({
     Key? key,
-    required EventModel eventData,
+    required EventDto eventData,
     List<PageRouteInfo>? children,
   }) : super(
           EventRoute.name,
@@ -223,7 +223,7 @@ class EventRouteArgs {
 
   final Key? key;
 
-  final EventModel eventData;
+  final EventDto eventData;
 
   @override
   String toString() {
@@ -322,6 +322,71 @@ class ProfileRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProfileScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ServiceDetailsScreen]
+class ServiceDetailsRoute extends PageRouteInfo<ServiceDetailsRouteArgs> {
+  ServiceDetailsRoute({
+    Key? key,
+    required AgencyServiceDto service,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ServiceDetailsRoute.name,
+          args: ServiceDetailsRouteArgs(
+            key: key,
+            service: service,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ServiceDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ServiceDetailsRouteArgs>();
+      return ServiceDetailsScreen(
+        key: args.key,
+        service: args.service,
+      );
+    },
+  );
+}
+
+class ServiceDetailsRouteArgs {
+  const ServiceDetailsRouteArgs({
+    this.key,
+    required this.service,
+  });
+
+  final Key? key;
+
+  final AgencyServiceDto service;
+
+  @override
+  String toString() {
+    return 'ServiceDetailsRouteArgs{key: $key, service: $service}';
+  }
+}
+
+/// generated route for
+/// [ServiceSelectionScreen]
+class ServiceSelectionRoute extends PageRouteInfo<void> {
+  const ServiceSelectionRoute({List<PageRouteInfo>? children})
+      : super(
+          ServiceSelectionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ServiceSelectionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ServiceSelectionScreen();
     },
   );
 }
@@ -430,6 +495,25 @@ class StartRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const StartScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [WrapperScreen]
+class WrapperRoute extends PageRouteInfo<void> {
+  const WrapperRoute({List<PageRouteInfo>? children})
+      : super(
+          WrapperRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WrapperRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const WrapperScreen();
     },
   );
 }

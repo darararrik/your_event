@@ -1,15 +1,2 @@
 export 'api/api.dart';
-export 'repositories/models/authResponse/auth_response.dart';
-export 'repositories/models/loginRequest/login_request.dart';
-export 'repositories/models/registerRequest/register_request.dart';
-export 'api/api_service.dart';
-export 'api/your_event_client.dart';
-export 'repositories/auth/auth.dart';
-export 'repositories/auth/auth_interface_repository.dart';
-export 'repositories/auth/auth_repository.dart';
-export 'repositories/event/event.dart';
-export 'repositories/event/event_repository.dart';
-export 'repositories/models/eventModel/event_model.dart';
-export 'repositories/models/models.dart';
-export 'repositories/models/user/user_dto.dart';
-export 'repositories/user/user_repository.dart';
+export 'repositories/repositories.dart';

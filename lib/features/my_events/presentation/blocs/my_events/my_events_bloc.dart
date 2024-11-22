@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:yourevent/core/Data/repositories/event/event_repository.dart';
-import 'package:yourevent/core/Data/repositories/models/eventModel/event_model.dart';
+import 'package:yourevent/core/data/repositories/event/event_repository.dart';
+import 'package:yourevent/core/data/repositories/models/event/event_dto.dart';
 
 part 'my_events_event.dart';
 part 'my_events_state.dart';
@@ -22,7 +22,7 @@ class MyEventsBloc extends Bloc<MyEventsEvent, MyEventsState> {
         emit(MyEventsLoading());
       }
         //TODO: нужно начать хранить
-      List<EventModel> events = await _eventRepository.getListEvents(18);
+      List<EventDto> events = await _eventRepository.getListEvents(18);
       if (events.isNotEmpty) {
         emit(MyEventsLoaded(list: events));
       } else {

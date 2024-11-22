@@ -15,13 +15,13 @@ class MyEventsLoad extends MyEventsEvent {
 }
 
 class MyEventsLoadCreated extends MyEventsLoad {
-  final List<EventModel>? list;
+  final List<EventDto>? list;
 
   const MyEventsLoadCreated(this.list);
 }
 
 class MyEventsLoadCompleted extends MyEventsLoad {
-  final List<EventModel>? list;
+  final List<EventDto>? list;
 
   const MyEventsLoadCompleted(this.list);
 }

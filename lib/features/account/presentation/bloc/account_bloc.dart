@@ -5,17 +5,14 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:yourevent/core/Data/repositories/auth/auth_repository.dart';
+import 'package:yourevent/core/data/repositories/auth/auth_repository.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
-  final AuthRepository _authRepository;
 
-  AccountBloc(
-    this._authRepository,
-  ) : super(AccountInitial()) {
+  AccountBloc() : super(AccountInitial()) {
     on<AccountUpdateName>(_onUpdateName);
     on<AccountUpdateEmail>(_onUpdateEmail);
   }

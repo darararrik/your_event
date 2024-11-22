@@ -11,7 +11,7 @@ sealed class EventTypeState extends Equatable {
 final class EventTypeInitial extends EventTypeState {}
 
 class EventTypesLoaded extends EventTypeState {
-  final List<EventTypeModel> list;
+  final List<EventTypeDto> list;
   const EventTypesLoaded({
     required this.list,
   });

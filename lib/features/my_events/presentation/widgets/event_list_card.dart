@@ -11,7 +11,7 @@ class EventListCard extends StatelessWidget {
     super.key,
     required this.event,
   });
-  final EventModel event;
+  final EventDto event;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

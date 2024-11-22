@@ -1,10 +1,10 @@
 
 
-import 'package:yourevent/core/Data/repositories/models/models.dart';
+import 'package:yourevent/core/data/repositories/models/models.dart';
 
 abstract interface class IAuthRepository {
-  Future<AuthResponse> singUp(RegisterRequest registerRequest);
-  Future<AuthResponse> signIn(LoginRequest loginRequest);
+  Future<AuthResponseDto> singUp(RegisterRequestDto registerRequest);
+  Future<AuthResponseDto> signIn(LoginRequestDto loginRequest);
   Future<String?> getAccessToken();
   Future<String?> getRefreshToken();
   Future<void> saveTokens(String accessToken, String refreshToken);

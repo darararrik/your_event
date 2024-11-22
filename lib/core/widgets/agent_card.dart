@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:yourevent/core/data/repositories/models/agency_service/agency_service_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
 
 class AgentCard extends StatelessWidget {
+  final AgencyServiceDto dto;
   const AgentCard({
     super.key,
+    required this.dto,
   });
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,8 @@ class AgentCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text("Agent name", style: theme.textTheme.bodyMedium),
+                          Text(dto.agencyName,
+                              style: theme.textTheme.bodyMedium),
                           const SizedBox(
                             width: 8,
                           ),
@@ -76,12 +80,12 @@ class AgentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Название услуги",
+                  dto.serviceName,
                   style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  "От 2000 руб.",
+                  dto.price.toString(),
                   style: theme.textTheme.titleMedium,
                 ),
               ],

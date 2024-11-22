@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:yourevent/core/blocs/blocs.dart';
-import 'package:yourevent/core/Data/repositories/models/user/user_dto.dart';
+import 'package:yourevent/core/data/repositories/models/user/user_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/features/profile_screens/profile/Presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/features/profile_screens/profile/Presentation/widgets/card_options.dart';
@@ -165,33 +165,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Padding _emailVerfied(bool emailVerified) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 82).copyWith(top: 12),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: emailVerified ? Colors.green : Colors.red,
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                emailVerified ? Icons.check_circle : Icons.cancel_rounded,
-                color: Colors.white,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                emailVerified ? "Почта подтверждена" : "Подтвердите почту!",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left, // Выровнять текст по левому краю
-              ),
-            ],
-          ),
-        ));
-  }
 }

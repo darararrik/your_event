@@ -10,7 +10,7 @@ sealed class MyEventsState extends Equatable {
 final class MyEventsInitial extends MyEventsState {}
 
 final class MyEventsLoaded extends MyEventsState {
-  final List<EventModel> list;
+  final List<EventDto> list;
   const MyEventsLoaded({required this.list});
 
   @override
@@ -28,7 +28,7 @@ class MyEventsError extends MyEventsState {
 final class MyEventsLoading extends MyEventsState {}
 
 final class MyEventsLoadedCompleted extends MyEventsState {
-  final List<EventModel> list;
+  final List<EventDto> list;
 
   const MyEventsLoadedCompleted({required this.list});
 
@@ -37,7 +37,7 @@ final class MyEventsLoadedCompleted extends MyEventsState {
 }
 
 final class MyEventsLoadedCreated extends MyEventsState {
-  final List<EventModel> list;
+  final List<EventDto> list;
 
   const MyEventsLoadedCreated({required this.list});
 

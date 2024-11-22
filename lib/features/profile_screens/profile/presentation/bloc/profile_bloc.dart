@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/Data/repositories/auth/auth.dart';
-import 'package:yourevent/core/Data/repositories/models/user/user_dto.dart';
+import 'package:yourevent/core/data/repositories/auth/auth.dart';
+import 'package:yourevent/core/data/repositories/models/user/user_dto.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

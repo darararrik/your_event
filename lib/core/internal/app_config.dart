@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yourevent/core/Data/api/api_service.dart';
+import 'package:yourevent/core/data/api/api_service.dart';
 
 class AppConfig {
   AppConfig({

@@ -22,13 +22,13 @@ class _YourEventClient implements YourEventClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<AuthResponse> register(RegisterRequest authRequest) async {
+  Future<AuthResponseDto> register(RegisterRequestDto authRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(authRequest.toJson());
-    final _options = _setStreamType<AuthResponse>(Options(
+    final _options = _setStreamType<AuthResponseDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -45,9 +45,9 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponse _value;
+    late AuthResponseDto _value;
     try {
-      _value = AuthResponse.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -56,13 +56,13 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<AuthResponse> login(LoginRequest authLoginRequest) async {
+  Future<AuthResponseDto> login(LoginRequestDto authLoginRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(authLoginRequest.toJson());
-    final _options = _setStreamType<AuthResponse>(Options(
+    final _options = _setStreamType<AuthResponseDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -79,9 +79,9 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponse _value;
+    late AuthResponseDto _value;
     try {
-      _value = AuthResponse.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -124,14 +124,14 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<AuthResponse> refreshAccessToken(
-      RefreshTokenRequest refreshTokenRequest) async {
+  Future<AuthResponseDto> refreshAccessToken(
+      RefreshTokenRequestDto refreshTokenRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(refreshTokenRequest.toJson());
-    final _options = _setStreamType<AuthResponse>(Options(
+    final _options = _setStreamType<AuthResponseDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -148,9 +148,9 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponse _value;
+    late AuthResponseDto _value;
     try {
-      _value = AuthResponse.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -159,12 +159,12 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<List<EventTypeModel>> getListCategories() async {
+  Future<List<EventTypeDto>> getListCategories() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<EventTypeModel>>(Options(
+    final _options = _setStreamType<List<EventTypeDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -181,11 +181,10 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<EventTypeModel> _value;
+    late List<EventTypeDto> _value;
     try {
       _value = _result.data!
-          .map(
-              (dynamic i) => EventTypeModel.fromJson(i as Map<String, dynamic>))
+          .map((dynamic i) => EventTypeDto.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -195,7 +194,7 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<int> createEvent(EventModel event) async {
+  Future<int> createEvent(EventDto event) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -229,12 +228,12 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<List<EventModel>> getListEvents(int userId) async {
+  Future<List<EventDto>> getListEvents(int userId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<EventModel>>(Options(
+    final _options = _setStreamType<List<EventDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -251,10 +250,150 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<EventModel> _value;
+    late List<EventDto> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) => EventModel.fromJson(i as Map<String, dynamic>))
+          .map((dynamic i) => EventDto.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<AgencyDto>> getListAgencies(int pageIndex) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': pageIndex};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<AgencyDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'agencies',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<AgencyDto> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) => AgencyDto.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<AgencyDto> getAgencyById(int agencyId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<AgencyDto>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'agencies/${agencyId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AgencyDto _value;
+    try {
+      _value = AgencyDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<AgencyServiceDto>> getListAgencyServicesById(int agencyId) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<AgencyServiceDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'agencies/${agencyId}/services',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<AgencyServiceDto> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) =>
+              AgencyServiceDto.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<AgencyServiceDto>> getAllAgencyServices() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<AgencyServiceDto>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'agencies/all/services',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<AgencyServiceDto> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) =>
+              AgencyServiceDto.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

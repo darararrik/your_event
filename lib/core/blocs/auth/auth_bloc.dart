@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:yourevent/core/Data/data.dart';
 import 'dart:async';
-
+import 'package:yourevent/core/data/repositories/repositories.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -22,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       SignUpRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final userRequestRegister = RegisterRequest(
+      final userRequestRegister = RegisterRequestDto(
           email: event.email,
           name: event.name,
           surname: event.surname,
@@ -39,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final loginRequest =
-          LoginRequest(email: event.email, password: event.password);
+          LoginRequestDto(email: event.email, password: event.password);
       await _authRepository.signIn(loginRequest);
       emit(const AuthSuccess());
     } catch (e) {

@@ -1,6 +1,8 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
-import 'package:yourevent/core/Data/data.dart';
+import 'package:yourevent/core/data/data.dart';
+import 'package:yourevent/core/data/repositories/models/agency/agency_dto.dart';
+import 'package:yourevent/core/data/repositories/models/agency_service/agency_service_dto.dart';
 
 part 'your_event_client.g.dart';
 
@@ -15,20 +17,33 @@ abstract class YourEventClient {
   }
 
   @POST("auth/register")
-  Future<AuthResponse> register(@Body() RegisterRequest authRequest);
+  Future<AuthResponseDto> register(@Body() RegisterRequestDto authRequest);
 
   @POST("auth/login")
-  Future<AuthResponse> login(@Body() LoginRequest authLoginRequest);
+  Future<AuthResponseDto> login(@Body() LoginRequestDto authLoginRequest);
   @GET("user/me")
   Future<UserDto> getCurrentUser(@Header('Authorization') String authHeader);
   @POST("auth/refresh") // Новый метод для обновления токена
-  Future<AuthResponse> refreshAccessToken(
-      @Body() RefreshTokenRequest refreshTokenRequest);
+  Future<AuthResponseDto> refreshAccessToken(
+      @Body() RefreshTokenRequestDto refreshTokenRequest);
   @GET("categories")
-  Future<List<EventTypeModel>> getListCategories();
+  Future<List<EventTypeDto>> getListCategories();
 
   @POST("events")
-  Future<int> createEvent(@Body() EventModel event);
+  Future<int> createEvent(@Body() EventDto event);
   @GET("events/{id}")
-  Future<List<EventModel>> getListEvents(@Path("id") int userId);
+  Future<List<EventDto>> getListEvents(@Path("id") int userId);
+
+  @GET("agencies")
+  Future<List<AgencyDto>> getListAgencies(@Query("page") int pageIndex);
+
+  @GET("agencies/{id}")
+  Future<AgencyDto> getAgencyById(@Path("id") int agencyId);
+
+  @GET("agencies/{id}/services")
+  Future<List<AgencyServiceDto>> getListAgencyServicesById(
+      @Path("id") int agencyId);
+      
+  @GET("agencies/all/services")
+  Future<List<AgencyServiceDto>> getAllAgencyServices();
 }

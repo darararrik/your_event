@@ -1,11 +1,11 @@
-import 'package:yourevent/core/Data/repositories/repositories.dart';
+import 'package:yourevent/core/data/repositories/repositories.dart';
 
 abstract interface class IEventRepository {
-  Future<List<EventTypeModel>> getListEventType();
+  Future<List<EventTypeDto>> getListEventType();
 
-  Future<List<EventModel>> getListEvents(int userId);
+  Future<List<EventDto>> getListEvents(int userId);
 
-  Future<void> createEvent(EventModel eventData);
+  Future<void> createEvent(EventDto eventData);
 
 
 }
