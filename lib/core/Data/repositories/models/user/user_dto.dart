@@ -9,12 +9,14 @@ class UserDto {
   final String surname;
   final String email;
   final String? city = null;
+  final String urlAvatar;
 
   UserDto({
     required this.id,
     required this.email,
     required this.name,
     required this.surname,
+    required this.urlAvatar,
   });
 
   // Фабричный метод для создания экземпляра из JSON

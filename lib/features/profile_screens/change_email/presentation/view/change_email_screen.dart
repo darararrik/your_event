@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/auth/auth.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
-import 'package:yourevent/features/account/presentation/bloc/account_bloc.dart';
-import 'package:yourevent/features/account/presentation/view/account_screen.dart';
+import 'package:yourevent/features/profile_screens/account/Presentation/bloc/account_bloc.dart';
+
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -52,11 +51,6 @@ class ChangeEmailScreen extends StatelessWidget {
                       text: "Проверить почту",
                       onPressed: () async {
                         context.read<AuthBloc>().add(SignOutRequested());
-
-                        await LaunchApp.openApp(
-                          androidPackageName: 'com.google.android.gm',
-                          openStore: true,
-                        );
                       })
                 ],
               ),

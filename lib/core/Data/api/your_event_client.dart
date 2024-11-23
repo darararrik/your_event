@@ -3,6 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:yourevent/core/data/data.dart';
 import 'package:yourevent/core/data/repositories/models/agency/agency_dto.dart';
 import 'package:yourevent/core/data/repositories/models/agency_service/agency_service_dto.dart';
+import 'package:yourevent/core/data/repositories/models/tokens_response/tokes_response_dto.dart';
+import 'package:yourevent/core/data/repositories/models/user/update_email_request/update_email_request.dart';
+import 'package:yourevent/core/data/repositories/models/user/update_name/update_name_request.dart';
+import 'package:yourevent/core/data/repositories/models/user/update_password_request/update_password_request.dart';
 
 part 'your_event_client.g.dart';
 
@@ -18,14 +22,25 @@ abstract class YourEventClient {
 
   @POST("auth/register")
   Future<AuthResponseDto> register(@Body() RegisterRequestDto authRequest);
-
   @POST("auth/login")
   Future<AuthResponseDto> login(@Body() LoginRequestDto authLoginRequest);
-  @GET("user/me")
-  Future<UserDto> getCurrentUser(@Header('Authorization') String authHeader);
-  @POST("auth/refresh") // Новый метод для обновления токена
-  Future<AuthResponseDto> refreshAccessToken(
+
+  @POST("auth/refresh")
+  Future<TokesResponseDto> refreshAccessToken(
       @Body() RefreshTokenRequestDto refreshTokenRequest);
+
+  @GET("user/me")
+  Future<UserDto> getCurrentUser();
+
+  @PATCH("user/update/password")
+  Future<UserDto> updatePassword(@Body() UpdatePasswordRequest request);
+
+  @PATCH("user/update/email")
+  Future<UserDto> updateEmail(@Body() UpdateEmailRequest request);
+
+  @PATCH("user/update/name")
+  Future<UserDto> updateName(@Body() UpdateNameRequest request);
+
   @GET("categories")
   Future<List<EventTypeDto>> getListCategories();
 
@@ -43,7 +58,7 @@ abstract class YourEventClient {
   @GET("agencies/{id}/services")
   Future<List<AgencyServiceDto>> getListAgencyServicesById(
       @Path("id") int agencyId);
-      
+
   @GET("agencies/all/services")
   Future<List<AgencyServiceDto>> getAllAgencyServices();
 }

@@ -2,17 +2,15 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yourevent/core/data/repositories/auth/auth.dart';
-import 'package:yourevent/core/data/repositories/models/user/user_dto.dart';
+import 'package:yourevent/core/core.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  AuthRepository authRepository;
-  ProfileBloc(this.authRepository) : super(ProfileLoading()) {
+  UserRepository userRepo;
+  ProfileBloc(this.userRepo) : super(ProfileLoading()) {
     on<ProfileLoadRequested>(_onProfileLoad);
   }
 
@@ -20,10 +18,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileLoadRequested event, Emitter<ProfileState> emit) async {
     try {
       emit(ProfileLoading());
-
-      //final firebaseUser = await authRepository.getCurrentUser();
-      //final user = user_model.User.fromFirebaseUser(firebaseUser!);
-      //emit(ProfileLoaded(user: user));
+      final user = await userRepo.getCurrentUser();
+      emit(ProfileLoaded(user: user));
     } catch (e) {
       emit(ProfileError(error: e));
     }

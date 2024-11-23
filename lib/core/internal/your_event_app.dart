@@ -7,9 +7,11 @@ import 'package:yourevent/core/data/repositories/repositories.dart';
 import 'package:yourevent/core/internal/app_config.dart';
 import 'package:yourevent/core/utils/theme.dart';
 import 'package:yourevent/features/event_screens/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
-import 'package:yourevent/features/event_screens/event/Presentation/bloc/event/event_bloc.dart';
-import 'package:yourevent/features/event_screens/service_selection/Presentation/service/service_bloc.dart';
+import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
+import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
 import 'package:yourevent/features/my_events/my_events.dart';
+import 'package:yourevent/features/profile_screens/account/Presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/Presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
 class YourEventApp extends StatelessWidget {
@@ -32,6 +34,7 @@ class YourEventApp extends StatelessWidget {
       apiService: config.apiService,
     );
 
+    final UserRepository userRepository = UserRepository(config.apiService);
     // Проверка токенов при запуске
     _checkLoginStatus(context, config.preferences);
 
@@ -55,6 +58,12 @@ class YourEventApp extends StatelessWidget {
         ),
         BlocProvider<EventBloc>(
           create: (context) => EventBloc(),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(userRepository),
+        ),
+        BlocProvider<AccountBloc>(
+          create: (context) => AccountBloc(userRepository),
         ),
       ],
       child: MaterialApp.router(
@@ -81,8 +90,8 @@ class YourEventApp extends StatelessWidget {
 
   Future<bool> _validateToken(String token) async {
     try {
-      final response = await config.apiService.getCurrentUser();
-      return response != null;
+      await config.apiService.getCurrentUser();
+      return true;
     } catch (e, stacktrace) {
       debugPrint("Token validation failed: $e\n$stacktrace");
       return false;

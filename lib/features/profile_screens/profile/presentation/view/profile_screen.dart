@@ -68,12 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 70,
-                      // backgroundImage: NetworkImage(
-                      //     //TODO: Реализация
-                      //     user.photoURL),
+                      backgroundImage: NetworkImage(
+                          //TODO: Реализация
+                          user.urlAvatar),
                     ),
                     const SizedBox(height: 16),
                     Text(
