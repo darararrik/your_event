@@ -14,6 +14,13 @@ final Widget faqSearch = SvgPicture.asset(
   width: 56,
   height: 56,
 );
+
+final Widget eyeHidden = SvgPicture.asset(
+  "assets/images/eye-hidden.svg",
+
+);final Widget eyeOpen = SvgPicture.asset(
+  "assets/images/eye-open.svg",
+);
 final Widget package = SvgPicture.asset(
   "assets/images/package.svg",
   width: 48,

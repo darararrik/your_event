@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:yourevent/core/data/api/your_event_client.dart';
 import 'package:yourevent/core/data/repositories/models/agency/agency_dto.dart';
 import 'package:yourevent/core/data/repositories/models/agency_service/agency_service_dto.dart';
+import 'package:yourevent/core/data/repositories/models/user/update_email_request/update_email_request.dart';
 import 'package:yourevent/core/data/repositories/models/user/update_name/update_name_request.dart';
 import 'package:yourevent/core/data/repositories/models/user/update_password_request/update_password_request.dart';
 import 'package:yourevent/core/data/repositories/repositories.dart';
@@ -17,57 +18,65 @@ class ApiService {
   bool isRefreshing = false;
   List<void Function(String)> requestQueue = [];
   Completer<void>? _refreshCompleter;
-  ApiService(this._dio, this._prefs, this._client) {
-    _dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (options, handler) async {
-      final path = options.path;
-      if (path != "auth/register" &&
-          path != "auth/login" &&
-          path != "auth/refresh") {
-        final accessToken = getAccessToken();
-        if (accessToken != null) {
-          options.headers["Authorization"] = "Bearer $accessToken";
-        }
-      }
-      return handler.next(options);
-    }, onError: (DioException e, handler) async {
-      if (e.response?.statusCode == 401) {
-        debugPrint("Получена ошибка 401. Попытка обновить токен.");
-        await _handleTokenRefresh();
-
-        // Повторяем запрос с новым токеном
-        final newAccessToken = getAccessToken();
-        if (newAccessToken != null) {
-          e.requestOptions.headers["Authorization"] = "Bearer $newAccessToken";
-          try {
-            final clonedRequest = await _dio.request(
-              e.requestOptions.path,
-              options: Options(
-                method: e.requestOptions.method,
-                headers: e.requestOptions.headers,
-              ),
-              data: e.requestOptions.data,
-              queryParameters: e.requestOptions.queryParameters,
-            );
-            return handler.resolve(clonedRequest);
-          } catch (error) {
-            debugPrint("Ошибка при повторной отправке запроса: $error");
-            return handler.reject(e);
+  final TokenService _tokenService;
+  ApiService(this._dio, this._prefs, this._client, this._tokenService) {
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          // Пропускаем запросы, которые не требуют авторизации
+          final path = options.path;
+          if (path != "auth/register" &&
+              path != "auth/login" &&
+              path != "auth/refresh") {
+            final accessToken = _tokenService.getAccessToken();
+            if (accessToken != null) {
+              options.headers["Authorization"] = "Bearer $accessToken";
+            }
           }
-        } else {
-          debugPrint("Обновление токена не удалось, пользователь разлогинен.");
-          return handler.reject(e);
-        }
-      } else {
-        return handler.next(e);
-      }
-    }));
+          return handler.next(options);
+        },
+        onError: (DioException e, handler) async {
+          if (e.response?.statusCode == 401) {
+            debugPrint("Ошибка 401. Попытка обновить токен.");
+            try {
+              await _handleTokenRefresh(); // Обновляем токен
+
+              // Повторяем запрос
+              final response = await _retryRequest(e.requestOptions);
+              return handler.resolve(response);
+            } catch (error) {
+              debugPrint("Не удалось обновить токен: $error");
+            }
+          }
+          return handler.next(e); // Передаем ошибку дальше
+        },
+      ),
+    );
+  }
+
+  Future<Response<dynamic>> _retryRequest(RequestOptions requestOptions) async {
+    final newAccessToken = _tokenService.getAccessToken();
+    if (newAccessToken != null) {
+      requestOptions.headers["Authorization"] = "Bearer $newAccessToken";
+      // Убедитесь, что используется полный URL
+      final fullUrl = requestOptions.baseUrl + requestOptions.path;
+      return _dio.request(
+        fullUrl,
+        options: Options(
+          method: requestOptions.method,
+          headers: requestOptions.headers,
+        ),
+        data: requestOptions.data,
+        queryParameters: requestOptions.queryParameters,
+      );
+    }
+    throw Exception("Нет нового токена для повторного запроса.");
   }
 
   Future<void> _handleTokenRefresh() async {
     if (isRefreshing) {
       debugPrint("Токен уже обновляется, ожидаем завершения.");
-      await _refreshCompleter?.future; // Ждем завершения обновления
+      await _refreshCompleter?.future; // Ожидаем завершения текущего обновления
       return;
     }
 
@@ -75,10 +84,9 @@ class ApiService {
     _refreshCompleter = Completer();
 
     try {
-      final refreshToken = getRefreshToken();
+      final refreshToken = _tokenService.getRefreshToken();
       if (refreshToken == null) {
-        debugPrint("Refresh токен отсутствует.");
-        throw Exception("Нет refresh токена.");
+        throw Exception("Refresh токен отсутствует.");
       }
 
       final refreshTokenDto =
@@ -86,11 +94,11 @@ class ApiService {
       final response = await _client.refreshAccessToken(refreshTokenDto);
 
       // Сохраняем новые токены
-      _prefs.setString("accessToken", response.accessToken);
-      _prefs.setString("refreshToken", response.refreshToken);
+      await _tokenService.saveTokens(
+          response.accessToken, response.refreshToken);
 
       debugPrint("Токен успешно обновлен.");
-      _refreshCompleter?.complete(); // Завершаем процесс обновления
+      _refreshCompleter?.complete();
     } catch (error) {
       debugPrint("Ошибка обновления токена: $error");
       _refreshCompleter?.completeError(error);
@@ -103,7 +111,8 @@ class ApiService {
 
   Future<String?> refreshAccessToken() async {
     try {
-      final refreshToken = getRefreshToken(); // Достаем refreshToken
+      final refreshToken =
+          _tokenService.getRefreshToken(); // Достаем refreshToken
       if (refreshToken == null) {
         debugPrint("Refresh token отсутствует.");
         return null;
@@ -126,14 +135,6 @@ class ApiService {
       debugPrint("Ошибка в процессе обновления токена: $e");
       return null;
     }
-  }
-
-  String? getRefreshToken() {
-    return _prefs.getString('refreshToken');
-  }
-
-  String? getAccessToken() {
-    return _prefs.getString('accessToken');
   }
 
   Future<AuthResponseDto> login(LoginRequestDto loginRequest) async {
@@ -192,7 +193,7 @@ class ApiService {
     return response;
   }
 
-  Future<UserDto> updatePassword(
+  Future<AuthResponseDto> updatePassword(
       {required String oldPassword, required String newPassword}) async {
     final response = await _client.updatePassword(UpdatePasswordRequest(
         oldPassword: oldPassword, newPassword: newPassword));
@@ -204,5 +205,27 @@ class ApiService {
     final response = await _client
         .updateName(UpdateNameRequest(name: name, surname: surname));
     return response;
+  }
+
+  Future<AuthResponseDto> updateEmail({required String newEmail}) async {
+    final response =
+        await _client.updateEmail(UpdateEmailRequest(newEmail: newEmail));
+    _tokenService.saveTokens(response.accessToken, response.refreshToken);
+    return response;
+  }
+}
+
+class TokenService {
+  final SharedPreferences _prefs;
+
+  TokenService(this._prefs);
+
+  String? getAccessToken() => _prefs.getString("accessToken");
+
+  String? getRefreshToken() => _prefs.getString("refreshToken");
+
+  Future<void> saveTokens(String accessToken, String refreshToken) async {
+    await _prefs.setString("accessToken", accessToken);
+    await _prefs.setString("refreshToken", refreshToken);
   }
 }

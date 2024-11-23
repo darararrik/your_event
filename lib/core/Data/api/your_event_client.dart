@@ -32,13 +32,13 @@ abstract class YourEventClient {
   @GET("user/me")
   Future<UserDto> getCurrentUser();
 
-  @PATCH("user/update/password")
-  Future<UserDto> updatePassword(@Body() UpdatePasswordRequest request);
+  @PATCH("user/me/update/password")
+  Future<AuthResponseDto> updatePassword(@Body() UpdatePasswordRequest request);
 
-  @PATCH("user/update/email")
-  Future<UserDto> updateEmail(@Body() UpdateEmailRequest request);
+  @PATCH("user/me/update/email")
+  Future<AuthResponseDto> updateEmail(@Body() UpdateEmailRequest request);
 
-  @PATCH("user/update/name")
+  @PATCH("user/me/update/name")
   Future<UserDto> updateName(@Body() UpdateNameRequest request);
 
   @GET("categories")

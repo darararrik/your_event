@@ -6,7 +6,7 @@ import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/core/widgets/input_widget.dart';
 import 'package:yourevent/features/features.dart';
-import 'package:yourevent/features/profile_screens/account/presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/profile_screens/account/presentation/bloc/change_name_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -47,9 +47,9 @@ class _AccountScreenState extends State<AccountScreen> {
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: BlocListener<AccountBloc, AccountState>(
+              child: BlocListener<ChangeNameBloc, ChangeNameState>(
                 listener: (context, state) {
-                  if (state is AccountNameUpdated) {
+                  if (state is NameUpdated) {
                     context.read<ProfileBloc>().add(ProfileLoadRequested());
                     const snackBar = SnackBar(
                       behavior: SnackBarBehavior.floating,
@@ -152,7 +152,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     context
-                                        .read<AccountBloc>()
+                                        .read<ChangeNameBloc>()
                                         .add(AccountUpdateName(
                                           name: nameController.text.trim(),
                                           surname:

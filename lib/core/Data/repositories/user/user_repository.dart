@@ -1,5 +1,4 @@
-import 'package:yourevent/core/data/api/api_service.dart';
-import 'package:yourevent/core/data/repositories/models/user/user_dto.dart';
+import 'package:yourevent/core/core.dart';
 import 'package:yourevent/core/data/repositories/user/user_interface_repository.dart';
 
 class UserRepository implements IUserRepository {
@@ -7,7 +6,7 @@ class UserRepository implements IUserRepository {
 
   UserRepository(this._apiService);
   @override
-  Future<UserDto> updatePassword(
+  Future<AuthResponseDto> updatePassword(
       {required String oldPassword, required String newPassword}) {
     return _apiService.updatePassword(
         oldPassword: oldPassword, newPassword: newPassword);
@@ -20,15 +19,13 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<UserDto> updateEmail({required String password}) {
-    // TODO: implement updateEmail
-    throw UnimplementedError();
+  Future<AuthResponseDto> updateEmail({required String newEmail}) {
+    return _apiService.updateEmail(newEmail: newEmail);
   }
 
-
   @override
-  Future<UserDto> updateName({required String name,required String surname}) {
-    return _apiService.updateName(name: name,surname: surname );
+  Future<UserDto> updateName({required String name, required String surname}) {
+    return _apiService.updateName(name: name, surname: surname);
   }
 
   @override

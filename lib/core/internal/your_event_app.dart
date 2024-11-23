@@ -10,7 +10,8 @@ import 'package:yourevent/features/event_screens/create_event/Presentation/bloc/
 import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
 import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
 import 'package:yourevent/features/my_events/my_events.dart';
-import 'package:yourevent/features/profile_screens/account/presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/profile_screens/account/presentation/bloc/change_name_bloc.dart';
+import 'package:yourevent/features/profile_screens/change_email/presentation/bloc/change_email_bloc.dart';
 import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
@@ -62,8 +63,11 @@ class YourEventApp extends StatelessWidget {
         BlocProvider<ProfileBloc>(
           create: (context) => ProfileBloc(userRepository),
         ),
-        BlocProvider<AccountBloc>(
-          create: (context) => AccountBloc(userRepository),
+        BlocProvider<ChangeNameBloc>(
+          create: (context) => ChangeNameBloc(userRepository),
+        ),
+        BlocProvider<ChangeEmailBloc>(
+          create: (context) => ChangeEmailBloc(userRepository),
         ),
       ],
       child: MaterialApp.router(

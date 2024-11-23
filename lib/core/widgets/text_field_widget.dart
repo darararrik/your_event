@@ -63,11 +63,7 @@ class TextFieldWidget extends StatelessWidget {
                   ),
                   suffixIcon: obscureText
                       ? IconButton(
-                          icon: Icon(
-                            state.isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
+                          icon: state.isPasswordVisible ? eyeOpen : eyeHidden,
                           onPressed: () {
                             context
                                 .read<InputFieldCubit>()

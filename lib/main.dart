@@ -22,7 +22,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final apiService = ApiService(dio, prefs, client);
+  final TokenService tokenService = TokenService(prefs);
+  final apiService = ApiService(dio, prefs, client, tokenService);
 
   final config =
       AppConfig(preferences: prefs, dio: dio, apiService: apiService);

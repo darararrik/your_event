@@ -30,6 +30,8 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
     return BlocBuilder<MyEventsBloc, MyEventsState>(
       builder: (context, state) {
         if (state is MyEventsError) {
+          context.read<MyEventsBloc>().add(MyEventsLoad(completer: null));
+
           return Center(child: Text(state.error.toString()));
         }
         if (state is MyEventsLoaded) {

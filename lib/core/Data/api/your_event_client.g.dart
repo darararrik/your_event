@@ -158,20 +158,20 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<UserDto> updatePassword(UpdatePasswordRequest request) async {
+  Future<AuthResponseDto> updatePassword(UpdatePasswordRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<UserDto>(Options(
+    final _options = _setStreamType<AuthResponseDto>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'user/update/password',
+          'user/me/update/password',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -181,9 +181,9 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserDto _value;
+    late AuthResponseDto _value;
     try {
-      _value = UserDto.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -192,20 +192,20 @@ class _YourEventClient implements YourEventClient {
   }
 
   @override
-  Future<UserDto> updateEmail(UpdateEmailRequest request) async {
+  Future<AuthResponseDto> updateEmail(UpdateEmailRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<UserDto>(Options(
+    final _options = _setStreamType<AuthResponseDto>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'user/update/email',
+          'user/me/update/email',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -215,9 +215,9 @@ class _YourEventClient implements YourEventClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UserDto _value;
+    late AuthResponseDto _value;
     try {
-      _value = UserDto.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -239,7 +239,7 @@ class _YourEventClient implements YourEventClient {
     )
         .compose(
           _dio.options,
-          'user/update/name',
+          'user/me/update/name',
           queryParameters: queryParameters,
           data: _data,
         )
