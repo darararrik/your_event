@@ -16,61 +16,89 @@ class ApiService {
   final YourEventClient _client;
   bool isRefreshing = false;
   List<void Function(String)> requestQueue = [];
+  Completer<void>? _refreshCompleter;
   ApiService(this._dio, this._prefs, this._client) {
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        // Добавляем токен авторизации в заголовок запроса
-        final path = options.path;
-        if (path != "auth/register" &&
-            path != "auth/login" &&
-            path != "auth/refresh") {
-          final accessToken = getAccessToken();
-          if (accessToken != null) {
-            options.headers["Authorization"] = "Bearer $accessToken";
-          }
+    _dio.interceptors
+        .add(InterceptorsWrapper(onRequest: (options, handler) async {
+      final path = options.path;
+      if (path != "auth/register" &&
+          path != "auth/login" &&
+          path != "auth/refresh") {
+        final accessToken = getAccessToken();
+        if (accessToken != null) {
+          options.headers["Authorization"] = "Bearer $accessToken";
         }
-        return handler.next(options); // Далее запрос будет отправлен с токеном
-      },
-      onError: (DioException e, handler) async {
-        if (e.response?.statusCode == 401) {
-          debugPrint("Ошибка 401. Попытка обновить токен.");
+      }
+      return handler.next(options);
+    }, onError: (DioException e, handler) async {
+      if (e.response?.statusCode == 401) {
+        debugPrint("Получена ошибка 401. Попытка обновить токен.");
+        await _handleTokenRefresh();
 
-          // Обновление токена (например, через refresh token)
-          final refreshedToken = await refreshAccessToken();
-          if (refreshedToken != null) {
-            // После успешного обновления токена пробуем повторить запрос с новым токеном
-            final requestOptions = e.requestOptions;
-            requestOptions.headers["Authorization"] =
-                "Bearer $refreshedToken"; // Новый токен в заголовке
-
-            // Повторный запрос с обновленным токеном
-            try {
-              final response = await _dio.request(
-                requestOptions.path,
-                options: Options(
-                  method: requestOptions.method,
-                  headers: requestOptions.headers,
-                  validateStatus: (status) => status != null && status < 500,
-                ),
-                data: requestOptions.data,
-                queryParameters: requestOptions.queryParameters,
-              );
-
-              // Возвращаем результат успешного повторного запроса
-              return handler.resolve(response);
-            } catch (error) {
-              return handler.reject(e); // Если повторный запрос не удался
-            }
-          } else {
-            debugPrint("Не удалось обновить токен. Пользователь разлогинен.");
-            return handler.reject(e); // Ошибка обновления токена
+        // Повторяем запрос с новым токеном
+        final newAccessToken = getAccessToken();
+        if (newAccessToken != null) {
+          e.requestOptions.headers["Authorization"] = "Bearer $newAccessToken";
+          try {
+            final clonedRequest = await _dio.request(
+              e.requestOptions.path,
+              options: Options(
+                method: e.requestOptions.method,
+                headers: e.requestOptions.headers,
+              ),
+              data: e.requestOptions.data,
+              queryParameters: e.requestOptions.queryParameters,
+            );
+            return handler.resolve(clonedRequest);
+          } catch (error) {
+            debugPrint("Ошибка при повторной отправке запроса: $error");
+            return handler.reject(e);
           }
         } else {
-          // Если ошибка не 401, то просто передаем дальше
-          return handler.next(e);
+          debugPrint("Обновление токена не удалось, пользователь разлогинен.");
+          return handler.reject(e);
         }
-      },
-    ));
+      } else {
+        return handler.next(e);
+      }
+    }));
+  }
+
+  Future<void> _handleTokenRefresh() async {
+    if (isRefreshing) {
+      debugPrint("Токен уже обновляется, ожидаем завершения.");
+      await _refreshCompleter?.future; // Ждем завершения обновления
+      return;
+    }
+
+    isRefreshing = true;
+    _refreshCompleter = Completer();
+
+    try {
+      final refreshToken = getRefreshToken();
+      if (refreshToken == null) {
+        debugPrint("Refresh токен отсутствует.");
+        throw Exception("Нет refresh токена.");
+      }
+
+      final refreshTokenDto =
+          RefreshTokenRequestDto(refreshToken: refreshToken);
+      final response = await _client.refreshAccessToken(refreshTokenDto);
+
+      // Сохраняем новые токены
+      _prefs.setString("accessToken", response.accessToken);
+      _prefs.setString("refreshToken", response.refreshToken);
+
+      debugPrint("Токен успешно обновлен.");
+      _refreshCompleter?.complete(); // Завершаем процесс обновления
+    } catch (error) {
+      debugPrint("Ошибка обновления токена: $error");
+      _refreshCompleter?.completeError(error);
+      rethrow; // Пробрасываем ошибку для обработки
+    } finally {
+      isRefreshing = false;
+      _refreshCompleter = null;
+    }
   }
 
   Future<String?> refreshAccessToken() async {

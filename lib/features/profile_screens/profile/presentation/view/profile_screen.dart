@@ -22,20 +22,22 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    context.read<ProfileBloc>().add(ProfileLoadRequested());
     super.initState();
+    context.read<ProfileBloc>().add(ProfileLoadRequested());
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocBuilder<ProfileBloc, ProfileState>(
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        if (state is ProfileError) {
+          context.read<ProfileBloc>().add(ProfileLoadRequested());
+        }
+      },
       builder: (context, state) {
         if (state is ProfileLoading) {
           return _loadingState();
-        }
-        if (state is ProfileError) {
-          return _errorState(state, context);
         }
         if (state is ProfileLoaded) {
           UserDto user = state.user;

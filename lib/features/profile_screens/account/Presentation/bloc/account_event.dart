@@ -11,6 +11,8 @@ final class AccountUpdateEmail extends AccountEvent {
   final String email;
   final String password;
   const AccountUpdateEmail({required this.email, required this.password});
+  @override
+  List<Object> get props => [email, password];
 }
 
 final class AccountUpdatePassword extends AccountEvent {
@@ -25,6 +27,8 @@ class AccountUpdateName extends AccountEvent {
     required this.name,
     required this.surname,
   });
+  @override
+  List<Object> get props => [name, surname];
 }
 
 final class AccountUpdate extends AccountEvent {

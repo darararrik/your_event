@@ -21,9 +21,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   FutureOr<void> _onUpdateNameAndSurname(
       AccountUpdateName event, Emitter<AccountState> emit) async {
     try {
-      await _userRepository.updateName(
+      final user = await _userRepository.updateName(
           name: event.name, surname: event.surname);
-      emit(AccountNameUpdated());
+      emit(AccountNameUpdated(user: user));
     } catch (e) {
       emit(Error(error: e.toString()));
     }

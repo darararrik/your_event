@@ -22,6 +22,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final user = await userRepo.getCurrentUser();
       emit(ProfileLoaded(user: user));
     } catch (e) {
+      
       emit(ProfileError(error: e));
     }
   }
