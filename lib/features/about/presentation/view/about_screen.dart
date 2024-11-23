@@ -13,7 +13,7 @@ class AboutScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
-        physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             centerTitle: true,

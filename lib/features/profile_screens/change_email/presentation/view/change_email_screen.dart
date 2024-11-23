@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/auth/auth.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
-import 'package:yourevent/features/profile_screens/account/Presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/profile_screens/account/presentation/bloc/account_bloc.dart';
 
 import 'package:yourevent/router/router.dart';
 

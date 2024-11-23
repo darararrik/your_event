@@ -14,8 +14,7 @@ class SettingsScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
-        //TODO че то сделал
-        physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(

@@ -2,11 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 part 'update_name_request.g.dart';
 @JsonSerializable()
 class UpdateNameRequest {
-  final String firstName;
+  final String name;
   final String surname;
 
   UpdateNameRequest({
-    required this.firstName,
+    required this.name,
     required this.surname,
   });
 

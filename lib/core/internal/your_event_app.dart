@@ -10,8 +10,8 @@ import 'package:yourevent/features/event_screens/create_event/Presentation/bloc/
 import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
 import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
 import 'package:yourevent/features/my_events/my_events.dart';
-import 'package:yourevent/features/profile_screens/account/Presentation/bloc/account_bloc.dart';
-import 'package:yourevent/features/profile_screens/profile/Presentation/bloc/profile_bloc.dart';
+import 'package:yourevent/features/profile_screens/account/presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
 class YourEventApp extends StatelessWidget {
@@ -51,7 +51,7 @@ class YourEventApp extends StatelessWidget {
                 eventRepository: eventRepository,
                 apiService: config.apiService)),
         BlocProvider<MyEventsBloc>(
-          create: (context) => MyEventsBloc(eventRepository),
+          create: (context) => MyEventsBloc(eventRepository, userRepository),
         ),
         BlocProvider<ServiceBloc>(
           create: (context) => ServiceBloc(agenciesRepository),

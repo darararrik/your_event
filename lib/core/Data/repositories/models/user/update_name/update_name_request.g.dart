@@ -8,12 +8,12 @@ part of 'update_name_request.dart';
 
 UpdateNameRequest _$UpdateNameRequestFromJson(Map<String, dynamic> json) =>
     UpdateNameRequest(
-      firstName: json['firstName'] as String,
+      name: json['name'] as String,
       surname: json['surname'] as String,
     );
 
 Map<String, dynamic> _$UpdateNameRequestToJson(UpdateNameRequest instance) =>
     <String, dynamic>{
-      'firstName': instance.firstName,
+      'name': instance.name,
       'surname': instance.surname,
     };

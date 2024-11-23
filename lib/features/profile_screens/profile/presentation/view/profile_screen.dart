@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
 import 'package:yourevent/core/data/repositories/models/user/user_dto.dart';
 import 'package:yourevent/core/utils/utils.dart';
-import 'package:yourevent/features/profile_screens/profile/Presentation/bloc/profile_bloc.dart';
-import 'package:yourevent/features/profile_screens/profile/Presentation/widgets/card_options.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yourevent/features/profile_screens/profile/presentation/widgets/card_options.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -29,28 +29,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        if (state is Unauthenticated) {
-          // Переход на стартовый экран при выходе пользователя
-          context.router.replaceAll([const StartRoute()]);
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        if (state is ProfileLoading) {
+          return _loadingState();
         }
+        if (state is ProfileError) {
+          return _errorState(state, context);
+        }
+        if (state is ProfileLoaded) {
+          UserDto user = state.user;
+          return _profileLoadedState(user, theme, context);
+        }
+        return const SizedBox();
       },
-      child: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
-          if (state is ProfileLoading) {
-            return _loadingState();
-          }
-          if (state is ProfileError) {
-            return _errorState(state, context);
-          }
-          if (state is ProfileLoaded) {
-            UserDto user = state.user;
-            return _profileLoadedState(user, theme, context);
-          }
-          return const SizedBox();
-        },
-      ),
     );
   }
 
@@ -61,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
         child: CustomScrollView(
-          physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
+          physics: NeverScrollableScrollPhysics(),
           slivers: [
             SliverFillRemaining(
               hasScrollBody: false,
@@ -164,5 +156,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
 }

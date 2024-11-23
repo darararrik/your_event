@@ -6,7 +6,7 @@ import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/core/widgets/input_widget.dart';
 import 'package:yourevent/features/features.dart';
-import 'package:yourevent/features/profile_screens/account/Presentation/bloc/account_bloc.dart';
+import 'package:yourevent/features/profile_screens/account/presentation/bloc/account_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -35,7 +35,7 @@ class _AccountScreenState extends State<AccountScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
-        physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             title: Text(
@@ -53,7 +53,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     context.read<ProfileBloc>().add(ProfileLoadRequested());
                     const snackBar = SnackBar(
                       behavior: SnackBarBehavior.floating,
-                      content: Text('Yay! A SnackBar!'),
+                      content: Text('Ваши данные успешно сохранены'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -151,10 +151,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                 text: "Сохранить изменения",
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    context.read<AccountBloc>().add(
-                                        AccountUpdateName(
-                                            name: nameController.text.trim(),
-                                            surname: ''));
+                                    context
+                                        .read<AccountBloc>()
+                                        .add(AccountUpdateName(
+                                          name: nameController.text.trim(),
+                                          surname:
+                                              surnameController.text.trim(),
+                                        ));
                                   }
                                 })
                           ],

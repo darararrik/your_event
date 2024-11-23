@@ -14,11 +14,11 @@ part 'account_state.dart';
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final UserRepository _userRepository;
   AccountBloc(this._userRepository) : super(AccountInitial()) {
-    on<AccountUpdateName>(_onUpdateName);
+    on<AccountUpdateName>(_onUpdateNameAndSurname);
     on<AccountUpdateEmail>(_onUpdateEmail);
   }
 
-  FutureOr<void> _onUpdateName(
+  FutureOr<void> _onUpdateNameAndSurname(
       AccountUpdateName event, Emitter<AccountState> emit) async {
     try {
       await _userRepository.updateName(

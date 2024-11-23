@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/utils/utils.dart';
-import 'package:yourevent/features/my_events/Presentation/blocs/my_events/my_events_bloc.dart';
-import 'package:yourevent/features/my_events/Presentation/widgets/widgets.dart';
+import 'package:yourevent/features/my_events/presentation/blocs/my_events/my_events_bloc.dart';
+import 'package:yourevent/features/my_events/presentation/widgets/widgets.dart';
 
 class CreatedEventsPage extends StatefulWidget {
   final List<String> statuses;
