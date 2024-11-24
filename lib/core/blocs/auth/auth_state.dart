@@ -9,10 +9,8 @@ abstract class AuthState extends Equatable {
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
-
-//class AuthChecking extends AuthState {}
-class AuthSuccess extends AuthState {
-  const AuthSuccess();
+class Authenticated extends AuthState {
+  const Authenticated();
 }
 
 class Unauthenticated extends AuthState {}

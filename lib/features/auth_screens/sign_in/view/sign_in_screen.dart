@@ -25,22 +25,16 @@ class SignInScreen extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthErrorState) {
-            // // Перепроверяем форму для отображения ошибки
-            // _formKey.currentState!.validate();
-          } else if (state is AuthSuccess) {
-            // Если вход успешен, перенаправляем на главную страницу
-            context.router.replaceAll([const MainRoute()]);
+            // Перепроверяем форму для отображения ошибки
+            _formKey.currentState!.validate();
           }
         },
         builder: (context, state) {
           if (state is AuthLoading) {
-            // Показываем индикатор загрузки, если идет процесс аутентификации
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-
-          // Если нет загрузки, показываем форму
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
             child: Form(

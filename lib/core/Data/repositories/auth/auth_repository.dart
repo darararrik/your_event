@@ -4,47 +4,48 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yourevent/core/data/api/api_service.dart';
+import 'package:yourevent/core/data/api/token_service/token_interface_service.dart';
 import 'package:yourevent/core/data/repositories/repositories.dart';
-
 
 class AuthRepository implements IAuthRepository {
   final ApiService apiService;
-  AuthRepository({
-    required this.prefs,
-    required this.apiService,
-  });
+  final ITokenService _tokenService;
+  AuthRepository(
+    this.apiService,
+    this._tokenService,
+  );
 
-  final SharedPreferences prefs;
-
-  // Выполняем запрос регистрации напрямую, без авторизации
   @override
-
-  Future<AuthResponseDto> singUp(RegisterRequestDto registerRequest) async {
-    final response = await apiService.register(registerRequest);
-    await saveTokens(response.accessToken, response.refreshToken);
-    return response;
+  Future<AuthResponseDto> signUp(RegisterRequestDto registerRequest) async {
+    try {
+      final response = await apiService.register(registerRequest);
+      await _tokenService.saveTokens(
+          refreshToken: response.refreshToken,
+          accessToken: response.accessToken);
+      return response;
+    } catch (e) {
+      debugPrint("Ошибка при регистрации: $e");
+      rethrow; // Пробрасываем дальше или возвращаем кастомное исключение
+    }
   }
 
   @override
   Future<AuthResponseDto> signIn(LoginRequestDto loginRequest) async {
-    final response = await apiService.login(loginRequest);
-    await saveTokens(response.accessToken, response.refreshToken);
-    return response;
+    try {
+      final response = await apiService.login(loginRequest);
+      await _tokenService.saveTokens(
+          refreshToken: response.refreshToken,
+          accessToken: response.accessToken);
+      return response;
+    } catch (e) {
+      debugPrint("Ошибка при входе: $e");
+      rethrow; // Или пробрасываем кастомное исключение
+    }
   }
 
+  /// Выход из системы
   @override
-  Future<void> saveTokens(String accessToken, String refreshToken) async {
-    await prefs.setString('accessToken', accessToken);
-    await prefs.setString('refreshToken', refreshToken);
-  }
-
-  @override
-  Future<String?> getAccessToken() async {
-    return prefs.getString('accessToken');
-  }
-
-  @override
-  Future<String?> getRefreshToken() async {
-    return prefs.getString('refreshToken');
+  Future<void> logout() async {
+    await _tokenService.deleteTokens();
   }
 }

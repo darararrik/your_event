@@ -9,20 +9,18 @@ sealed class ChangeNameState extends Equatable {
 
 final class ChangeNameInitial extends ChangeNameState {}
 
-
-
 final class Loading extends ChangeNameState {}
 
-final class NameUpdated extends ChangeNameState {
+final class ChangeNameSuccess extends ChangeNameState {
   final UserDto user;
-  const NameUpdated({required this.user});
+  const ChangeNameSuccess({required this.user});
   @override
   List<Object> get props => [user];
 }
 
-final class Error extends ChangeNameState {
+final class ChangeNameError extends ChangeNameState {
   final Object error;
-  const Error({required this.error});
+  const ChangeNameError({required this.error});
   @override
   List<Object> get props => [error];
 }

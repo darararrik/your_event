@@ -30,8 +30,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: StartRoute.page,
-          initial: true,
+          page: StartRoute.page, initial: true, // Стартовый э
         ),
         AutoRoute(
           page: SignInRoute.page,
@@ -43,8 +42,8 @@ class AppRouter extends RootStackRouter {
           page: MainRoute.page,
           children: [
             AutoRoute(
-              page: HomeRoute.page,
               initial: true,
+              page: HomeRoute.page,
             ),
             AutoRoute(
               page: ProfileRoute.page,

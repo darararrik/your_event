@@ -7,8 +7,8 @@ class UserRepository implements IUserRepository {
   UserRepository(this._apiService);
   @override
   Future<AuthResponseDto> updatePassword(
-      {required String oldPassword, required String newPassword}) {
-    return _apiService.updatePassword(
+      {required String oldPassword, required String newPassword}) async {
+    return await _apiService.updatePassword(
         oldPassword: oldPassword, newPassword: newPassword);
   }
 

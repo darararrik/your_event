@@ -11,9 +11,9 @@ final class ChangeEmailInitial extends ChangeEmailState {}
 
 final class EmailUpdated extends ChangeEmailState {}
 
-final class Error extends ChangeEmailState {
+final class ChangeEmailError extends ChangeEmailState {
   final Object error;
-  const Error({required this.error});
+  const ChangeEmailError({required this.error});
   @override
   List<Object> get props => [error];
 }

@@ -49,7 +49,7 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: const EdgeInsets.only(top: 16),
               child: BlocListener<ChangeNameBloc, ChangeNameState>(
                 listener: (context, state) {
-                  if (state is NameUpdated) {
+                  if (state is ChangeNameSuccess) {
                     context.read<ProfileBloc>().add(ProfileLoadRequested());
                     const snackBar = SnackBar(
                       behavior: SnackBarBehavior.floating,

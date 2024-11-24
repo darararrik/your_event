@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nested/nested.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
+import 'package:yourevent/core/data/api/token_service/token_service.dart';
 import 'package:yourevent/core/data/repositories/agencies/agencies_repository.dart';
 import 'package:yourevent/core/data/repositories/repositories.dart';
 import 'package:yourevent/core/internal/app_config.dart';
@@ -12,64 +14,27 @@ import 'package:yourevent/features/event_screens/service_selection/presentation/
 import 'package:yourevent/features/my_events/my_events.dart';
 import 'package:yourevent/features/profile_screens/account/presentation/bloc/change_name_bloc.dart';
 import 'package:yourevent/features/profile_screens/change_email/presentation/bloc/change_email_bloc.dart';
+import 'package:yourevent/features/profile_screens/change_password/Presentation/bloc/change_password_bloc.dart';
 import 'package:yourevent/features/profile_screens/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yourevent/router/router.dart';
 
 class YourEventApp extends StatelessWidget {
-  final _router = AppRouter();
-
   YourEventApp({super.key, required this.config});
   final AppConfig config;
+  final _router = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    final AuthRepository authRepository = AuthRepository(
-      prefs: config.preferences,
-      apiService: config.apiService,
-    );
-
-    final EventRepository eventRepository = EventRepository(
-      apiService: config.apiService,
-    );
-    final AgenciesRepository agenciesRepository = AgenciesRepository(
-      apiService: config.apiService,
-    );
-
+    final AuthRepository authRepository =
+        AuthRepository(config.apiService, TokenService(config.preferences));
+    final EventRepository eventRepository =
+        EventRepository(apiService: config.apiService);
+    final AgenciesRepository agenciesRepository =
+        AgenciesRepository(apiService: config.apiService);
     final UserRepository userRepository = UserRepository(config.apiService);
-    // Проверка токенов при запуске
-    _checkLoginStatus(context, config.preferences);
-
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<EventTypeBloc>(
-          create: (context) => EventTypeBloc(eventRepository),
-        ),
-        BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(authRepository),
-        ),
-        BlocProvider<CreateEventBloc>(
-            create: (context) => CreateEventBloc(
-                eventRepository: eventRepository,
-                apiService: config.apiService)),
-        BlocProvider<MyEventsBloc>(
-          create: (context) => MyEventsBloc(eventRepository, userRepository),
-        ),
-        BlocProvider<ServiceBloc>(
-          create: (context) => ServiceBloc(agenciesRepository),
-        ),
-        BlocProvider<EventBloc>(
-          create: (context) => EventBloc(),
-        ),
-        BlocProvider<ProfileBloc>(
-          create: (context) => ProfileBloc(userRepository),
-        ),
-        BlocProvider<ChangeNameBloc>(
-          create: (context) => ChangeNameBloc(userRepository),
-        ),
-        BlocProvider<ChangeEmailBloc>(
-          create: (context) => ChangeEmailBloc(userRepository),
-        ),
-      ],
+      providers: _buildBlocProviders(config, eventRepository, authRepository,
+          userRepository, agenciesRepository),
       child: MaterialApp.router(
         theme: lightTheme,
         routerConfig: _router.config(),
@@ -77,28 +42,45 @@ class YourEventApp extends StatelessWidget {
     );
   }
 
-  Future<void> _checkLoginStatus(
-      BuildContext context, SharedPreferences preferences) async {
-    final accessToken = preferences.getString('accessToken');
-    if (accessToken != null) {
-      final isValid = await _validateToken(accessToken);
-      if (isValid) {
-        _router.replaceAll([const MainRoute()]);
-      } else {
-        _router.replaceAll([const StartRoute()]);
-      }
-    } else {
-      _router.replaceAll([const StartRoute()]);
-    }
+  List<SingleChildWidget> _buildBlocProviders(
+      AppConfig config,
+      EventRepository eventRepository,
+      IAuthRepository authRepository,
+      UserRepository userRepository,
+      AgenciesRepository agenciesRepository) {
+    return [
+      BlocProvider<EventTypeBloc>(
+        create: (context) => EventTypeBloc(eventRepository),
+      ),
+      BlocProvider<AuthBloc>(
+        create: (context) =>
+            AuthBloc(authRepository, config.tokenService, userRepository),
+      ),
+      BlocProvider<CreateEventBloc>(
+          create: (context) => CreateEventBloc(
+              eventRepository: eventRepository, apiService: config.apiService)),
+      BlocProvider<MyEventsBloc>(
+        create: (context) => MyEventsBloc(eventRepository, userRepository),
+      ),
+      BlocProvider<ServiceBloc>(
+        create: (context) => ServiceBloc(agenciesRepository),
+      ),
+      BlocProvider<EventBloc>(
+        create: (context) => EventBloc(),
+      ),
+      BlocProvider<ProfileBloc>(
+        create: (context) => ProfileBloc(userRepository),
+      ),
+      BlocProvider<ChangeNameBloc>(
+        create: (context) => ChangeNameBloc(userRepository),
+      ),
+      BlocProvider<ChangeEmailBloc>(
+        create: (context) => ChangeEmailBloc(userRepository),
+      ),
+      BlocProvider<ChangePasswordBloc>(
+        create: (context) => ChangePasswordBloc(userRepository),
+      ),
+    ];
   }
 
-  Future<bool> _validateToken(String token) async {
-    try {
-      await config.apiService.getCurrentUser();
-      return true;
-    } catch (e, stacktrace) {
-      debugPrint("Token validation failed: $e\n$stacktrace");
-      return false;
-    }
-  }
 }

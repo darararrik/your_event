@@ -33,7 +33,7 @@ class SignUpScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is AuthSuccess) {
+            if (state is Authenticated) {
               context.router
                   .popUntil((route) => route.settings.name == MainRoute.name);
               context.router.push(const HomeRoute());

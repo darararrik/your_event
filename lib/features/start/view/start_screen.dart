@@ -1,7 +1,7 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:yourevent/core/blocs/auth/auth_bloc.dart';
 import 'package:yourevent/core/widgets/button_widget.dart';
 import 'package:yourevent/router/router.dart';
@@ -16,12 +16,15 @@ class StartScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     // Отправляем событие для проверки аутентификации при загрузке экрана
-    //context.read<AuthBloc>().add(AuthCheckRequested());
+    context.read<AuthBloc>().add(CheckLoginStatus());
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
-          // Если пользователь авторизован, перенаправляем на главную страницу
-              context.router.replaceAll([const MainRoute()]);
+        if (state is Authenticated) {
+          FlutterNativeSplash.remove();
+          context.router.replaceAll([MainRoute()]);
+        } else if (state is Unauthenticated) {
+          FlutterNativeSplash.remove();
+          context.router.replaceAll([StartRoute()]);
         }
       },
       child: Scaffold(
@@ -54,7 +57,6 @@ class StartScreen extends StatelessWidget {
                 },
                 hasColor: false,
               ),
-            
             ],
           ),
         ),

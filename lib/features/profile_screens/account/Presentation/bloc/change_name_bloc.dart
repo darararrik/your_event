@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:yourevent/core/core.dart';
-import 'package:yourevent/core/data/repositories/models/user/user_dto.dart';
 
 part 'change_name_event.dart';
 part 'change_name_state.dart';
@@ -20,9 +19,9 @@ class ChangeNameBloc extends Bloc<ChangeNameEvent, ChangeNameState> {
     try {
       final user = await _userRepository.updateName(
           name: event.name, surname: event.surname);
-      emit(NameUpdated(user: user));
+      emit(ChangeNameSuccess(user: user));
     } catch (e) {
-      emit(Error(error: e.toString()));
+      emit(ChangeNameError(error: e.toString()));
     }
   }
 
