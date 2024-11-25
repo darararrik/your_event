@@ -16,9 +16,13 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Вход'),
+        title: Text(
+          'Вход',
+          style: theme.textTheme.headlineSmall,
+        ),
         centerTitle: true,
         backgroundColor: white,
       ),
@@ -80,12 +84,9 @@ class SignInScreen extends StatelessWidget {
                         onPressed: () {
                           // TODO: Сделать экран "Забыли пароль?"
                         },
-                        child: const Text(
-                          "Забыли пароль?",
-                          style: TextStyle(
-                              color: Color(0xFF939BAA),
-                              fontWeight: FontWeight.w400),
-                        ),
+                        child: Text("Забыли пароль?",
+                            style: theme.textTheme.labelSmall!
+                                .copyWith(color: grey,)),
                       ),
                     ],
                   ),

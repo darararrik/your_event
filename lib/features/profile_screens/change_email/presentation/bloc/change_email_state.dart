@@ -9,7 +9,7 @@ sealed class ChangeEmailState extends Equatable {
 
 final class ChangeEmailInitial extends ChangeEmailState {}
 
-final class EmailUpdated extends ChangeEmailState {}
+final class ChangeEmailSuccess extends ChangeEmailState {}
 
 final class ChangeEmailError extends ChangeEmailState {
   final Object error;

@@ -123,7 +123,7 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                         .copyWith(top: 200),
                     child: Column(
                       children: [
-                        love,
+                        successPicture,
                         const SizedBox(height: 36),
                         Text(
                           "Событие успешно создано!",

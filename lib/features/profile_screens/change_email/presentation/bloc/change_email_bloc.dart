@@ -17,7 +17,7 @@ class ChangeEmailBloc extends Bloc<ChangeEmailEvent, ChangeEmailState> {
       AccountUpdateEmail event, Emitter<ChangeEmailState> emit) async {
     try {
       await _userRepository.updateEmail(newEmail: event.email);
-      emit(EmailUpdated());
+      emit(ChangeEmailSuccess());
     } catch (e) {
       emit(ChangeEmailError(error: e.toString()));
     }

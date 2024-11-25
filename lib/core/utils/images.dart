@@ -3,30 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yourevent/core/utils/utils.dart';
 
+//Логотип
 final Widget logo = SvgPicture.asset(
   "assets/images/logo.svg",
   width: 134,
   height: 52,
 );
-
-final Widget faqSearch = SvgPicture.asset(
-  "assets/images/search.svg",
-  width: 56,
-  height: 56,
-);
-
-final Widget eyeHidden = SvgPicture.asset(
+//Иконка глаза скрыть\раскрыть пароль
+final Widget passwordHiddenIcon = SvgPicture.asset(
   "assets/images/eye-hidden.svg",
-
-);final Widget eyeOpen = SvgPicture.asset(
+//Иконка глаза скрыть\раскрыть пароль
+);
+final Widget passwordOpenIcon = SvgPicture.asset(
   "assets/images/eye-open.svg",
 );
-final Widget package = SvgPicture.asset(
-  "assets/images/package.svg",
-  width: 48,
-  height: 48,
-);
-final Widget favorite = SvgPicture.asset(
+//Иконка сердца
+final Widget favoriteIcon = SvgPicture.asset(
   "assets/images/heart.svg",
   width: 24,
   height: 24,
@@ -60,26 +52,15 @@ final Widget surprise = SvgPicture.asset(
   width: 24,
   height: 24,
 );
-final Widget imgStartScreen = SvgPicture.asset(
-    'assets/images/img_start_screen.svg',
-    width: 220,
-    height: 220);
-// final Widget bottomSvgPicture = SvgPicture.asset('assets/images/bottomSvgPicture.svg',
-//     fit: BoxFit.fill);
+
 final Widget placeholder = Image.asset(
   "assets/images/placeholder.png",
 );
-final Widget like = Image.asset("assets/images/like.png");
-final Widget folder = Image.asset("assets/images/folder.png");
 
 final Widget home = SvgPicture.asset(
   'assets/images/Nav1Home.svg',
   width: 32, // ширина иконки
   height: 32, // высота иконки
-);
-final Widget love = SvgPicture.asset(
-  'assets/images/love.svg',
-// высота иконки
 );
 final Widget homeSelected = SvgPicture.asset(
   'assets/images/Nav1Home.svg',
@@ -130,4 +111,12 @@ final Widget emailCheck = SvgPicture.asset(
   'assets/images/email.svg',
   width: 64, // ширина иконки
   height: 64, // высота иконки
+);
+final Widget successPicture = SvgPicture.asset('assets/images/success.svg');
+final Widget emptyEventsPicture =
+    SvgPicture.asset('assets/images/emptyEvents.svg');
+final Widget passwordResetPicture = SvgPicture.asset(
+  'assets/images/passwordReset.svg',
+  width: 64,
+  height: 64,
 );

@@ -5,7 +5,6 @@ import 'package:yourevent/core/data/repositories/models/models.dart';
 import 'package:yourevent/features/about/Presentation/view/about_screen.dart';
 import 'package:yourevent/features/profile_screens/account/presentation/view/account_screen.dart';
 import 'package:yourevent/features/agents/view/agents_screen.dart';
-import 'package:yourevent/features/articles/view/articles_screen.dart';
 import 'package:yourevent/features/auth_screens/sign_in/view/sign_in_screen.dart';
 import 'package:yourevent/features/auth_screens/sign_up/view/sign_up_screen.dart';
 import 'package:yourevent/features/event_screens/create_event/presentation/view/event_details_page_view.dart';
@@ -70,9 +69,6 @@ class AppRouter extends RootStackRouter {
               page: ServiceDetailsRoute.page,
             ),
           ],
-        ),
-        AutoRoute(
-          page: ArticlesRoute.page,
         ),
         AutoRoute(
           page: EventTypeRoute.page,

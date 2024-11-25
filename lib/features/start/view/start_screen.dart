@@ -29,18 +29,18 @@ class StartScreen extends StatelessWidget {
       },
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 52, 16, 0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               logo,
-              const SizedBox(height: 60),
+              const SizedBox(height: 28),
+              successPicture,
+              const SizedBox(height: 28),
               Text(
-                'Все для праздника\nв одном месте',
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineSmall,
+                "Все для праздника в одном месте",
+                style: theme.textTheme.titleMedium,
               ),
-              const SizedBox(height: 32),
-              imgStartScreen,
               const SizedBox(height: 40),
               ButtonWidget(
                 text: 'Создать аккаунт',

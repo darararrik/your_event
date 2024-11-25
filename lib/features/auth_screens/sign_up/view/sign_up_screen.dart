@@ -52,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
                   TextFieldWidget(
                     controller: nameController,
                     labelText: 'Имя',
-                    hintText: "Light",
+                    hintText: "Введите ваше имя",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите имя пользователя';
@@ -64,7 +64,7 @@ class SignUpScreen extends StatelessWidget {
                   TextFieldWidget(
                     controller: surnameController,
                     labelText: 'Фамилия',
-                    hintText: "Light",
+                    hintText: "Введите вашу фамилию",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Введите фамилию пользователя';

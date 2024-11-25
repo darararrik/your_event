@@ -55,7 +55,7 @@ class _CreatedEventsPageState extends State<CreatedEventsPage> {
                 const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 160),
             child: Column(
               children: <Widget>[
-                folder,
+                emptyEventsPicture,
                 const SizedBox(
                   height: 8,
                 ),

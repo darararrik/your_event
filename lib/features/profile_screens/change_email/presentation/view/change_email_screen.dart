@@ -13,7 +13,7 @@ import 'package:yourevent/router/router.dart';
 class ChangeEmailScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  late final Object? error;
   final _formKey = GlobalKey<FormState>();
   ChangeEmailScreen({super.key});
 
@@ -22,43 +22,53 @@ class ChangeEmailScreen extends StatelessWidget {
     context.read<ChangeEmailBloc>().add(ResetState());
     final theme = Theme.of(context);
     return Scaffold(
-      body: BlocBuilder<ChangeEmailBloc, ChangeEmailState>(
-        builder: (context, state) {
-          if (state is EmailUpdated) {
-            context.read<ProfileBloc>().add(ProfileLoadRequested());
-            return _accountEmailUpdatedState(theme, context);
-          }
-          if (state is Loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return CustomScrollView(
-            slivers: [
-              const SliverAppBar(
-                title: Text("Смена E-mail"),
-                centerTitle: true,
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0)
-                    .copyWith(top: 40),
-                sliver: SliverFillRemaining(
-                  child: Form(
+      body: CustomScrollView(
+        slivers: [
+          const SliverAppBar(
+            title: Text("Смена E-mail"),
+            centerTitle: true,
+          ),
+          SliverPadding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0).copyWith(top: 120),
+            sliver: SliverFillRemaining(
+              child: BlocBuilder<ChangeEmailBloc, ChangeEmailState>(
+                builder: (context, state) {
+                  if (state is ChangeEmailSuccess) {
+                    context.read<ProfileBloc>().add(ProfileLoadRequested());
+                    return _accountEmailUpdatedState(theme, context);
+                  }
+                  if (state is Loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state is ChangeEmailError) {
+                    error = state.error;
+                  }
+                  return Form(
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Column(
                           children: [
+                            emailCheck,
+                            const SizedBox(
+                              height: 36,
+                            ),
                             Text(
                               "На новую почту будет выслана ссылка для подтверждения",
-                              style: theme.textTheme.titleMedium,
+                              style: theme.textTheme.titleMedium!
+                                  .copyWith(color: grey),
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 24),
                             TextFieldWidget(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Введите новую почту!';
+                                  return 'Введите e-mail';
+                                } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                    .hasMatch(value)) {
+                                  return 'Введите корректный email';
                                 }
                                 return null;
                               },
@@ -84,45 +94,50 @@ class ChangeEmailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                ),
-              )
-            ],
-          );
-        },
+                  );
+                },
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Padding _accountEmailUpdatedState(ThemeData theme, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 120),
-      child: Column(
-        children: [
-          emailCheck,
-          const SizedBox(
-            height: 40,
-          ),
-          Text(
-            "Осталось проверить почту",
-            style: theme.textTheme.headlineSmall,
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          Text(
-            "Мы выслали письмо на почту. Перейдите по ней для авторизации.",
-            style: theme.textTheme.titleMedium!.copyWith(color: grey),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 48,
-          ),
-          ButtonWidget(
+  Column _accountEmailUpdatedState(ThemeData theme, BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          children: [
+            emailCheck,
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Осталось проверить почту",
+              style: theme.textTheme.headlineSmall,
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            Text(
+              "Мы выслали письмо на почту. Перейдите по ней для авторизации.",
+              style: theme.textTheme.titleMedium!.copyWith(color: grey),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 48,
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 24.0),
+          child: ButtonWidget(
               text: "Проверить почту",
-              onPressed: () => context.router.navigate(ProfileRoute()))
-        ],
-      ),
+              onPressed: () => context.router.navigate(ProfileRoute())),
+        )
+      ],
     );
   }
 }

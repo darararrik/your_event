@@ -20,3 +20,5 @@ final class ChangePasswordError extends ChangePasswordState {
 class ChangePasswordSuccess extends ChangePasswordState {}
 
 class ChangePasswordLoading extends ChangePasswordState {}
+
+class Loading extends ChangePasswordState {}

@@ -31,6 +31,13 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    surnameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
@@ -69,6 +76,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       final user = state.user;
                       nameController.text = user.name;
                       surnameController.text = user.surname;
+
                       return Form(
                         key: _formKey,
                         child: Column(
@@ -147,10 +155,15 @@ class _AccountScreenState extends State<AccountScreen> {
                             const SizedBox(
                               height: 40,
                             ),
+                            //TODO: Реализовать кнопку серой
                             ButtonWidget(
                                 text: "Сохранить изменения",
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
+                                  if (_formKey.currentState!.validate() &&
+                                          user.name !=
+                                              nameController.text.trim() ||
+                                      user.surname !=
+                                          surnameController.text.trim()) {
                                     context
                                         .read<ChangeNameBloc>()
                                         .add(AccountUpdateName(
