@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/blocs/event_type/event_type_bloc.dart';
 import 'package:yourevent/core/data/repositories/models/event_type/event_type_dto.dart';
-import 'package:yourevent/features/event_screens/create_event/Presentation/widgets/event_type_card_widget.dart';
+import 'package:yourevent/features/event_screens/create_event/presentation/widgets/event_type_card_widget.dart';
 
 @RoutePage()
 class EventTypeScreen extends StatefulWidget {

@@ -93,26 +93,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Center _errorState(ProfileError state, BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            state.error.toString(), // Вывод сообщения об ошибке
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              context.read<ProfileBloc>().add(ProfileLoadRequested());
-            },
-            child: const Text('Повторить попытку'),
-          ),
-        ],
-      ),
-    );
-  }
-
   Center _loadingState() {
     return const Center(
       child: CircularProgressIndicator(),

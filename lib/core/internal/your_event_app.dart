@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nested/nested.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yourevent/core/blocs/blocs.dart';
@@ -8,7 +9,7 @@ import 'package:yourevent/core/data/repositories/agencies/agencies_repository.da
 import 'package:yourevent/core/data/repositories/repositories.dart';
 import 'package:yourevent/core/internal/app_config.dart';
 import 'package:yourevent/core/utils/theme.dart';
-import 'package:yourevent/features/event_screens/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
+import 'package:yourevent/features/event_screens/create_event/presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
 import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
 import 'package:yourevent/features/event_screens/my_events/my_events.dart';
@@ -36,6 +37,15 @@ class YourEventApp extends StatelessWidget {
       providers: _buildBlocProviders(config, eventRepository, authRepository,
           userRepository, agenciesRepository),
       child: MaterialApp.router(
+        localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: [
+      const Locale('ru', 'RU'), // Русский
+      const Locale('en', 'US'), // Английский
+    ],
         theme: lightTheme,
         routerConfig: _router.config(),
       ),

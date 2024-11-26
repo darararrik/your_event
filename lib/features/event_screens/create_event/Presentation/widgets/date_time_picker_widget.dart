@@ -51,7 +51,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
                         fontWeight: FontWeight.w300,
                       ),
                 ),
-                const Icon(Icons.calendar_today),
+                calendarIcon,
               ],
             ),
           ),

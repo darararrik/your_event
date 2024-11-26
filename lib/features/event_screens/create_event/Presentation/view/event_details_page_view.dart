@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/data/repositories/models/models.dart';
-import 'package:yourevent/core/utils/images.dart';
+import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/widgets.dart';
 import 'package:yourevent/features/event_screens/create_event/create_event.dart';
 
@@ -41,19 +41,44 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
     required bool isStart,
   }) async {
     final DateTime? pickedDate = await showDatePicker(
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: black, // Цвет заголовка
+              colorScheme: ColorScheme.light(primary: black), // Цветовая схема
+              buttonTheme: ButtonThemeData(
+                  textTheme: ButtonTextTheme.primary), // Стиль кнопок
+            ),
+            child: child!);
+      },
+      locale: Locale('ru', 'RU'),
       context: context,
       initialDate: isStart
           ? (selectedStartDateTime ?? DateTime.now())
           : (selectedEndDateTime ?? DateTime.now()),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
     );
 
     if (pickedDate != null) {
       final TimeOfDay? pickedTime = await showTimePicker(
+        builder: (context, child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: black, // Цвет заголовка
+              colorScheme: ColorScheme.light(primary: black), // Цветовая схема
+              buttonTheme: ButtonThemeData(
+                  textTheme: ButtonTextTheme.primary), // Стиль кнопок
+            ),
+            child: MediaQuery(
+                data: const MediaQueryData(alwaysUse24HourFormat: true),
+                child: child!),
+          );
+        },
         initialTime: TimeOfDay.fromDateTime(isStart
             ? (selectedStartDateTime ?? DateTime.now())
             : (selectedEndDateTime ?? DateTime.now())),
+        // ignore: use_build_context_synchronously
         context: context,
       );
 
@@ -103,10 +128,12 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                       children: [
                         Text(error),
                         const SizedBox(height: 16),
-                        ButtonWidget(
-                          text: "Вернуться на главную",
-                          onPressed: () =>
-                              context.router.replaceAll([const MainRoute()]),
+                        Expanded(
+                          child: ButtonWidget(
+                            text: "Вернуться на главную",
+                            onPressed: () =>
+                                context.router.replaceAll([const MainRoute()]),
+                          ),
                         ),
                       ],
                     ),
@@ -136,17 +163,21 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 80),
-                        ButtonWidget(
-                          text: "Мои события",
-                          onPressed: () =>
-                              context.router.navigate(const MyEventsRoute()),
+                        Expanded(
+                          child: ButtonWidget(
+                            text: "Мои события",
+                            onPressed: () =>
+                                context.router.navigate(const MyEventsRoute()),
+                          ),
                         ),
                         const SizedBox(height: 12),
-                        ButtonWidget(
-                          text: "Вернуться на главную",
-                          hasColor: false,
-                          onPressed: () =>
-                              context.router.replaceAll([const MainRoute()]),
+                        Expanded(
+                          child: ButtonWidget(
+                            text: "Вернуться на главную",
+                            hasColor: false,
+                            onPressed: () =>
+                                context.router.replaceAll([const MainRoute()]),
+                          ),
                         ),
                       ],
                     ),
@@ -156,6 +187,8 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
+                      surfaceTintColor: white,
+                      pinned: true,
                       title: const Text("Введите детали"),
                       centerTitle: true,
                       leading: IconButton(
@@ -174,78 +207,90 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                     ),
                     SliverFillRemaining(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          EventTypeCardWidget(
-                            eventType: widget.eventType,
-                            func: false,
-                            width: 380,
-                            height: 180,
+                          Column(
+                            children: [
+                              EventTypeCardWidget(
+                                eventType: widget.eventType,
+                                func: false,
+                                width: 380,
+                                height: 180,
+                              ),
+                              SizedBox(
+                                height: 460,
+                                child: PageView(
+                                  controller: pageController,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  onPageChanged: (index) {
+                                    context
+                                        .read<PageViewBloc>()
+                                        .add(PageViewChanged(index: index));
+                                  },
+                                  children: [
+                                    EventDetailsFirstPage(
+                                      selectedEndDateTime: selectedEndDateTime,
+                                      selectedStartDateTime:
+                                          selectedStartDateTime,
+                                      nameController: nameController,
+                                      descriptionController:
+                                          descriptionController,
+                                      eventType: widget.eventType,
+                                      formKey: _formKeyFirst,
+                                      onStartDateSelected: () =>
+                                          _selectDateTime(
+                                              context: context, isStart: true),
+                                      onEndDateSelected: () => _selectDateTime(
+                                          context: context, isStart: false),
+                                    ),
+                                    EventDetailsSecondPage(
+                                      formKey: _formKeySecond,
+                                      addressController: addressController,
+                                      priceController: priceController,
+                                      numberOfPeopleController:
+                                          numberOfPeopleController,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 460,
-                            child: PageView(
-                              controller: pageController,
-                              physics: const NeverScrollableScrollPhysics(),
-                              onPageChanged: (index) {
-                                context
-                                    .read<PageViewBloc>()
-                                    .add(PageViewChanged(index: index));
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 24.0),
+                            child: ButtonWidget(
+                              onPressed: () {
+                                if (pageIndex < 1 &&
+                                    _formKeyFirst.currentState!.validate() &&
+                                    selectedStartDateTime != null &&
+                                    selectedEndDateTime != null) {
+                                  pageController.nextPage(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                }
+                                if (pageIndex == 1 &&
+                                    _formKeySecond.currentState!.validate()) {
+                                  context.read<CreateEventBloc>().add(
+                                        SubmitEvent(
+                                          name: nameController.text.trim(),
+                                          people: int.parse(
+                                              numberOfPeopleController.text
+                                                  .trim()),
+                                          price: int.parse(
+                                              priceController.text.trim()),
+                                          startDate: selectedStartDateTime!,
+                                          endDate: selectedEndDateTime!,
+                                          address:
+                                              addressController.text.trim(),
+                                          categoryId: widget.eventType.id,
+                                          description:
+                                              descriptionController.text.trim(),
+                                        ),
+                                      );
+                                }
                               },
-                              children: [
-                                EventDetailsFirstPage(
-                                  selectedEndDateTime: selectedEndDateTime,
-                                  selectedStartDateTime: selectedStartDateTime,
-                                  nameController: nameController,
-                                  descriptionController: descriptionController,
-                                  eventType: widget.eventType,
-                                  formKey: _formKeyFirst,
-                                  onStartDateSelected: () => _selectDateTime(
-                                      context: context, isStart: true),
-                                  onEndDateSelected: () => _selectDateTime(
-                                      context: context, isStart: false),
-                                ),
-                                EventDetailsSecondPage(
-                                  formKey: _formKeySecond,
-                                  addressController: addressController,
-                                  priceController: priceController,
-                                  numberOfPeopleController:
-                                      numberOfPeopleController,
-                                ),
-                              ],
+                              text: 'Далее',
                             ),
-                          ),
-                          ButtonWidget(
-                            onPressed: () {
-                              if (pageIndex < 1 &&
-                                  _formKeyFirst.currentState!.validate() &&
-                                  selectedStartDateTime != null &&
-                                  selectedEndDateTime != null) {
-                                pageController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-                              if (pageIndex == 1 &&
-                                  _formKeySecond.currentState!.validate()) {
-                                context.read<CreateEventBloc>().add(
-                                      SubmitEvent(
-                                        name: nameController.text.trim(),
-                                        people: int.parse(
-                                            numberOfPeopleController.text
-                                                .trim()),
-                                        price: int.parse(
-                                            priceController.text.trim()),
-                                        startDate: selectedStartDateTime!,
-                                        endDate: selectedEndDateTime!,
-                                        address: addressController.text.trim(),
-                                        categoryId: widget.eventType.id,
-                                        description:
-                                            descriptionController.text.trim(),
-                                      ),
-                                    );
-                              }
-                            },
-                            text: 'Далее',
                           ),
                         ],
                       ),

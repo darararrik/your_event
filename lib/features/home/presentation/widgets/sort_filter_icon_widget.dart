@@ -16,7 +16,9 @@ class SortFilterIconWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          padding: const EdgeInsets.all(16),
+          width: 52,
+          height: 52,
+          padding: const EdgeInsets.all(12),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(12)),
             color: Colors.white,

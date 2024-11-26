@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/agent_card.dart';
 import 'package:yourevent/core/widgets/button_widget.dart';
+import 'package:yourevent/core/widgets/filter_widget.dart';
 import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
 import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
 import 'package:yourevent/features/home/Presentation/widgets/create_event_button.dart';
@@ -32,10 +33,10 @@ class HomeScreen extends StatelessWidget {
         BlocBuilder<ServiceBloc, ServiceState>(
           builder: (context, state) {
             if (state is ServicesLoaded) {
-              final count = state.services.length;
-              return _filter(context, count, theme);
+              final number = state.services.length;
+              return SliverToBoxAdapter(child: FilterWidget(number: number));
             }
-            return _filter(context, 0, theme);
+            return SliverToBoxAdapter(child: FilterWidget(number: 0));
           },
         ),
         BlocBuilder<ServiceBloc, ServiceState>(
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       return AgentCard(
-                        dto: list[index],
+                        service: list[index],
                       );
                     },
                     childCount: list.length, // Количество карточек
@@ -89,6 +90,7 @@ class HomeScreen extends StatelessWidget {
 
   SliverAppBar _appBar(BuildContext context) {
     return SliverAppBar(
+      surfaceTintColor: white,
       backgroundColor: Colors.white,
       toolbarHeight: 172,
       flexibleSpace: Stack(
@@ -138,54 +140,6 @@ class HomeScreen extends StatelessWidget {
       pinned: true,
     );
   }
-}
-
-SliverToBoxAdapter _filter(BuildContext context, int count, theme) {
-  return SliverToBoxAdapter(
-    child: Column(children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 8, 0, 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Выберите услуги",
-                    style: theme.textTheme.titleMedium,
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    "Найдено $count объявлений",
-                    style: theme.textTheme.bodySmall,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  SortFilterIconWidget(
-                    icon: sortIcon,
-                    onTap: () {
-                      showSortOptions(context);
-                    },
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  SortFilterIconWidget(icon: filterIcon, onTap: () {}),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    ]),
-  );
 }
 
 void showSortOptions(BuildContext context) {

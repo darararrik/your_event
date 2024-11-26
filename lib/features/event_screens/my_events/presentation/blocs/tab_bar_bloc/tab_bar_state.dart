@@ -2,20 +2,20 @@
 
 part of 'tab_bar_bloc.dart';
 
-abstract class TabBarState extends Equatable {
-  const TabBarState();
-  
+abstract class TabBarEventState extends Equatable {
+  const TabBarEventState();
+
   @override
   List<Object> get props => [];
 }
 
-class TabBarInitial extends TabBarState {}
+class TabBarEventInitial extends TabBarEventState {}
 
-class TabBarUpdated extends TabBarState {
+class TabBarEventUpdated extends TabBarEventState {
   final int tabIndex;
-  
-  const TabBarUpdated({required this.tabIndex});
-  
+
+  const TabBarEventUpdated({required this.tabIndex});
+
   @override
   List<Object> get props => [tabIndex];
 }

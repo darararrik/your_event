@@ -156,23 +156,26 @@ class _AccountScreenState extends State<AccountScreen> {
                               height: 40,
                             ),
                             //TODO: Реализовать кнопку серой
-                            ButtonWidget(
-                                text: "Сохранить изменения",
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate() &&
-                                          user.name !=
-                                              nameController.text.trim() ||
-                                      user.surname !=
-                                          surnameController.text.trim()) {
-                                    context
-                                        .read<ChangeNameBloc>()
-                                        .add(AccountUpdateName(
-                                          name: nameController.text.trim(),
-                                          surname:
-                                              surnameController.text.trim(),
-                                        ));
-                                  }
-                                })
+                            SizedBox(
+                              width: 384,
+                              child: ButtonWidget(
+                                  text: "Сохранить изменения",
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate() &&
+                                            user.name !=
+                                                nameController.text.trim() ||
+                                        user.surname !=
+                                            surnameController.text.trim()) {
+                                      context
+                                          .read<ChangeNameBloc>()
+                                          .add(AccountUpdateName(
+                                            name: nameController.text.trim(),
+                                            surname:
+                                                surnameController.text.trim(),
+                                          ));
+                                    }
+                                  }),
+                            )
                           ],
                         ),
                       );

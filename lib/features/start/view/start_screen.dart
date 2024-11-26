@@ -42,20 +42,24 @@ class StartScreen extends StatelessWidget {
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: 40),
-              ButtonWidget(
-                text: 'Создать аккаунт',
-                onPressed: () {
-                  context.router.push(SignUpRoute()); // Используем AutoRoute
-                },
+              Expanded(
+                child: ButtonWidget(
+                  text: 'Создать аккаунт',
+                  onPressed: () {
+                    context.router.push(SignUpRoute()); // Используем AutoRoute
+                  },
+                ),
               ),
               const SizedBox(height: 20),
-              ButtonWidget(
-                text: 'Войти',
-                onPressed: () {
-                  context.router
-                      .push(SignInRoute()); // Используем AutoRouteем pushNamed
-                },
-                hasColor: false,
+              Expanded(
+                child: ButtonWidget(
+                  text: 'Войти',
+                  onPressed: () {
+                    context.router.push(
+                        SignInRoute()); // Используем AutoRouteем pushNamed
+                  },
+                  hasColor: false,
+                ),
               ),
             ],
           ),

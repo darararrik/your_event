@@ -48,25 +48,6 @@ class AccountRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AgentsScreen]
-class AgentsRoute extends PageRouteInfo<void> {
-  const AgentsRoute({List<PageRouteInfo>? children})
-      : super(
-          AgentsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AgentsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AgentsScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [ChangeEmailScreen]
 class ChangeEmailRoute extends PageRouteInfo<ChangeEmailRouteArgs> {
   ChangeEmailRoute({
@@ -116,6 +97,25 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ChangePasswordScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ChatsScreen]
+class ChatsRoute extends PageRouteInfo<void> {
+  const ChatsRoute({List<PageRouteInfo>? children})
+      : super(
+          ChatsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChatsScreen();
     },
   );
 }

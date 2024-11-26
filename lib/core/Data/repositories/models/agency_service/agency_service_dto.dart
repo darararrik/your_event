@@ -3,6 +3,8 @@ part 'agency_service_dto.g.dart';
 
 @JsonSerializable()
 class AgencyServiceDto {
+  //TODO: добавить в сущность город и рейтинг
+
   final String agencyName;
   final String serviceName;
   final String serviceTypeName;

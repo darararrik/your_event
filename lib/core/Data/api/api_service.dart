@@ -80,42 +80,6 @@ class ApiService {
     requestQueue.clear();
   }
 
-  // Future<Response<dynamic>> _retryRequest(RequestOptions requestOptions) async {
-  //   final newAccessToken = _tokenService.getAccessToken();
-  //   if (newAccessToken != null) {
-  //     requestOptions.headers["Authorization"] = "Bearer $newAccessToken";
-  //     // Убедитесь, что используется полный URL
-  //     final fullUrl = requestOptions.baseUrl + requestOptions.path;
-  //     return _dio.request(
-  //       fullUrl,
-  //       options: Options(
-  //         method: requestOptions.method,
-  //         headers: requestOptions.headers,
-  //       ),
-  //       data: requestOptions.data,
-  //       queryParameters: requestOptions.queryParameters,
-  //     );
-  //   }
-  //   throw Exception("Нет нового токена для повторного запроса.");
-  //    onError: (DioException e, handler) async {
-  //         if (e.response?.statusCode == 401) {
-  //           debugPrint("Ошибка 401. Попытка обновить токен.");
-  //           try {
-  //             await _handleTokenRefresh();
-  //             final newAccessToken = _tokenService.getAccessToken();
-  //             if (newAccessToken != null) {
-  //               processQueue(newAccessToken);
-  //             }
-  //             // Повторяем запрос
-  //             final response = await _retryRequest(e.requestOptions);
-  //             return handler.resolve(response);
-  //           } catch (error) {
-  //             debugPrint("Не удалось обновить токен: $error");
-  //           }
-  //         }
-  //         return handler.next(e); // Передаем ошибку дальше
-  //       },
-  // }
 
   Future<void> _handleTokenRefresh() async {
     if (isRefreshing) {

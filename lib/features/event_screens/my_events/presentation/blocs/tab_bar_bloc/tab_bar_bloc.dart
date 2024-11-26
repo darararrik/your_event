@@ -5,12 +5,12 @@ import 'package:equatable/equatable.dart';
 part 'tab_bar_event.dart';
 part 'tab_bar_state.dart';
 
-class TabBarBloc extends Bloc<TabBarEvent, TabBarState> {
-  TabBarBloc() : super(TabBarInitial()) {
+class TabBarEventBloc extends Bloc<TabBarEventEvent, TabBarEventState> {
+  TabBarEventBloc() : super(TabBarEventInitial()) {
     on<TabChanged>(_onTabChanged);
   }
 
-  void _onTabChanged(TabChanged event, Emitter<TabBarState> emit) {
-    emit(TabBarUpdated(tabIndex: event.index));
+  void _onTabChanged(TabChanged event, Emitter<TabBarEventState> emit) {
+    emit(TabBarEventUpdated(tabIndex: event.index));
   }
 }

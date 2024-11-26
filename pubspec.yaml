@@ -30,6 +30,9 @@ dependencies:
   json_annotation: ^4.9.0
   shared_preferences: ^2.3.3
   flutter_native_splash: ^2.4.3
+  flutter_localizations:
+    sdk: flutter
+  nested: ^1.0.0
 
 dev_dependencies:
   retrofit_generator: ^9.1.5

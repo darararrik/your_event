@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/data/repositories/models/event_type/event_type_dto.dart';
 import 'package:yourevent/core/widgets/button_widget.dart';
 import 'package:yourevent/core/widgets/text_field_widget.dart';
-import 'package:yourevent/features/event_screens/create_event/Presentation/widgets/date_time_picker_widget.dart';
+import 'package:yourevent/features/event_screens/create_event/presentation/widgets/date_time_picker_widget.dart';
 
 class EventDetailsFirstPage extends StatelessWidget {
   final TextEditingController nameController;

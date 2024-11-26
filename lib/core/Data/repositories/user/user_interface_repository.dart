@@ -6,5 +6,4 @@ abstract interface class IUserRepository {
       {required String oldPassword, required String newPassword});
   Future<AuthResponseDto> updateEmail({required String newEmail});
   Future<UserDto> updateName({required String name, required String surname});
-  Future<UserDto> updateCity({required String city});
 }

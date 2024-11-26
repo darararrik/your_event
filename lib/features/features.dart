@@ -1,4 +1,4 @@
-export 'agents/agents.dart';
+export 'chats/agents.dart';
 export 'event_screens/create_event/create_event.dart';
 export 'home/home.dart';
 export 'main/main.dart';

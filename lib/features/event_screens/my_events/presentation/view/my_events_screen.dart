@@ -13,10 +13,10 @@ class MyEventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TabBarBloc(),
-      child: BlocBuilder<TabBarBloc, TabBarState>(
+      create: (context) => TabBarEventBloc(),
+      child: BlocBuilder<TabBarEventBloc, TabBarEventState>(
         builder: (context, state) {
-          final tabIndex = (state is TabBarUpdated) ? state.tabIndex : 0;
+          final tabIndex = (state is TabBarEventUpdated) ? state.tabIndex : 0;
           final tabController = TabController(
             length: 2,
             vsync: Scaffold.of(context),
@@ -63,7 +63,7 @@ class _AppBar extends StatelessWidget {
       bottom: TabBar(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         onTap: (index) {
-          context.read<TabBarBloc>().add(TabChanged(index: index));
+          context.read<TabBarEventBloc>().add(TabChanged(index: index));
         },
         tabs: const [
           Tab(

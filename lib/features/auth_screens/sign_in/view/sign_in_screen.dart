@@ -85,28 +85,31 @@ class SignInScreen extends StatelessWidget {
                           // TODO: Сделать экран "Забыли пароль?"
                         },
                         child: Text("Забыли пароль?",
-                            style: theme.textTheme.labelSmall!
-                                .copyWith(color: grey,)),
+                            style: theme.textTheme.labelSmall!.copyWith(
+                              color: grey,
+                            )),
                       ),
                     ],
                   ),
                   const SizedBox(height: 40),
-                  ButtonWidget(
-                    text: "Войти",
-                    onPressed: () {
-                      if (state is AuthErrorState) {
-                        _formKey.currentState!.validate();
-                      }
-                      context.read<AuthBloc>().add(
-                            SignInRequested(
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            ),
-                          );
-                      // if (_formKey.currentState!.validate()) {
-
-                      // }
-                    },
+                  Expanded(
+                    child: ButtonWidget(
+                      text: "Войти",
+                      onPressed: () {
+                        if (state is AuthErrorState) {
+                          _formKey.currentState!.validate();
+                        }
+                        context.read<AuthBloc>().add(
+                              SignInRequested(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              ),
+                            );
+                        // if (_formKey.currentState!.validate()) {
+                    
+                        // }
+                      },
+                    ),
                   ),
                 ],
               ),

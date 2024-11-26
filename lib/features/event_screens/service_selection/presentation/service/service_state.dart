@@ -13,7 +13,7 @@ class ServicesLoading extends ServiceState {}
 
 class ServicesLoaded extends ServiceState {
   final List<AgencyServiceDto> services;
-  final sortingMethod;
+  final String sortingMethod;
   const ServicesLoaded(this.services, {this.sortingMethod = "По умолчанию"});
   @override
   List<Object> get props => [services, sortingMethod];

@@ -17,10 +17,9 @@ class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return CustomScrollView(
       slivers: [
-        _appBar(theme, context),
+        _appBar(context),
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -50,7 +49,7 @@ class EventScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         child: Text(
-                          "Услуги",
+                          "Подключенные услуги",
                           style: theme.textTheme.titleLarge,
                         ),
                       ),
@@ -68,23 +67,44 @@ class EventScreen extends StatelessWidget {
                             itemCount: list2.length,
                             itemBuilder: (context, index) {
                               return AgentCard(
-                                dto: list2[index],
+                                service: list2[index],
                               );
                             },
                           );
                         }
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 24.0),
-                          child: Center(child: Text("Услуги пока не выбраны")),
+                        return GestureDetector(
+                          onTap: () {
+                            context.router.push(const ServiceSelectionRoute());
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(top: 20),
+                              height: 154,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: outline_Grey, width: 2),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    addEventIcon,
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      "Добавить услуги",
+                                      style: theme.textTheme.bodyMedium!
+                                          .copyWith(
+                                              color: outline_Grey,
+                                              fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              )),
                         );
                       }),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Divider(
-                        height: 1,
-                        color: outline_Grey,
-                      ),
                       BlocBuilder<EventBloc, EventState>(
                         builder: (context, state) {
                           if (state is EventServiceAdded) {
@@ -119,30 +139,23 @@ class EventScreen extends StatelessWidget {
                               ),
                             );
                           } else {
-                            return const Text("");
+                            return const SizedBox();
                           }
                         },
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      ButtonWidget(
-                          text: "Подобрать еще",
-                          onPressed: () {
-                            context.router.push(const ServiceSelectionRoute());
-                          })
                     ],
                   ),
                 )
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
 
-  SliverAppBar _appBar(ThemeData theme, BuildContext context) {
+  SliverAppBar _appBar(BuildContext context) {
+    final theme = Theme.of(context);
     return SliverAppBar(
       title: Text(
         "О событии",

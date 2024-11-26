@@ -9,6 +9,9 @@ final Widget logo = SvgPicture.asset(
   width: 134,
   height: 52,
 );
+final Widget calendarIcon = SvgPicture.asset(
+  "assets/images/calendar.svg",
+);
 //Иконка глаза скрыть\раскрыть пароль
 final Widget passwordHiddenIcon = SvgPicture.asset(
   "assets/images/eye-hidden.svg",
@@ -72,6 +75,11 @@ final Widget chat = SvgPicture.asset(
   'assets/images/chat.svg',
   width: 32, // ширина иконки
   height: 32, // высота иконки
+);
+final Widget addEventIcon = SvgPicture.asset(
+  'assets/images/add_event.svg',
+  width: 64, // ширина иконки
+  height: 64, // высота иконки
 );
 final Widget chatSelected = SvgPicture.asset(
   colorFilter: const ColorFilter.mode(orange, BlendMode.srcIn),

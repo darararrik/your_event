@@ -80,17 +80,19 @@ class ChangeEmailScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 24.0),
-                          child: ButtonWidget(
-                              text: "Далее",
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  context
-                                      .read<ChangeEmailBloc>()
-                                      .add(AccountUpdateEmail(
-                                        email: emailController.text.trim(),
-                                      ));
-                                }
-                              }),
+                          child: Expanded(
+                            child: ButtonWidget(
+                                text: "Далее",
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    context
+                                        .read<ChangeEmailBloc>()
+                                        .add(AccountUpdateEmail(
+                                          email: emailController.text.trim(),
+                                        ));
+                                  }
+                                }),
+                          ),
                         ),
                       ],
                     ),
@@ -133,9 +135,11 @@ class ChangeEmailScreen extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 24.0),
-          child: ButtonWidget(
-              text: "Проверить почту",
-              onPressed: () => context.router.navigate(ProfileRoute())),
+          child: Expanded(
+            child: ButtonWidget(
+                text: "Проверить почту",
+                onPressed: () => context.router.navigate(ProfileRoute())),
+          ),
         )
       ],
     );

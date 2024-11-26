@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
     return AutoTabsRouter(
       routes: const [
         HomeRoute(),
-        AgentsRoute(),
+        ChatsRoute(),
         MyEventsRoute(),
         ProfileRoute(),
       ],

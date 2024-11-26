@@ -12,11 +12,6 @@ class UserRepository implements IUserRepository {
         oldPassword: oldPassword, newPassword: newPassword);
   }
 
-  @override
-  Future<UserDto> updateCity({required String city}) {
-    // TODO: implement updateCity
-    throw UnimplementedError();
-  }
 
   @override
   Future<AuthResponseDto> updateEmail({required String newEmail}) {

@@ -104,20 +104,22 @@ class SignUpScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 40),
-                  ButtonWidget(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                              SignUpRequested(
-                                name: nameController.text.trim(),
-                                surname: surnameController.text.trim(),
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              ),
-                            );
-                      }
-                    },
-                    text: 'Зарегистрироваться',
+                  Expanded(
+                    child: ButtonWidget(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                                SignUpRequested(
+                                  name: nameController.text.trim(),
+                                  surname: surnameController.text.trim(),
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                ),
+                              );
+                        }
+                      },
+                      text: 'Зарегистрироваться',
+                    ),
                   ),
                 ],
               ),

@@ -149,7 +149,7 @@ TextTheme _textTheme() {
 
 ColorScheme _colorShcemeTheme() {
   return const ColorScheme.light(
-    primary: white, // Основной цвет (будет использован вместо accentColor)
+    primary: orange, // Основной цвет (будет использован вместо accentColor)
     secondary: Color(0xFFAB8A74), // Вторичный цвет, если вам нужен
     surface: white, // Цвет поверхности (например, фон карточек)
     error: Color(0xFFFF5449), // Цвет для ошибок
