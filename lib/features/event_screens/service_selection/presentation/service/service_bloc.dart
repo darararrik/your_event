@@ -13,6 +13,8 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
   ServiceBloc(this.agenciesRepository) : super(ServiceInitial()) {
     on<LoadServices>(_onLoadServices);
+    on<SortServicesAscending>(_onSortAscending);
+    on<SortServicesDescending>(_onSortDescending);
   }
 
   Future<void> _onLoadServices(
@@ -23,6 +25,34 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       emit(ServicesLoaded(services));
     } catch (e) {
       emit(const ServicesError("Ошибка загрузки услуг"));
+    }
+  }
+
+  FutureOr<void> _onSortAscending(
+      SortServicesAscending event, Emitter<ServiceState> emit) {
+    final curr = state;
+    emit(ServicesLoading());
+
+    if (curr is ServicesLoaded) {
+      final services = curr.services;
+      final List<AgencyServiceDto> sortedList = services
+        ..sort((a, b) => a.price.compareTo(b.price)); // Corrected for ascending
+      emit(ServicesLoaded(sortedList));
+    }
+  }
+
+  FutureOr<void> _onSortDescending(
+      SortServicesDescending event, Emitter<ServiceState> emit) {
+    final curr = state;
+
+    emit(ServicesLoading());
+
+    if (curr is ServicesLoaded) {
+      final services = curr.services;
+      final List<AgencyServiceDto> sortedList = services
+        ..sort(
+            (a, b) => b.price.compareTo(a.price)); // Corrected for descending
+      emit(ServicesLoaded(sortedList));
     }
   }
 }

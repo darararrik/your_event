@@ -8,3 +8,7 @@ sealed class ServiceEvent extends Equatable {
 }
 
 class LoadServices extends ServiceEvent {}
+
+class SortServicesAscending extends ServiceEvent {}
+
+class SortServicesDescending extends ServiceEvent {}

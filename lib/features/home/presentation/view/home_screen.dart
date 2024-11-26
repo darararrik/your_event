@@ -62,6 +62,11 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             }
+            if (state is ServicesLoading) {
+              return SliverToBoxAdapter(
+                child: CircularProgressIndicator(),
+              );
+            }
             return SliverToBoxAdapter(
               child: SizedBox(
                 height:
@@ -163,15 +168,14 @@ SliverToBoxAdapter _filter(BuildContext context, int count, theme) {
                 children: [
                   SortFilterIconWidget(
                     icon: sortIcon,
-                    onTap: () {},
+                    onTap: () {
+                      showSortOptions(context);
+                    },
                   ),
                   const SizedBox(
                     width: 8,
                   ),
-                  SortFilterIconWidget(
-                    icon: filterIcon,
-                    onTap: () {},
-                  ),
+                  SortFilterIconWidget(icon: filterIcon, onTap: () {}),
                 ],
               ),
             ],
@@ -179,6 +183,38 @@ SliverToBoxAdapter _filter(BuildContext context, int count, theme) {
         ),
       ),
     ]),
+  );
+}
+
+void showSortOptions(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text("По возрастанию цены"),
+              onTap: () {
+                // Здесь вы можете вызвать метод сортировки
+                context.read<ServiceBloc>().add(SortServicesAscending());
+                Navigator.pop(context); // Закрыть BottomSheet
+              },
+            ),
+            ListTile(
+              title: Text("По убыванию цены"),
+              onTap: () {
+                // Здесь вы можете вызвать метод сортировки
+                context.read<ServiceBloc>().add(SortServicesDescending());
+                Navigator.pop(context); // Закрыть BottomSheet
+              },
+            ),
+          ],
+        ),
+      );
+    },
   );
 }
 
