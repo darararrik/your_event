@@ -3,8 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yourevent/features/my_events/presentation/blocs/blocs.dart';
-import 'package:yourevent/features/my_events/presentation/view/tabs/tabs.dart';
+import 'package:yourevent/features/event_screens/my_events/presentation/blocs/blocs.dart';
+import 'package:yourevent/features/event_screens/my_events/presentation/view/tabs/tabs.dart';
 
 @RoutePage()
 class MyEventsScreen extends StatelessWidget {

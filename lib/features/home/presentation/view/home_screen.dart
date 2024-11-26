@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/agent_card.dart';
 import 'package:yourevent/core/widgets/button_widget.dart';
+import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
+import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
 import 'package:yourevent/features/home/Presentation/widgets/create_event_button.dart';
 import 'package:yourevent/features/home/Presentation/widgets/sort_filter_icon_widget.dart';
 import 'package:yourevent/features/home/Presentation/widgets/widgets.dart';
@@ -15,6 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ServiceBloc>().add(LoadServices());
     final theme = Theme.of(context);
     return CustomScrollView(
       slivers: [
@@ -24,51 +27,54 @@ class HomeScreen extends StatelessWidget {
           pinned: true,
           delegate: _ShadowHeaderDelegate(),
         ),
-        SliverFillRemaining(
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 8, 0, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Выберите услуги",
-                          style: theme.textTheme.titleMedium,
-                        ),
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Text(
-                          "Найдено 123 объявлений",
-                          style: theme.textTheme.bodySmall,
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SortFilterIconWidget(
-                          icon: sortIcon,
-                          onTap: () {},
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        SortFilterIconWidget(
-                          icon: filterIcon,
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                  ],
+        BlocBuilder<ServiceBloc, ServiceState>(
+          builder: (context, state) {
+            if (state is ServicesLoaded) {
+              final count = state.services.length;
+              return _filter(context, count, theme);
+            }
+            return _filter(context, 0, theme);
+          },
+        ),
+        BlocBuilder<ServiceBloc, ServiceState>(
+          builder: (context, state) {
+            if (state is ServicesLoaded) {
+              final list = state.services;
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(bottom: 100),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Количество столбцов
+                    crossAxisSpacing: 20, // Промежуток между столбцами
+                    mainAxisSpacing: 20, // Промежуток между строками
+                    childAspectRatio:
+                        0.75, // Соотношение ширины и высоты карточки
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return AgentCard(
+                        dto: list[index],
+                      );
+                    },
+                    childCount: list.length, // Количество карточек
+                  ),
+                ),
+              );
+            }
+            return SliverToBoxAdapter(
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).size.height * 0.5, // Задайте высоту
+                child: Center(
+                  child: Text(
+                    "Услуги не найдены.",
+                    style: theme.textTheme.headlineSmall,
+                  ),
                 ),
               ),
-            ),
-          ]),
+            );
+          },
         ),
       ],
     );
@@ -122,8 +128,58 @@ class HomeScreen extends StatelessWidget {
           bottomRight: Radius.circular(20),
         ),
       ),
+      pinned: true,
     );
   }
+}
+
+SliverToBoxAdapter _filter(BuildContext context, int count, theme) {
+  return SliverToBoxAdapter(
+    child: Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(12, 8, 0, 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Выберите услуги",
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "Найдено $count объявлений",
+                    style: theme.textTheme.bodySmall,
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  SortFilterIconWidget(
+                    icon: sortIcon,
+                    onTap: () {},
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  SortFilterIconWidget(
+                    icon: filterIcon,
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ]),
+  );
 }
 
 class _ShadowHeaderDelegate extends SliverPersistentHeaderDelegate {

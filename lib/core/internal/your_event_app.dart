@@ -11,7 +11,7 @@ import 'package:yourevent/core/utils/theme.dart';
 import 'package:yourevent/features/event_screens/create_event/Presentation/bloc/create_event/create_event_bloc.dart';
 import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
 import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
-import 'package:yourevent/features/my_events/my_events.dart';
+import 'package:yourevent/features/event_screens/my_events/my_events.dart';
 import 'package:yourevent/features/profile_screens/account/presentation/bloc/change_name_bloc.dart';
 import 'package:yourevent/features/profile_screens/change_email/presentation/bloc/change_email_bloc.dart';
 import 'package:yourevent/features/profile_screens/change_password/Presentation/bloc/change_password_bloc.dart';
@@ -82,5 +82,4 @@ class YourEventApp extends StatelessWidget {
       ),
     ];
   }
-
 }

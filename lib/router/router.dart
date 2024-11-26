@@ -13,7 +13,7 @@ import 'package:yourevent/features/event_screens/event/presentation/view/event_s
 import 'package:yourevent/features/event_screens/wrapper.dart';
 import 'package:yourevent/features/home/Presentation/view/home_screen.dart';
 import 'package:yourevent/features/main/view/main_screen.dart';
-import 'package:yourevent/features/my_events/presentation/view/my_events_screen.dart';
+import 'package:yourevent/features/event_screens/my_events/presentation/view/my_events_screen.dart';
 import 'package:yourevent/features/profile_screens/change_email/presentation/view/change_email_screen.dart';
 import 'package:yourevent/features/profile_screens/change_password/Presentation/view/change_password.dart';
 import 'package:yourevent/features/profile_screens/options/Presentation/view/settings_screen.dart';
