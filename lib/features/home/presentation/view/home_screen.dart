@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -187,32 +189,117 @@ SliverToBoxAdapter _filter(BuildContext context, int count, theme) {
 }
 
 void showSortOptions(BuildContext context) {
+  final theme = Theme.of(context);
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true, // Позволяет изменять высоту bottom sheet
     builder: (BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: Text("По возрастанию цены"),
-              onTap: () {
-                // Здесь вы можете вызвать метод сортировки
-                context.read<ServiceBloc>().add(SortServicesAscending());
-                Navigator.pop(context); // Закрыть BottomSheet
-              },
+      return BlocBuilder<ServiceBloc, ServiceState>(
+        builder: (context, state) {
+          String selectedMethod =
+              "По умолчанию"; // Переменная для хранения выбранного метода
+          if (state is ServicesLoaded) {
+            selectedMethod =
+                state.sortingMethod; // Получаем текущий метод сортировки
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0)
+                .copyWith(bottom: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize
+                  .min, // Ограничиваем высоту до необходимого размера
+              children: [
+                // Полоска сверху
+                Container(
+                  height: 4, // Высота полоски
+                  width: 32, // Ширина полоски
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 16), // Отступы вокруг полоски
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey, // Цвет полоски
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        "Сортировать",
+                        style: theme.textTheme.titleLarge,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        context.read<ServiceBloc>().add(LoadServices());
+                        Navigator.pop(context);
+                      },
+                      title: Row(
+                        children: [
+                          Radio<String>(
+                            fillColor: WidgetStatePropertyAll(orange),
+                            activeColor: orange,
+                            value: "По умолчанию",
+                            groupValue: selectedMethod,
+                            onChanged: (value) {},
+                          ),
+                          Text("По умолчанию",
+                              style: theme.textTheme.titleMedium),
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        context
+                            .read<ServiceBloc>()
+                            .add(SortServicesAscending());
+                        Navigator.pop(context);
+                      },
+                      title: Row(
+                        children: [
+                          Radio<String>(
+                            fillColor: WidgetStatePropertyAll(orange),
+                            activeColor: orange,
+                            value: "По цене (сначала дешевле)",
+                            groupValue: selectedMethod,
+                            onChanged: (value) {},
+                          ),
+                          Text("По цене (сначала дешевле)",
+                              style: theme.textTheme.titleMedium),
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        context
+                            .read<ServiceBloc>()
+                            .add(SortServicesDescending());
+                        Navigator.pop(context);
+                      },
+                      title: Row(
+                        children: [
+                          Radio<String>(
+                            fillColor: WidgetStatePropertyAll(orange),
+                            activeColor: orange,
+                            value: "По цене (сначала дороже)",
+                            groupValue: selectedMethod,
+                            onChanged: (value) {},
+                          ),
+                          Text("По цене (сначала дороже)",
+                              style: theme.textTheme.titleMedium),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            ListTile(
-              title: Text("По убыванию цены"),
-              onTap: () {
-                // Здесь вы можете вызвать метод сортировки
-                context.read<ServiceBloc>().add(SortServicesDescending());
-                Navigator.pop(context); // Закрыть BottomSheet
-              },
-            ),
-          ],
-        ),
+          );
+        },
       );
     },
   );

@@ -35,9 +35,10 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
     if (curr is ServicesLoaded) {
       final services = curr.services;
-      final List<AgencyServiceDto> sortedList = services
-        ..sort((a, b) => a.price.compareTo(b.price)); // Corrected for ascending
-      emit(ServicesLoaded(sortedList));
+      services.sort(
+          (a, b) => a.price.compareTo(b.price)); // Corrected for ascending
+      emit(
+          ServicesLoaded(services, sortingMethod: "По цене (сначала дешевле)"));
     }
   }
 
@@ -49,10 +50,9 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
 
     if (curr is ServicesLoaded) {
       final services = curr.services;
-      final List<AgencyServiceDto> sortedList = services
-        ..sort(
-            (a, b) => b.price.compareTo(a.price)); // Corrected for descending
-      emit(ServicesLoaded(sortedList));
+      services.sort(
+          (a, b) => b.price.compareTo(a.price)); // Corrected for descending
+      emit(ServicesLoaded(services, sortingMethod: "По цене (сначала дороже)"));
     }
   }
 }
