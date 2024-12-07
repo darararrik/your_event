@@ -92,24 +92,22 @@ class SignInScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 40),
-                  Expanded(
-                    child: ButtonWidget(
-                      text: "Войти",
-                      onPressed: () {
-                        if (state is AuthErrorState) {
-                          _formKey.currentState!.validate();
-                        }
-                        context.read<AuthBloc>().add(
-                              SignInRequested(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              ),
-                            );
-                        // if (_formKey.currentState!.validate()) {
-                    
-                        // }
-                      },
-                    ),
+                  ButtonWidget(
+                    text: "Войти",
+                    onPressed: () {
+                      if (state is AuthErrorState) {
+                        _formKey.currentState!.validate();
+                      }
+                      context.read<AuthBloc>().add(
+                            SignInRequested(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            ),
+                          );
+                      // if (_formKey.currentState!.validate()) {
+                  
+                      // }
+                    },
                   ),
                 ],
               ),

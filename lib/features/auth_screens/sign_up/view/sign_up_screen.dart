@@ -31,14 +31,7 @@ class SignUpScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 48),
-        child: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is Authenticated) {
-              context.router
-                  .popUntil((route) => route.settings.name == MainRoute.name);
-              context.router.push(const HomeRoute());
-            }
-          },
+        child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
             if (state is AuthLoading) {
               return const Center(
@@ -104,22 +97,20 @@ class SignUpScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 40),
-                  Expanded(
-                    child: ButtonWidget(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(
-                                SignUpRequested(
-                                  name: nameController.text.trim(),
-                                  surname: surnameController.text.trim(),
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                ),
-                              );
-                        }
-                      },
-                      text: 'Зарегистрироваться',
-                    ),
+                  ButtonWidget(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(
+                              SignUpRequested(
+                                name: nameController.text.trim(),
+                                surname: surnameController.text.trim(),
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              ),
+                            );
+                      }
+                    },
+                    text: 'Зарегистрироваться',
                   ),
                 ],
               ),

@@ -128,12 +128,10 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                       children: [
                         Text(error),
                         const SizedBox(height: 16),
-                        Expanded(
-                          child: ButtonWidget(
-                            text: "Вернуться на главную",
-                            onPressed: () =>
-                                context.router.replaceAll([const MainRoute()]),
-                          ),
+                        ButtonWidget(
+                          text: "Вернуться на главную",
+                          onPressed: () =>
+                              context.router.replaceAll([const MainRoute()]),
                         ),
                       ],
                     ),
@@ -163,21 +161,17 @@ class _EventDetailsPageViewState extends State<EventDetailsPageView> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 80),
-                        Expanded(
-                          child: ButtonWidget(
-                            text: "Мои события",
-                            onPressed: () =>
-                                context.router.navigate(const MyEventsRoute()),
-                          ),
+                        ButtonWidget(
+                          text: "Мои события",
+                          onPressed: () =>
+                              context.router.navigate(const MyEventsRoute()),
                         ),
                         const SizedBox(height: 12),
-                        Expanded(
-                          child: ButtonWidget(
-                            text: "Вернуться на главную",
-                            hasColor: false,
-                            onPressed: () =>
-                                context.router.replaceAll([const MainRoute()]),
-                          ),
+                        ButtonWidget(
+                          text: "Вернуться на главную",
+                          hasColor: false,
+                          onPressed: () =>
+                              context.router.replaceAll([const MainRoute()]),
                         ),
                       ],
                     ),

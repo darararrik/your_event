@@ -106,22 +106,20 @@ class ChangePasswordScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
-                    child: Expanded(
-                      child: ButtonWidget(
-                        text: "Сбросить пароль",
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            // Если форма валидна, обработать данные
-                            final oldPassword = oldPasswordController.text.trim();
-                            final newPassword =
-                                newPasswordController1.text.trim();
-                            context.read<ChangePasswordBloc>().add(
-                                ChangePasswordRequested(
-                                    oldPassword: oldPassword,
-                                    newPassword: newPassword));
-                          }
-                        },
-                      ),
+                    child: ButtonWidget(
+                      text: "Сбросить пароль",
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          // Если форма валидна, обработать данные
+                          final oldPassword = oldPasswordController.text.trim();
+                          final newPassword =
+                              newPasswordController1.text.trim();
+                          context.read<ChangePasswordBloc>().add(
+                              ChangePasswordRequested(
+                                  oldPassword: oldPassword,
+                                  newPassword: newPassword));
+                        }
+                      },
                     ),
                   ),
                 ],
