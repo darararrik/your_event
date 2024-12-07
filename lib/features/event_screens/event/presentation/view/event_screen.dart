@@ -60,14 +60,31 @@ class EventScreen extends StatelessWidget {
                       BlocBuilder<EventBloc, EventState>(
                           builder: (context, state) {
                         if (state is EventServiceAdded) {
-                          final list2 = state.services;
+                          final list = state.services;
+
+                          // Группируем услуги по агентствам
+                          final groupedServices =
+                              <String, List<AgencyServiceDto>>{};
+                          for (var service in list) {
+                            final agencyName = service
+                                .agencyName; // Предполагается, что у service есть поле agencyName
+                            if (groupedServices.containsKey(agencyName)) {
+                              groupedServices[agencyName]!.add(service);
+                            } else {
+                              groupedServices[agencyName] = [service];
+                            }
+                          }
                           return ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: list2.length,
+                            itemCount: groupedServices.keys.length,
                             itemBuilder: (context, index) {
-                              return AgentCard(
-                                service: list2[index],
+                              final agencyName =
+                                  groupedServices.keys.elementAt(index);
+                              final services = groupedServices[agencyName]!;
+                              return AgencyServiceCard(
+                                agencyName: agencyName,
+                                services: services,
                               );
                             },
                           );
@@ -110,33 +127,45 @@ class EventScreen extends StatelessWidget {
                           if (state is EventServiceAdded) {
                             double fold = (state.services
                                 .fold(0.0, (sum, item) => sum + item.price));
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Итого:",
-                                    style: theme.textTheme.titleLarge,
-                                  ),
-                                  Row(
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        fold.toString(),
+                                        "Итого:",
                                         style: theme.textTheme.titleLarge,
                                       ),
-                                      const SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        "руб",
-                                        style: theme.textTheme.titleLarge,
+                                      Row(
+                                        children: [
+                                          Text(
+                                            fold.toString(),
+                                            style: theme.textTheme.titleLarge,
+                                          ),
+                                          const SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            "руб",
+                                            style: theme.textTheme.titleLarge,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                ButtonWidget(
+                                  text: 'Подобрать еще',
+                                  onPressed: () {},
+                                )
+                              ],
                             );
                           } else {
                             return const SizedBox();
@@ -165,6 +194,36 @@ class EventScreen extends StatelessWidget {
           onPressed: () => context.router.popAndPush(const MyEventsRoute())),
       centerTitle: true,
       actions: [IconButton(onPressed: () {}, icon: editIcon)],
+    );
+  }
+}
+
+class AgencyServiceCard extends StatelessWidget {
+  final String agencyName;
+  final List<AgencyServiceDto> services;
+
+  const AgencyServiceCard({
+    super.key,
+    required this.agencyName,
+    required this.services,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            agencyName,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          ...services.map((service) => ListTile(
+                title: Text(service
+                    .serviceName), // Предполагается, что у service есть поле name
+              )),
+        ],
+      ),
     );
   }
 }
