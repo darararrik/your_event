@@ -7,6 +7,7 @@ import 'package:yourevent/core/data/repositories/models/agency_service/agency_se
 import 'package:yourevent/core/widgets/agent_card.dart';
 import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
 import 'package:yourevent/features/event_screens/event/presentation/widgets/about_event_card.dart';
+import 'package:yourevent/features/event_screens/event/presentation/widgets/agency_service_card.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -60,22 +61,11 @@ class EventScreen extends StatelessWidget {
                       BlocBuilder<EventBloc, EventState>(
                           builder: (context, state) {
                         if (state is EventServiceAdded) {
-                          final list = state.services;
+                          final groupedServices = state.groupedServices;
 
-                          // Группируем услуги по агентствам
-                          final groupedServices =
-                              <String, List<AgencyServiceDto>>{};
-                          for (var service in list) {
-                            final agencyName = service
-                                .agencyName; // Предполагается, что у service есть поле agencyName
-                            if (groupedServices.containsKey(agencyName)) {
-                              groupedServices[agencyName]!.add(service);
-                            } else {
-                              groupedServices[agencyName] = [service];
-                            }
-                          }
                           return ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: 12),
                             shrinkWrap: true,
                             itemCount: groupedServices.keys.length,
                             itemBuilder: (context, index) {
@@ -129,6 +119,10 @@ class EventScreen extends StatelessWidget {
                                 .fold(0.0, (sum, item) => sum + item.price));
                             return Column(
                               children: [
+                                const Divider(
+                                  height: 1,
+                                  color: outline_Grey,
+                                ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 12),
@@ -163,7 +157,10 @@ class EventScreen extends StatelessWidget {
                                 ),
                                 ButtonWidget(
                                   text: 'Подобрать еще',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.router
+                                        .push(const ServiceSelectionRoute());
+                                  },
                                 )
                               ],
                             );
@@ -194,36 +191,6 @@ class EventScreen extends StatelessWidget {
           onPressed: () => context.router.popAndPush(const MyEventsRoute())),
       centerTitle: true,
       actions: [IconButton(onPressed: () {}, icon: editIcon)],
-    );
-  }
-}
-
-class AgencyServiceCard extends StatelessWidget {
-  final String agencyName;
-  final List<AgencyServiceDto> services;
-
-  const AgencyServiceCard({
-    super.key,
-    required this.agencyName,
-    required this.services,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            agencyName,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          ...services.map((service) => ListTile(
-                title: Text(service
-                    .serviceName), // Предполагается, что у service есть поле name
-              )),
-        ],
-      ),
     );
   }
 }

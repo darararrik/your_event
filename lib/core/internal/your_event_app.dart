@@ -34,31 +34,7 @@ class YourEventApp extends StatelessWidget {
         AgenciesRepository(apiService: config.apiService);
     final UserRepository userRepository = UserRepository(config.apiService);
     return MultiBlocProvider(
-      providers: _buildBlocProviders(config, eventRepository, authRepository,
-          userRepository, agenciesRepository),
-      child: MaterialApp.router(
-        localizationsDelegates: [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-    ],
-    supportedLocales: [
-      const Locale('ru', 'RU'), // Русский
-      const Locale('en', 'US'), // Английский
-    ],
-        theme: lightTheme,
-        routerConfig: _router.config(),
-      ),
-    );
-  }
-
-  List<SingleChildWidget> _buildBlocProviders(
-      AppConfig config,
-      EventRepository eventRepository,
-      IAuthRepository authRepository,
-      UserRepository userRepository,
-      AgenciesRepository agenciesRepository) {
-    return [
+      providers: [
       BlocProvider<EventTypeBloc>(
         create: (context) => EventTypeBloc(eventRepository),
       ),
@@ -90,6 +66,20 @@ class YourEventApp extends StatelessWidget {
       BlocProvider<ChangePasswordBloc>(
         create: (context) => ChangePasswordBloc(userRepository),
       ),
-    ];
+    ],
+      child: MaterialApp.router(
+        localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: [
+      const Locale('ru', 'RU'), // Русский
+      const Locale('en', 'US'), // Английский
+    ],
+        theme: lightTheme,
+        routerConfig: _router.config(),
+      ),
+    );
   }
 }

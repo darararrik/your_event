@@ -12,12 +12,13 @@ import 'package:yourevent/lib.dart';
 
 @RoutePage()
 class ServiceDetailsScreen extends StatelessWidget {
-
   final AgencyServiceDto service;
   final lorem =
       "Lorem ipsum dolor sit amet consectetur. In mattis adipiscing fames ac pharetra. Ac hac senectus sem natoque. Magna nisl ornare aliquam sapien maecenas parturient augue. Massa malesuada duis accumsan mauris pharetra in.";
-  const ServiceDetailsScreen(
-      {super.key, required this.service,});
+  const ServiceDetailsScreen({
+    super.key,
+    required this.service,
+  });
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

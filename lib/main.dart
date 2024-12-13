@@ -20,7 +20,7 @@ void main() async {
 
   final prefs = await _initPrefs();
   await dotenv.load(fileName: ".env");
-  final dio = Dio(); // Создание экземпляра Dio
+  final dio = Dio();// Создание экземпляра Dio
   final client =
       YourEventClient.create(dio: dio, apiUrl: dotenv.env['API_URL']);
   await initializeDateFormatting('ru, null');

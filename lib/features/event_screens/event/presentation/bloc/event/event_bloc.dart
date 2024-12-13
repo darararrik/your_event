@@ -15,10 +15,27 @@ class EventBloc extends Bloc<EventEvent, EventState> {
 
   FutureOr<void> _onAddServiceeToEvent(
       AddServiceEvent event, Emitter<EventState> emit) {
+    // Получаем текущий список услуг
     final updatedServices = List<AgencyServiceDto>.from(
         state is EventServiceAdded ? (state as EventServiceAdded).services : [])
       ..add(event.service);
-    emit(UpdateEvents(service: event.service));
-    emit(EventServiceAdded(services: updatedServices));
+
+    // Группируем услуги по агентствам
+    final groupedServices = <String, List<AgencyServiceDto>>{};
+    for (var service in updatedServices) {
+      final agencyName =
+          service.agencyName; // Поле agencyName у AgencyServiceDto
+      if (groupedServices.containsKey(agencyName)) {
+        groupedServices[agencyName]!.add(service);
+      } else {
+        groupedServices[agencyName] = [service];
+      }
+    }
+
+    // Эмитим новое состояние с обновленными данными
+    emit(EventServiceAdded(
+      services: updatedServices,
+      groupedServices: groupedServices,
+    ));
   }
 }

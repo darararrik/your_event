@@ -11,8 +11,14 @@ final class EventInitial extends EventState {}
 
 class EventServiceAdded extends EventState {
   final List<AgencyServiceDto> services;
+  final Map<String, List<AgencyServiceDto>> groupedServices;
 
-  const EventServiceAdded({required this.services});
+  const EventServiceAdded({
+    required this.services,
+    required this.groupedServices,
+  });
+  @override
+  List<Object> get props => [groupedServices, services];
 }
 
 class UpdateEvents extends EventState {
@@ -20,4 +26,6 @@ class UpdateEvents extends EventState {
   const UpdateEvents({
     required this.service,
   });
+  @override
+  List<Object> get props => [service];
 }
