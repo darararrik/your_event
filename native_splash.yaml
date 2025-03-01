@@ -1,0 +1,9 @@
+flutter_native_splash:
+  color: "#ffffff" # Цвет фона экрана загрузки
+  image: assets/images/LogoSplash.png # Логотип вашего приложения
+  android: true
+  ios: true
+  fullscreen: true # Убирает статус-бар для полноэкранного вида
+  android_12:
+    color: "#ffffff" # Цвет фона экрана загрузки
+    image: assets/images/LogoSplash.png # Логотип вашего приложения

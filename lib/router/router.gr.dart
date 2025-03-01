@@ -48,44 +48,6 @@ class AccountRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AgentsScreen]
-class AgentsRoute extends PageRouteInfo<void> {
-  const AgentsRoute({List<PageRouteInfo>? children})
-      : super(
-          AgentsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AgentsRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AgentsScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [ArticlesScreen]
-class ArticlesRoute extends PageRouteInfo<void> {
-  const ArticlesRoute({List<PageRouteInfo>? children})
-      : super(
-          ArticlesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ArticlesRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const ArticlesScreen();
-    },
-  );
-}
-
-/// generated route for
 /// [ChangeEmailScreen]
 class ChangeEmailRoute extends PageRouteInfo<ChangeEmailRouteArgs> {
   ChangeEmailRoute({
@@ -140,28 +102,47 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EventDeatailsPageView]
-class EventDeatailsRouteView extends PageRouteInfo<EventDeatailsRouteViewArgs> {
-  EventDeatailsRouteView({
+/// [ChatsScreen]
+class ChatsRoute extends PageRouteInfo<void> {
+  const ChatsRoute({List<PageRouteInfo>? children})
+      : super(
+          ChatsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChatsScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [EventDetailsPageView]
+class EventDetailsRouteView extends PageRouteInfo<EventDetailsRouteViewArgs> {
+  EventDetailsRouteView({
     Key? key,
-    required EventTypeModel eventType,
+    required EventTypeDto eventType,
     List<PageRouteInfo>? children,
   }) : super(
-          EventDeatailsRouteView.name,
-          args: EventDeatailsRouteViewArgs(
+          EventDetailsRouteView.name,
+          args: EventDetailsRouteViewArgs(
             key: key,
             eventType: eventType,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'EventDeatailsRouteView';
+  static const String name = 'EventDetailsRouteView';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<EventDeatailsRouteViewArgs>();
-      return EventDeatailsPageView(
+      final args = data.argsAs<EventDetailsRouteViewArgs>();
+      return EventDetailsPageView(
         key: args.key,
         eventType: args.eventType,
       );
@@ -169,19 +150,65 @@ class EventDeatailsRouteView extends PageRouteInfo<EventDeatailsRouteViewArgs> {
   );
 }
 
-class EventDeatailsRouteViewArgs {
-  const EventDeatailsRouteViewArgs({
+class EventDetailsRouteViewArgs {
+  const EventDetailsRouteViewArgs({
     this.key,
     required this.eventType,
   });
 
   final Key? key;
 
-  final EventTypeModel eventType;
+  final EventTypeDto eventType;
 
   @override
   String toString() {
-    return 'EventDeatailsRouteViewArgs{key: $key, eventType: $eventType}';
+    return 'EventDetailsRouteViewArgs{key: $key, eventType: $eventType}';
+  }
+}
+
+/// generated route for
+/// [EventScreen]
+class EventRoute extends PageRouteInfo<EventRouteArgs> {
+  EventRoute({
+    Key? key,
+    required EventDto eventData,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EventRoute.name,
+          args: EventRouteArgs(
+            key: key,
+            eventData: eventData,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EventRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EventRouteArgs>();
+      return EventScreen(
+        key: args.key,
+        eventData: args.eventData,
+      );
+    },
+  );
+}
+
+class EventRouteArgs {
+  const EventRouteArgs({
+    this.key,
+    required this.eventData,
+  });
+
+  final Key? key;
+
+  final EventDto eventData;
+
+  @override
+  String toString() {
+    return 'EventRouteArgs{key: $key, eventData: $eventData}';
   }
 }
 
@@ -276,6 +303,71 @@ class ProfileRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProfileScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [ServiceDetailsScreen]
+class ServiceDetailsRoute extends PageRouteInfo<ServiceDetailsRouteArgs> {
+  ServiceDetailsRoute({
+    Key? key,
+    required AgencyServiceDto service,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ServiceDetailsRoute.name,
+          args: ServiceDetailsRouteArgs(
+            key: key,
+            service: service,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ServiceDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ServiceDetailsRouteArgs>();
+      return ServiceDetailsScreen(
+        key: args.key,
+        service: args.service,
+      );
+    },
+  );
+}
+
+class ServiceDetailsRouteArgs {
+  const ServiceDetailsRouteArgs({
+    this.key,
+    required this.service,
+  });
+
+  final Key? key;
+
+  final AgencyServiceDto service;
+
+  @override
+  String toString() {
+    return 'ServiceDetailsRouteArgs{key: $key, service: $service}';
+  }
+}
+
+/// generated route for
+/// [ServiceSelectionScreen]
+class ServiceSelectionRoute extends PageRouteInfo<void> {
+  const ServiceSelectionRoute({List<PageRouteInfo>? children})
+      : super(
+          ServiceSelectionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ServiceSelectionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ServiceSelectionScreen();
     },
   );
 }
@@ -384,6 +476,25 @@ class StartRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const StartScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [WrapperScreen]
+class WrapperRoute extends PageRouteInfo<void> {
+  const WrapperRoute({List<PageRouteInfo>? children})
+      : super(
+          WrapperRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WrapperRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const WrapperScreen();
     },
   );
 }

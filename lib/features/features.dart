@@ -1,10 +1,9 @@
-export 'agents/agents.dart';
-export 'articles/articles.dart';
-export 'create_event/create_event.dart';
+export 'chats/agents.dart';
+export 'event_screens/create_event/create_event.dart';
 export 'home/home.dart';
 export 'main/main.dart';
-export 'my_events/my_events.dart';
-export 'profile/profile.dart';
-export 'sign_in/sign_in.dart';
-export 'sign_up/sign_up.dart';
+export 'event_screens/my_events/my_events.dart';
+export 'profile_screens/profile/profile.dart';
+export 'auth_screens/sign_in/sign_in.dart';
+export 'auth_screens/sign_up/sign_up.dart';
 export 'start/start.dart';

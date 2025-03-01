@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:yourevent/core/utils/utils.dart';
 import 'package:yourevent/core/widgets/input_widget.dart';
-import 'package:yourevent/features/about/presentation/widgets/action_button.dart';
+import 'package:yourevent/features/about/Presentation/widgets/action_button.dart';
 
 @RoutePage()
 class AboutScreen extends StatelessWidget {
@@ -13,7 +13,7 @@ class AboutScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
-        physics: const ScrollPhysics(parent: FixedExtentScrollPhysics()),
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             centerTitle: true,

@@ -16,16 +16,21 @@ class MainScreen extends StatelessWidget {
     return AutoTabsRouter(
       routes: const [
         HomeRoute(),
-        AgentsRoute(),
+        ChatsRoute(),
         MyEventsRoute(),
         ProfileRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
-          body:
-              child, // Используйте `child` для отображения содержимого ваших вкладок
-          bottomNavigationBar: NavigationBarWidget(tabsRouter),
+          body: Stack(children: [
+            Positioned.fill(child: child),
+            Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: navigationBarWidget(tabsRouter))
+          ]), // Используйте `child` для отображения содержимого ваших вкладок
         );
       },
     );

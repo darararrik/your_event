@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:yourevent/core/utils/utils.dart';
 
 class InputWidget extends StatelessWidget {
-  InputWidget({
+  const InputWidget({
     super.key,
     required this.labelText,
     this.suffixIcon,
@@ -23,7 +23,7 @@ class InputWidget extends StatelessWidget {
   final bool? readOnly;
   final TextEditingController? controller;
 
-  String? Function(String?)? validator;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

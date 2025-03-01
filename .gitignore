@@ -1,4 +1,5 @@
 # Flutter/Dart
+.flutter-plugins-dependencies
 *.dart_tool/
 *.pub/
 *.packages
@@ -6,10 +7,10 @@
 build/
 flutter_*.png
 pubspec.lock
-.flutter-plugins-dependencies
 # macOS
 *.DS_Store
 *.localized
+*.env
 
 # iOS
 ios/Flutter/Flutter.framework

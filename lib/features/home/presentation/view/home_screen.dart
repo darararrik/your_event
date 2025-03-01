@@ -1,10 +1,17 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yourevent/core/utils/utils.dart';
-import 'package:yourevent/features/create_event/presentation/presentation.dart';
-import 'package:yourevent/features/home/presentation/bloc/articles_bloc.dart';
-import 'package:yourevent/features/home/presentation/widgets/widgets.dart';
+import 'package:yourevent/core/widgets/agent_card.dart';
+import 'package:yourevent/core/widgets/button_widget.dart';
+import 'package:yourevent/core/widgets/filter_widget.dart';
+import 'package:yourevent/features/event_screens/event/presentation/bloc/event/event_bloc.dart';
+import 'package:yourevent/features/event_screens/service_selection/presentation/service/service_bloc.dart';
+import 'package:yourevent/features/home/Presentation/widgets/create_event_button.dart';
+import 'package:yourevent/features/home/Presentation/widgets/sort_filter_icon_widget.dart';
+import 'package:yourevent/features/home/Presentation/widgets/widgets.dart';
 import 'package:yourevent/router/router.dart';
 
 @RoutePage()
@@ -13,172 +20,271 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ServiceBloc>().add(LoadServices());
     final theme = Theme.of(context);
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          toolbarHeight: 108,
-          title: logo,
-          centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications_outlined,
-                  size: 32,
-                  color: theme.primaryColor,
-                ),
-                onPressed: () {},
-              ),
-            )
-          ],
+        _appBar(context),
+        //Тень
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: _ShadowHeaderDelegate(),
         ),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                // Добавляем статический контент
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-                  child: _title(theme),
+        BlocBuilder<ServiceBloc, ServiceState>(
+          builder: (context, state) {
+            if (state is ServicesLoaded) {
+              final number = state.services.length;
+              return SliverToBoxAdapter(child: FilterWidget(number: number));
+            }
+            return SliverToBoxAdapter(child: FilterWidget(number: 0));
+          },
+        ),
+        BlocBuilder<ServiceBloc, ServiceState>(
+          builder: (context, state) {
+            if (state is ServicesLoaded) {
+              final list = state.services;
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16)
+                    .copyWith(bottom: 100),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Количество столбцов
+                    crossAxisSpacing: 20, // Промежуток между столбцами
+                    mainAxisSpacing: 20, // Промежуток между строками
+                    childAspectRatio:
+                        0.75, // Соотношение ширины и высоты карточки
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return AgentCard(
+                        service: list[index],
+                      );
+                    },
+                    childCount: list.length, // Количество карточек
+                  ),
                 ),
-                const SizedBox(height: 20),
-                _buttons(context),
-                const SizedBox(height: 32),
-                _titleArticle(context, theme),
-                const SizedBox(
-                  height: 20,
+              );
+            }
+            if (state is ServicesLoading) {
+              return SliverToBoxAdapter(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SliverToBoxAdapter(
+              child: SizedBox(
+                height:
+                    MediaQuery.of(context).size.height * 0.5, // Задайте высоту
+                child: Center(
+                  child: Text(
+                    "Услуги не найдены.",
+                    style: theme.textTheme.headlineSmall,
+                  ),
                 ),
-                _artilcesCards(),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ],
     );
   }
 
-  SizedBox _artilcesCards() {
-    return SizedBox(
-                height: 240,
-                child: BlocBuilder<ArticlesBloc, ArticlesState>(
-                  builder: (context, state) {
-                    if (state is ArticlesLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is ArticlesLoaded) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: state.articles.length,
-                        itemBuilder: (context, index) {
-                          final article = state.articles[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 12),
-                            child: CardWidget(
-                              article: article,
-                              width: 260,
-                              height: 240,
-                            ),
-                          );
-                        },
-                      );
-                    } else if (state is ArticlesError) {
-                      return Center(child: Text(state.message));
-                    }
-
-                    return const Center(child: Text('No articles found.'));
-                  },
-                ),
-              );
-  }
-
-  GestureDetector _titleArticle(BuildContext context, ThemeData theme) {
-    return GestureDetector(
-                onTap: () {
-                  context.router.push(const ArticlesRoute());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12)
-                      .copyWith(right: 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Наши статьи",
-                        style: theme.textTheme.headlineMedium,
-                      ),
-                      const Chips(
-                          icon: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 14,
-                          ),
-                          title: "title")
-                    ],
-                  ),
-                ),
-              );
-  }
-
-  Row _buttons(BuildContext context) {
-    return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  SliverAppBar _appBar(BuildContext context) {
+    return SliverAppBar(
+      surfaceTintColor: white,
+      backgroundColor: Colors.white,
+      toolbarHeight: 172,
+      flexibleSpace: Stack(
+        children: [
+          // Лого по центру
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    child: IconButtonWidget(
-                      text: 'Выбрать агентство мероприятий',
-                      image: faqSearch,
-                      onTap: () {},
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: logo,
                   ),
-                  SizedBox(
-                    child: IconButtonWidget(
-                      text: 'Организую сам',
-                      image: package,
+                  const SizedBox(height: 20),
+                  const CreateEventButton(),
+                ],
+              ),
+            ),
+          ),
+          // Иконка уведомлений справа с отступом 16 пкс
+          Positioned(
+            right: 16,
+            top: 40, // Настройте отступ сверху для выравнивания
+            child: IconButton(
+              icon: Icon(
+                Icons.notifications_outlined,
+                size: 32,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                //TODO: Реализация
+              },
+            ),
+          ),
+        ],
+      ),
+      centerTitle: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      pinned: true,
+    );
+  }
+}
+
+void showSortOptions(BuildContext context) {
+  final theme = Theme.of(context);
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Позволяет изменять высоту bottom sheet
+    builder: (BuildContext context) {
+      return BlocBuilder<ServiceBloc, ServiceState>(
+        builder: (context, state) {
+          String selectedMethod =
+              "По умолчанию"; // Переменная для хранения выбранного метода
+          if (state is ServicesLoaded) {
+            selectedMethod =
+                state.sortingMethod; // Получаем текущий метод сортировки
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0)
+                .copyWith(bottom: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize
+                  .min, // Ограничиваем высоту до необходимого размера
+              children: [
+                // Полоска сверху
+                Container(
+                  height: 4, // Высота полоски
+                  width: 32, // Ширина полоски
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 16), // Отступы вокруг полоски
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey, // Цвет полоски
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        "Сортировать",
+                        style: theme.textTheme.titleLarge,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        context.read<ServiceBloc>().add(LoadServices());
+                        Navigator.pop(context);
+                      },
+                      title: Row(
+                        children: [
+                          Radio<String>(
+                            fillColor: WidgetStatePropertyAll(orange),
+                            activeColor: orange,
+                            value: "По умолчанию",
+                            groupValue: selectedMethod,
+                            onChanged: (value) {},
+                          ),
+                          Text("По умолчанию",
+                              style: theme.textTheme.titleMedium),
+                        ],
+                      ),
+                    ),
+                    ListTile(
                       onTap: () {
                         context
-                            .read<CreateEventBloc>()
-                            .add(const EventTypesLoad(completer: null));
-                        context.router.push(const EventTypeRoute());
+                            .read<ServiceBloc>()
+                            .add(SortServicesAscending());
+                        Navigator.pop(context);
                       },
-                    ),
-                  ),
-                ],
-              );
-  }
-
-  Row _title(ThemeData theme) {
-    return Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14.0, vertical: 8),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          gradient: const LinearGradient(colors: <Color>[
-                            Color.fromRGBO(234, 115, 18, 1),
-                            Color.fromRGBO(255, 0, 0, 1)
-                          ])),
-                      child: Text(
-                        "1",
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 18,
-                          color: white,
-                        ),
+                      title: Row(
+                        children: [
+                          Radio<String>(
+                            fillColor: WidgetStatePropertyAll(orange),
+                            activeColor: orange,
+                            value: "По цене (сначала дешевле)",
+                            groupValue: selectedMethod,
+                            onChanged: (value) {},
+                          ),
+                          Text("По цене (сначала дешевле)",
+                              style: theme.textTheme.titleMedium),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      "Выберите способ организации",
-                      style: theme.textTheme.bodySmall!
-                          .copyWith(color: grey, fontSize: 16, height: 1.6),
+                    ListTile(
+                      onTap: () {
+                        context
+                            .read<ServiceBloc>()
+                            .add(SortServicesDescending());
+                        Navigator.pop(context);
+                      },
+                      title: Row(
+                        children: [
+                          Radio<String>(
+                            fillColor: WidgetStatePropertyAll(orange),
+                            activeColor: orange,
+                            value: "По цене (сначала дороже)",
+                            groupValue: selectedMethod,
+                            onChanged: (value) {},
+                          ),
+                          Text("По цене (сначала дороже)",
+                              style: theme.textTheme.titleMedium),
+                        ],
+                      ),
                     ),
                   ],
-                );
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+class _ShadowHeaderDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      decoration: const BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.13), // Настройте цвет тени
+            offset: Offset(0, 4),
+            spreadRadius: 8,
+            blurRadius: 33,
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 1;
+
+  @override
+  double get minExtent => 1;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
