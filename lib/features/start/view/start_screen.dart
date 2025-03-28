@@ -8,15 +8,27 @@ import 'package:yourevent/router/router.dart';
 import '../../../core/utils/utils.dart';
 
 @RoutePage()
-class StartScreen extends StatelessWidget {
+class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
+
+  @override
+  State<StartScreen> createState() => _StartScreenState();
+}
+
+class _StartScreenState extends State<StartScreen> {
+  @override
+  initState() {
+    super.initState();
+
+    // Отправляем событие для проверки аутентификации при загрузке экрана
+    //context.read<AuthBloc>().add(CheckLoginStatus());
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Отправляем событие для проверки аутентификации при загрузке экрана
-    context.read<AuthBloc>().add(CheckLoginStatus());
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is Authenticated) {
@@ -52,8 +64,8 @@ class StartScreen extends StatelessWidget {
               ButtonWidget(
                 text: 'Войти',
                 onPressed: () {
-                  context.router.push(
-                      SignInRoute()); // Используем AutoRouteем pushNamed
+                  context.router
+                      .push(SignInRoute()); // Используем AutoRouteем pushNamed
                 },
                 hasColor: false,
               ),
